@@ -1,13 +1,17 @@
 import React from 'react';
 import { API_SECRET } from './api'
 
+import { connect } from 'react-redux'
 import { ActionCableConsumer } from 'react-actioncable-provider'
 
 class App extends React.Component {
   state = {
-    venues: [],
+    venues: [], // move to redux
     on: false,
-    messages: []
+
+    currentUser: '',
+    currentVenue: 1,
+    currentMessage: ''
   }
 
   componentDidMount() {
@@ -23,11 +27,11 @@ class App extends React.Component {
     if (localStorage.lat && localStorage.long && this.state.on) {
       fetch(`https://api.foursquare.com/v2/venues/explore?section=food&ll=${localStorage.getItem('lat')},${localStorage.getItem('long')}&client_id=${API_SECRET.id}&client_secret=${API_SECRET.secret}&v=${API_SECRET.version}`)
         .then(r => r.json())
-        .then(data => {
-          this.setState({
-            venues: data.response.groups[0].items
-          })
-        })
+        // .then(data => {
+        //   this.setState({
+        //     venues: data.response.groups[0].items
+        //   })
+        // })
     }
   }
 
@@ -45,22 +49,40 @@ class App extends React.Component {
         Accept: "application/json"
       },
       body: JSON.stringify({
-        user_id: 1,
-        restaurant_id: 1,
-        content: "Hello from the front end!"
+        user_id: localStorage.getItem('user_id'),
+        restaurant_id: this.state.currentVenue,
+        content: this.state.currentMessage
       })
     })
-      .then(r => r.json())
-      .then(console.log)
+      // .then(r => r.json())
   }
 
-  renderMessage = (data) => {
+  handleChange = event => {
     this.setState({
-      messages: [...this.state.messages, data]
+      currentMessage: event.target.value
     })
+  }
+
+  handleSubmit = event => {
+    event.preventDefault()
+    this.sendMessage()
+    this.setState({
+      currentMessage: ''
+    })
+  }
+
+  handleReceived = data => {
+    switch(data.type) {
+      case 'SEND_MESSAGE':
+        this.props.sendMessage(data.payload)
+        break
+      default:
+        console.log(data)
+    }
   }
 
   render() {
+    // debugger
     console.log('App state', this.state)
     return (
       <div>
@@ -70,13 +92,44 @@ class App extends React.Component {
         <br />
         <button onClick={() => this.pressMe()}>Press it</button>
         <button onClick={() => this.sendMessage()}>Message it</button>
+
+        <h2>Send message here</h2>
+        <form onSubmit={this.handleSubmit}>
+          <input
+            onChange={this.handleChange}
+            value={this.state.currentMessage}
+            type="text" />
+          <input type="submit" />
+        </form>
+
         <ActionCableConsumer
           channel={{ channel: "ChatThreadChannel" }}
-          onReceived={users => this.renderMessage(users)} />
-        {this.state.messages}
+          onReceived={data => this.handleReceived(data)} />
+
+        <h2>Show message here</h2>
+        {this.props.state.messages.map(message => {
+          return (<div key={message.id}>
+            {message.username}
+            {message.content}
+          </div>)
+        })}
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    state: state.messages
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    sendMessage: message => {
+      dispatch({type: 'SEND_MESSAGE', payload: message})
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
