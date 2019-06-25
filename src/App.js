@@ -6,7 +6,8 @@ import { ActionCableConsumer } from 'react-actioncable-provider'
 class App extends React.Component {
   state = {
     venues: [],
-    on: false
+    on: false,
+    messages: []
   }
 
   componentDidMount() {
@@ -49,6 +50,14 @@ class App extends React.Component {
         content: "Hello from the front end!"
       })
     })
+      .then(r => r.json())
+      .then(console.log)
+  }
+
+  renderMessage = (data) => {
+    this.setState({
+      messages: [...this.state.messages, data]
+    })
   }
 
   render() {
@@ -63,7 +72,8 @@ class App extends React.Component {
         <button onClick={() => this.sendMessage()}>Message it</button>
         <ActionCableConsumer
           channel={{ channel: "ChatThreadChannel" }}
-          onReceived={users => console.log(users)} />
+          onReceived={users => this.renderMessage(users)} />
+        {this.state.messages}
       </div>
     );
   }
