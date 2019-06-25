@@ -4,6 +4,8 @@ import { API_SECRET } from './api'
 import { connect } from 'react-redux'
 import { ActionCableConsumer } from 'react-actioncable-provider'
 
+const BACKEND_API = 'http://localhost:8000/api/v1'
+
 class App extends React.Component {
   state = {
     venues: [], // move to redux
@@ -33,6 +35,14 @@ class App extends React.Component {
         //   })
         // })
     }
+
+    fetch(BACKEND_API + `/restaurants/${this.state.currentVenue}`)
+      .then(r => r.json())
+      .then(data => {
+        this.props.loadMessages(data)
+        let chatBox = document.querySelector("#chat-box")
+        chatBox.scrollTop = chatBox.scrollHeight
+      })
   }
 
   pressMe = () => {
@@ -72,9 +82,11 @@ class App extends React.Component {
   }
 
   handleReceived = data => {
+    let chatBox = document.querySelector("#chat-box")
     switch(data.type) {
       case 'SEND_MESSAGE':
         this.props.sendMessage(data.payload)
+        chatBox.scrollTop = chatBox.scrollHeight
         break
       default:
         console.log(data)
@@ -107,12 +119,14 @@ class App extends React.Component {
           onReceived={data => this.handleReceived(data)} />
 
         <h2>Show message here</h2>
-        {this.props.state.messages.map(message => {
-          return (<div key={message.id}>
-            {message.username}
-            {message.content}
-          </div>)
-        })}
+        <div id="chat-box" className="chat-box">
+          {this.props.state.messages.map(message => {
+            return (<div key={message.id}>
+              <strong>{message.username} {message.created_at}: </strong>
+              {message.content}
+            </div>)
+          })}
+        </div>
       </div>
     );
   }
@@ -128,6 +142,9 @@ const mapDispatchToProps = dispatch => {
   return {
     sendMessage: message => {
       dispatch({type: 'SEND_MESSAGE', payload: message})
+    },
+    loadMessages: messages => {
+      dispatch({type: 'LOAD_MESSAGES', payload: messages})
     }
   }
 }
