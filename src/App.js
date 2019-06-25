@@ -92,31 +92,34 @@ class App extends React.Component {
   render() {
     console.log('App state', this.state)
     return (
-      <div>
+      <div className="row">
         <ActionCableConsumer
           channel={{ channel: "ChatThreadChannel" }}
           onReceived={data => this.handleReceived(data)} />
-        Hello from App.
-        <br />
-        Venues: {this.state.venues.length}
-        <br />
-        <h2>Send message here</h2>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            onChange={this.handleChange}
-            value={this.state.currentMessage}
-            type="text" />
-          <input type="submit" />
-        </form>
+        <div className="col-6">
+          Hello from App.
+          <br />
+          Venues: {this.state.venues.length}
+        </div>
 
-        <h2>Show message here</h2>
-        <div id="chat-box" className="chat-box">
-          {this.props.state.messages.map(message => {
-            return (<div key={message.id}>
-              <strong>{message.username} {message.created_at}: </strong>
-              {message.content}
-            </div>)
-          })}
+        <div className="col-6">
+          <h2>Show message here</h2>
+          <div id="chat-box" className="chat-box">
+            {this.props.state.messages.map(message => {
+              return (<div key={message.id}>
+                <strong>{message.username} {message.created_at}: </strong>
+                {message.content}
+              </div>)
+            })}
+          </div>
+          <h2>Send message here</h2>
+          <form onSubmit={this.handleSubmit}>
+            <input
+              onChange={this.handleChange}
+              value={this.state.currentMessage}
+              type="text" />
+            <input type="submit" />
+          </form>
         </div>
       </div>
     );
