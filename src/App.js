@@ -32,8 +32,23 @@ class App extends React.Component {
 
   pressMe = () => {
     // ActionCable
-    return fetch('http://localhost:8000/users')
+    return fetch('http://localhost:8000/api/v1/users')
       .then(r => r.json())
+  }
+
+  sendMessage = () => {
+    return fetch('http://localhost:8000/api/v1/messages', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        user_id: 1,
+        restaurant_id: 1,
+        content: "Hello from the front end!"
+      })
+    })
   }
 
   render() {
@@ -45,6 +60,7 @@ class App extends React.Component {
         Venues: {this.state.venues.length}
         <br />
         <button onClick={() => this.pressMe()}>Press it</button>
+        <button onClick={() => this.sendMessage()}>Message it</button>
         <ActionCableConsumer
           channel={{ channel: "ChatThreadChannel" }}
           onReceived={users => console.log(users)} />
