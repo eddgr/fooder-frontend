@@ -12,7 +12,7 @@ class App extends React.Component {
     on: false,
 
     currentUser: '',
-    currentVenue: 1,
+    currentVenue: 2,
     currentMessage: ''
   }
 
@@ -29,26 +29,21 @@ class App extends React.Component {
     if (localStorage.lat && localStorage.long && this.state.on) {
       fetch(`https://api.foursquare.com/v2/venues/explore?section=food&ll=${localStorage.getItem('lat')},${localStorage.getItem('long')}&client_id=${API_SECRET.id}&client_secret=${API_SECRET.secret}&v=${API_SECRET.version}`)
         .then(r => r.json())
-        // .then(data => {
-        //   this.setState({
-        //     venues: data.response.groups[0].items
-        //   })
-        // })
     }
 
     fetch(BACKEND_API + `/restaurants/${this.state.currentVenue}`)
       .then(r => r.json())
       .then(data => {
         this.props.loadMessages(data)
-        let chatBox = document.querySelector("#chat-box")
-        chatBox.scrollTop = chatBox.scrollHeight
+        this.scrollToBottom()
       })
   }
 
-  pressMe = () => {
-    // ActionCable
-    return fetch('http://localhost:8000/api/v1/users')
-      .then(r => r.json())
+  // HELPER FUNCTIONS
+
+  scrollToBottom = () => {
+    const chatBox = document.querySelector("#chat-box")
+    chatBox.scrollTop = chatBox.scrollHeight
   }
 
   sendMessage = () => {
@@ -64,7 +59,6 @@ class App extends React.Component {
         content: this.state.currentMessage
       })
     })
-      // .then(r => r.json())
   }
 
   handleChange = event => {
@@ -82,29 +76,30 @@ class App extends React.Component {
   }
 
   handleReceived = data => {
-    let chatBox = document.querySelector("#chat-box")
+
     switch(data.type) {
       case 'SEND_MESSAGE':
         this.props.sendMessage(data.payload)
-        chatBox.scrollTop = chatBox.scrollHeight
+        this.scrollToBottom()
         break
       default:
         console.log(data)
     }
   }
 
+  // end HELPER FUNCTIONS
+
   render() {
-    // debugger
     console.log('App state', this.state)
     return (
       <div>
+        <ActionCableConsumer
+          channel={{ channel: "ChatThreadChannel" }}
+          onReceived={data => this.handleReceived(data)} />
         Hello from App.
         <br />
         Venues: {this.state.venues.length}
         <br />
-        <button onClick={() => this.pressMe()}>Press it</button>
-        <button onClick={() => this.sendMessage()}>Message it</button>
-
         <h2>Send message here</h2>
         <form onSubmit={this.handleSubmit}>
           <input
@@ -113,10 +108,6 @@ class App extends React.Component {
             type="text" />
           <input type="submit" />
         </form>
-
-        <ActionCableConsumer
-          channel={{ channel: "ChatThreadChannel" }}
-          onReceived={data => this.handleReceived(data)} />
 
         <h2>Show message here</h2>
         <div id="chat-box" className="chat-box">
