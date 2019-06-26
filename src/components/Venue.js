@@ -7,7 +7,14 @@ export default function Venue(props) {
       {name}<br />
       {location}<br />
       {categories}<br />
-      <button name="like" data-id={id}>Like</button>
+
+      <button
+        onClick={() => props.likeVenue(props.venue)}
+        name="like"
+        data-id={id}>
+        Like
+      </button>
+
       <button name="dislike" data-id={id}>Dislike</button>
     </div>
   )

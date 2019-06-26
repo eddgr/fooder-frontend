@@ -19,6 +19,7 @@ class VenueContainer extends React.Component {
       return (
         <Venue
           key={venue.id}
+          likeVenue={this.props.likeVenue}
           venue={venue} />
       )
     })
@@ -45,7 +46,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addVenues: venues => {
-      dispatch({type: 'ADD_VENUES', payload: venues})
+      dispatch({ type: 'ADD_VENUES', payload: venues })
+    },
+    likeVenue: venue => {
+      dispatch({ type: 'LIKE_VENUE', venue: venue })
     }
   }
 }
