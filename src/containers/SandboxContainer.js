@@ -194,7 +194,7 @@ class SandboxContainer extends React.Component {
   render() {
     return (
       <div className="m-4 row">
-
+        SandboxContainer
         <div className="col-6">
           Current User ID: {localStorage.getItem('user_id')}
           <br />
