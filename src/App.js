@@ -35,6 +35,24 @@ class App extends React.Component {
       fetch(`https://api.foursquare.com/v2/venues/explore?section=food&ll=${localStorage.getItem('lat')},${localStorage.getItem('long')}&client_id=${API_SECRET.id}&client_secret=${API_SECRET.secret}&v=${API_SECRET.version}`)
         .then(r => r.json())
     }
+
+    fetch(AUTH_API + '/profile', {
+      method: 'POST',
+      headers: {
+        "Authorization": localStorage.getItem("token")
+      }
+    })
+      .then(r => r.json())
+      .then(data => {
+        localStorage.setItem("user_id", data.id)
+
+        this.setState({
+          currentUser: data.id,
+          loggedIn: true
+        })
+
+        this.showChat()
+      })
   }
 
   // HELPER FUNCTIONS
@@ -61,7 +79,7 @@ class App extends React.Component {
         Accept: "application/json"
       },
       body: JSON.stringify({
-        user_id: localStorage.getItem('user_id'),
+        user_id: this.state.currentUser,
         restaurant_id: this.state.currentVenue,
         content: this.state.currentMessage
       })
@@ -192,7 +210,6 @@ class App extends React.Component {
                 type="text" />
               <input type="submit" />
             </form>
-            {this.showChat()}
           </div>
           :
           <form>
