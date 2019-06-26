@@ -4,6 +4,7 @@ import { API_SECRET } from './api'
 import { connect } from 'react-redux'
 import { ActionCableConsumer } from 'react-actioncable-provider'
 
+const AUTH_API = 'http://localhost:8000'
 const BACKEND_API = 'http://localhost:8000/api/v1'
 
 class App extends React.Component {
@@ -16,7 +17,8 @@ class App extends React.Component {
     currentMessage: '',
 
     username: '',
-    password: ''
+    password: '',
+    loggedIn: false
   }
 
   componentDidMount() {
@@ -33,7 +35,11 @@ class App extends React.Component {
       fetch(`https://api.foursquare.com/v2/venues/explore?section=food&ll=${localStorage.getItem('lat')},${localStorage.getItem('long')}&client_id=${API_SECRET.id}&client_secret=${API_SECRET.secret}&v=${API_SECRET.version}`)
         .then(r => r.json())
     }
+  }
 
+  // HELPER FUNCTIONS
+
+  showChat = () => {
     fetch(BACKEND_API + `/restaurants/${this.state.currentVenue}`)
       .then(r => r.json())
       .then(data => {
@@ -41,8 +47,6 @@ class App extends React.Component {
         this.scrollToBottom()
       })
   }
-
-  // HELPER FUNCTIONS
 
   scrollToBottom = () => {
     const chatBox = document.querySelector("#chat-box")
@@ -86,6 +90,58 @@ class App extends React.Component {
 
   handleSubmitAuthForm = event => {
     event.preventDefault()
+    switch(event.target.name) {
+      case "signup":
+        fetch(BACKEND_API + '/users', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          body: JSON.stringify({
+            username: this.state.username,
+            password: this.state.password
+          })
+        })
+          .then(r => r.json())
+          .then(data => {
+            localStorage.setItem('token', data.token)
+            localStorage.setItem('user_id', data.id)
+          })
+
+        this.setState({
+          username: '',
+          password: '',
+          loggedIn: true
+        })
+        break
+      case "login":
+        fetch(AUTH_API + '/login', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          body: JSON.stringify({
+            username: this.state.username,
+            password: this.state.password
+          })
+        })
+          .then(r => r.json())
+          .then(data => {
+            localStorage.setItem('token', data.token)
+            localStorage.setItem('user_id', data.id)
+          })
+
+        this.setState({
+          username: '',
+          password: '',
+          loggedIn: true
+        })
+        break
+      default:
+        console.log("boop")
+    }
   }
 
   handleReceived = data => {
@@ -115,7 +171,31 @@ class App extends React.Component {
           <br />
           Venues: {this.state.venues.length}
 
-          <form onSubmit={this.handleSubmitAuthForm}>
+        </div>
+        {
+          this.state.loggedIn ?
+          <div className="col-6">
+            <h2>Show message here</h2>
+            <div id="chat-box" className="chat-box">
+              {this.props.state.messages.map(message => {
+                return (<div key={message.id}>
+                  <strong>{message.username} {message.created_at}: </strong>
+                  {message.content}
+                </div>)
+              })}
+            </div>
+            <h2>Send message here</h2>
+            <form onSubmit={this.handleSubmitMessage}>
+              <input
+                onChange={this.handleMessageChange}
+                value={this.state.currentMessage}
+                type="text" />
+              <input type="submit" />
+            </form>
+            {this.showChat()}
+          </div>
+          :
+          <form>
             <input
               name="username"
               value={this.state.username}
@@ -129,30 +209,16 @@ class App extends React.Component {
               placeholder="password"
               type="password" />
             <br />
-            <button name="signup">Sign Up</button>
-            <button name="login">Log In</button>
+            <button
+              type="submit"
+              name="signup"
+              onClick={this.handleSubmitAuthForm}>Sign Up</button>
+            <button
+              type="submit"
+              name="login"
+              onClick={this.handleSubmitAuthForm}>Log In</button>
           </form>
-        </div>
-
-        <div className="col-6">
-          <h2>Show message here</h2>
-          <div id="chat-box" className="chat-box">
-            {this.props.state.messages.map(message => {
-              return (<div key={message.id}>
-                <strong>{message.username} {message.created_at}: </strong>
-                {message.content}
-              </div>)
-            })}
-          </div>
-          <h2>Send message here</h2>
-          <form onSubmit={this.handleSubmitMessage}>
-            <input
-              onChange={this.handleMessageChange}
-              value={this.state.currentMessage}
-              type="text" />
-            <input type="submit" />
-          </form>
-        </div>
+        }
       </div>
     );
   }
