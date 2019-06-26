@@ -13,7 +13,10 @@ class App extends React.Component {
 
     currentUser: '',
     currentVenue: 2,
-    currentMessage: ''
+    currentMessage: '',
+
+    username: '',
+    password: ''
   }
 
   componentDidMount() {
@@ -61,13 +64,19 @@ class App extends React.Component {
     })
   }
 
-  handleChange = event => {
+  handleMessageChange = event => {
     this.setState({
       currentMessage: event.target.value
     })
   }
 
-  handleSubmit = event => {
+  handleLoginChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
+  handleSubmitMessage = event => {
     event.preventDefault()
     this.sendMessage()
     this.setState({
@@ -75,8 +84,11 @@ class App extends React.Component {
     })
   }
 
-  handleReceived = data => {
+  handleSubmitAuthForm = event => {
+    event.preventDefault()
+  }
 
+  handleReceived = data => {
     switch(data.type) {
       case 'SEND_MESSAGE':
         this.props.sendMessage(data.payload)
@@ -93,13 +105,33 @@ class App extends React.Component {
     console.log('App state', this.state)
     return (
       <div className="row">
+
         <ActionCableConsumer
           channel={{ channel: "ChatThreadChannel" }}
           onReceived={data => this.handleReceived(data)} />
+
         <div className="col-6">
-          Hello from App.
+          Current User ID: {localStorage.getItem('user_id')}
           <br />
           Venues: {this.state.venues.length}
+
+          <form onSubmit={this.handleSubmitAuthForm}>
+            <input
+              name="username"
+              value={this.state.username}
+              onChange={this.handleLoginChange}
+              placeholder="username"
+              type="text" />
+            <input
+              name="password"
+              value={this.state.password}
+              onChange={this.handleLoginChange}
+              placeholder="password"
+              type="password" />
+            <br />
+            <button name="signup">Sign Up</button>
+            <button name="login">Log In</button>
+          </form>
         </div>
 
         <div className="col-6">
@@ -113,9 +145,9 @@ class App extends React.Component {
             })}
           </div>
           <h2>Send message here</h2>
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmitMessage}>
             <input
-              onChange={this.handleChange}
+              onChange={this.handleMessageChange}
               value={this.state.currentMessage}
               type="text" />
             <input type="submit" />
