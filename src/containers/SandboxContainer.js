@@ -13,7 +13,7 @@ class SandboxContainer extends React.Component {
     on: false,
 
     currentUser: '',
-    currentVenue: 2,
+    currentVenue: 63,
     currentMessage: '',
 
     username: '',
