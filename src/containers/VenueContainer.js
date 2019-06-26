@@ -14,17 +14,60 @@ class VenueContainer extends React.Component {
       })
   }
 
+  // HELPER FUNCTIONS
   displayVenues = () => {
     return this.props.venues.venues.map(venue => {
       return (
         <Venue
           key={venue.id}
+          handleLikeDislike={this.handleLikeDislike}
           likeVenue={this.props.likeVenue}
           dislikeVenue={this.props.dislikeVenue}
           venue={venue} />
       )
     })
   }
+
+  handleLikeDislike = (event, venue) => {
+    switch(event.target.name) {
+      case "like":
+        console.log("like")
+        fetch(BACKEND_API + '/favorites', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          body: JSON.stringify({
+            user_id: this.props.currentUser.id,
+            restaurant_id: venue.id,
+            liked: true
+          })
+        })
+        this.props.likeVenue(venue)
+        break
+      case "dislike":
+        console.log("dislike")
+        fetch(BACKEND_API + '/favorites', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          body: JSON.stringify({
+            user_id: this.props.currentUser.id,
+            restaurant_id: venue.id,
+            liked: false
+          })
+        })
+        this.props.dislikeVenue(venue)
+        break
+      default:
+        console.log("Like or Dislike")
+    }
+  }
+  // end HELPER FUNCTIONS
+
   render() {
     console.log("VenueContainer props", this.props)
     return (
