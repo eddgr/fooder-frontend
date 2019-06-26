@@ -15,7 +15,7 @@ class VenueContainer extends React.Component {
   }
 
   displayVenues = () => {
-    return this.props.state.venues.map(venue => {
+    return this.props.venues.venues.map(venue => {
       return (
         <Venue
           key={venue.id}
@@ -36,7 +36,9 @@ class VenueContainer extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    state: state.venues
+    // can select specific pieces from state not just the whole object
+    currentUser: state.currentUser,
+    venues: state.venues
   }
 }
 
