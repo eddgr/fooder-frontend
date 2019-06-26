@@ -15,7 +15,10 @@ export default function Venue(props) {
         Like
       </button>
 
-      <button name="dislike" data-id={id}>Dislike</button>
+      <button
+        onClick={() => props.dislikeVenue(props.venue)}
+        name="dislike"
+        data-id={id}>Dislike</button>
     </div>
   )
 }
