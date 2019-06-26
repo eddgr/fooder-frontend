@@ -36,23 +36,29 @@ class App extends React.Component {
         .then(r => r.json())
     }
 
-    fetch(AUTH_API + '/profile', {
-      method: 'POST',
-      headers: {
-        "Authorization": localStorage.getItem("token")
-      }
-    })
+    // check if logged in
+
+    if (!!localStorage.token) {
+      fetch(AUTH_API + '/profile', {
+        method: 'POST',
+        headers: {
+          "Authorization": localStorage.getItem("token")
+        }
+      })
       .then(r => r.json())
       .then(data => {
-        localStorage.setItem("user_id", data.id)
+        if (!!data.username) {
+          localStorage.setItem("user_id", data.id)
 
-        this.setState({
-          currentUser: data.id,
-          loggedIn: true
-        })
+          this.setState({
+            currentUser: data.id,
+            loggedIn: true
+          })
 
-        this.showChat()
+          this.showChat()
+        }
       })
+    } // end if
   }
 
   // HELPER FUNCTIONS
@@ -149,13 +155,14 @@ class App extends React.Component {
           .then(data => {
             localStorage.setItem('token', data.token)
             localStorage.setItem('user_id', data.id)
+            this.setState({
+              username: '',
+              password: '',
+              loggedIn: true
+            })
+            this.showChat()
           })
 
-        this.setState({
-          username: '',
-          password: '',
-          loggedIn: true
-        })
         break
       default:
         console.log("boop")
@@ -171,6 +178,14 @@ class App extends React.Component {
       default:
         console.log(data)
     }
+  }
+
+  handleLogOut = () => {
+    this.setState({
+      loggedIn: false
+    })
+
+    localStorage.clear()
   }
 
   // end HELPER FUNCTIONS
@@ -193,6 +208,7 @@ class App extends React.Component {
         {
           this.state.loggedIn ?
           <div className="col-6">
+            <button onClick={() => this.handleLogOut()}>Log Out</button>
             <h2>Show message here</h2>
             <div id="chat-box" className="chat-box">
               {this.props.state.messages.map(message => {
