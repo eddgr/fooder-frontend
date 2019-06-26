@@ -20,6 +20,7 @@ class VenueContainer extends React.Component {
         <Venue
           key={venue.id}
           likeVenue={this.props.likeVenue}
+          dislikeVenue={this.props.dislikeVenue}
           venue={venue} />
       )
     })
@@ -50,6 +51,9 @@ const mapDispatchToProps = dispatch => {
     },
     likeVenue: venue => {
       dispatch({ type: 'LIKE_VENUE', venue: venue })
+    },
+    dislikeVenue: venue => {
+      dispatch({ type: 'DISLIKE_VENUE', venue: venue })
     }
   }
 }
