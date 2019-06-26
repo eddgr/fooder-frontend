@@ -12,6 +12,7 @@ code {
     monospace;
 }
 
+/* CUSTOM CSS */
 .chat-box {
   height: 300px;
   overflow: scroll;
