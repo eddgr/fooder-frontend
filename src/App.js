@@ -58,6 +58,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" render={() => this.props.currentUser.loggedIn  ? <MainContainer logOut={this.props.logOut} /> : <SignUpLogIn />} />
             <Route path="/likes" component={LikeContainer} />
+            <Route path="/sandbox" render={routeProps => <SandboxContainer routeProps={routeProps} />} />
           </Switch>
         </div>
 
