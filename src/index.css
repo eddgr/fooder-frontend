@@ -13,7 +13,8 @@ code {
 }
 
 /* CUSTOM CSS */
+
 .chat-box {
-  height: 300px;
-  overflow: scroll;
+  height: calc(100vh - 100px);
+  /* 100px = ~ top + bottom navbars */
 }

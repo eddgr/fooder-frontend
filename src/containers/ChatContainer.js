@@ -2,22 +2,18 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 import { ActionCableConsumer } from 'react-actioncable-provider'
-import { Redirect } from 'react-router-dom'
 
 const BACKEND_API = 'http://localhost:8000/api/v1'
+const moment = require('moment')
 
-class SandboxContainer extends React.Component {
+class ChatContainer extends React.Component {
   state = {
     currentMessage: '',
     loaded: false
   }
 
   componentDidMount() {
-    if (this.props.currentUser.selectedVenue !== '') {
-      this.showChat()
-    } else {
-      this.props.routeProps.history.push('/likes')
-    }
+    this.showChat()
   }
 
   // HELPER FUNCTIONS
@@ -77,62 +73,72 @@ class SandboxContainer extends React.Component {
   }
 
   showCurrentMessages = () => {
-    const sortedMessages = this.props.messages.messages.sort((a, b) => {
+    // checks to see if messages state exist
+    if (this.props.messages.messages) {
+      const sortedMessages = this.props.messages.messages.sort((a, b) => {
 
-      // check to see if message has a create_at date
-      if (a.created_at) {
-        return a.created_at.localeCompare(b.created_at)
-      } else {
-        // if it doesn't exist, return normal array
-        return this.props.messages.messages
-      }
-    })
+        // check to see if message has a create_at date
+        if (a.created_at) {
+          return a.created_at.localeCompare(b.created_at)
+        } else {
+          // if it doesn't exist, return normal array
+          return this.props.messages.messages
+        }
+      })
 
-    return sortedMessages.map(message => {
-      return (<div key={message.id}>
-        <strong>{message.username} {message.created_at}: </strong>
-        {message.content}
-      </div>)
-    })
+      return sortedMessages.map(message => {
+        return (
+          <div key={message.id}>
+            <strong>{message.username} {moment(message.created_at).fromNow()}: </strong>
+            {message.content}
+          </div>
+        )
+      })
+    } else {
+      // if not go back
+      window.history.go(-1)
+    }
   }
 
+  handleGoBack = () => {
+    this.props.routeProps.history.goBack(1)
+    this.props.notInChat()
+  }
   // end HELPER FUNCTIONS
 
   render() {
-    console.log("Sandobx prps", this.props)
+    console.log("ChatContainer props", this.props)
     return (
-      <div className="m-4 row">
-        SandboxContainer
-        <div className="col-6">
-          Current User ID: {this.props.currentUser.id}
-        </div>
+      <div>
+        <ActionCableConsumer
+        channel={{ channel: "ChatThreadChannel", restaurant_id: this.props.currentUser.selectedVenue }}
+        onReceived={data => this.handleReceived(data)} />
 
-        <div className="col-6">
-          <ActionCableConsumer
-          channel={{ channel: "ChatThreadChannel", restaurant_id: this.props.currentUser.selectedVenue }}
-          onReceived={data => this.handleReceived(data)} />
-          <button onClick={() => this.handleLogOut()}>Log Out</button>
-          <h2>Show message here</h2>
-
-          {
-            this.state.loaded ?
-
-            <div id="chat-box" className="chat-box">
+        {
+          this.state.loaded ?
+            <div id="chat-box" className="chat-box overflow-auto">
               {this.showCurrentMessages()}
             </div>
           :
             "Loading"
-          }
-          <h2>Send message here</h2>
-          <form onSubmit={this.handleSubmitMessage}>
+        }
+        <form
+          className="form-inline fixed-bottom"
+          onSubmit={this.handleSubmitMessage}>
+          <div className="input-group w-100">
             <input
+              className="form-control rounded-0"
               onChange={this.handleMessageChange}
               value={this.state.currentMessage}
               type="text" />
-            <input type="submit" />
-          </form>
-        </div>
+            <button
+              className="btn btn-primary rounded-0"
+              type="submit">
+              <i className="fas fa-paper-plane"></i>
+            </button>
+          </div>
 
+        </form>
       </div>
     )
   }
@@ -152,8 +158,11 @@ const mapDispatchToProps = dispatch => {
     },
     loadMessages: messages => {
       dispatch({type: 'LOAD_MESSAGES', payload: messages})
+    },
+    notInChat: () => {
+      dispatch({type: 'NOT_IN_CHAT'})
     }
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SandboxContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);

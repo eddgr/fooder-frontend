@@ -2,11 +2,11 @@ import React from 'react';
 import NavBar from './components/NavBar'
 import MainContainer from './containers/MainContainer'
 import LikeContainer from './containers/LikeContainer'
+import ChatContainer from './containers/ChatContainer'
 import SignUpLogIn from './components/SignUpLogIn'
 import TabbedBar from './components/TabbedBar'
 // import Error from './components/Error'
 
-import SandboxContainer from './containers/SandboxContainer' // storing everything here until App is cleaned up
 
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -15,8 +15,17 @@ const AUTH_API = 'http://localhost:8000'
 
 class App extends React.Component {
   state = {
-    loaded: false
+    loaded: false,
+    loggedIn: false
   }
+
+  setLoggedIn = () => {
+    this.setState({
+      loggedIn: true,
+      loaded: true
+    })
+  }
+
   componentDidMount() {
     let getLoc = () => {
       navigator.geolocation.getCurrentPosition(position => {
@@ -43,7 +52,8 @@ class App extends React.Component {
           this.props.setUser(data)
         }
         this.setState({
-          loaded: true
+          loaded: true,
+          loggedIn: true
         })
       })
     } // end if
@@ -51,18 +61,38 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="row">
-        <NavBar currentUser={this.props.currentUser} />
+      <div>
+      {
+        this.state.loaded ?
+          <>
+            <NavBar
+              notInChat={this.props.notInChat}
+              currentUser={this.props.currentUser} />
 
-        <div className="m-4">
-          <Switch>
-            <Route exact path="/" render={() => this.props.currentUser.loggedIn  ? <MainContainer logOut={this.props.logOut} /> : <SignUpLogIn />} />
-            <Route path="/likes" component={LikeContainer} />
-            <Route path="/sandbox" render={routeProps => <SandboxContainer routeProps={routeProps} />} />
-          </Switch>
-        </div>
+            <div className="container mt-4 mb-4 pt-4 pb-4">
+              <Switch>
+                <Route exact path="/" render={() => this.props.currentUser.loggedIn  ? <MainContainer logOut={this.props.logOut} /> : <SignUpLogIn setLoggedIn={this.setLoggedIn} />} />
+                <Route path="/likes" component={LikeContainer} />
+                <Route path="/chats" render={routeProps => <ChatContainer routeProps={routeProps} />} />
+              </Switch>
+            </div>
 
-        <TabbedBar />
+            {
+              this.props.currentUser.inChat ?
+                null
+              :
+              <TabbedBar />
+            }
+          </>
+        :
+          this.state.loggedIn ?
+            "Loading"
+          :
+            <div className="m-4 p-4 text-center">
+              <h1>fulfilld</h1>
+              <SignUpLogIn setLoggedIn={this.setLoggedIn} />
+            </div>
+      }
       </div>
     );
   }
@@ -81,13 +111,10 @@ const mapDispatchToProps = dispatch => {
     },
     logOut: () => {
       dispatch({ type: 'LOG_OUT' })
+    },
+    notInChat: () => {
+      dispatch({type: 'NOT_IN_CHAT'})
     }
-    // likeVenue: venue => {
-    //   dispatch({ type: 'LIKE_VENUE', venue: venue })
-    // },
-    // dislikeVenue: venue => {
-    //   dispatch({ type: 'DISLIKE_VENUE', venue: venue })
-    // }
   }
 }
 

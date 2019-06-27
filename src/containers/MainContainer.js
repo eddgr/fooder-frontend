@@ -10,7 +10,7 @@ export default function MainContainer(props) {
     // end HELPER FUNCTIONS
 
     return (
-      <div className="m-4">
+      <div>
         <button onClick={() => handleLogOut()}>Log Out</button>
         <VenueContainer />
       </div>
