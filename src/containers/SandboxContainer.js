@@ -95,6 +95,10 @@ class SandboxContainer extends React.Component {
     })
   }
 
+  handleGoBack = () => {
+    this.props.routeProps.history.goBack(1)
+    this.props.notInChat()
+  }
   // end HELPER FUNCTIONS
 
   render() {
@@ -113,6 +117,8 @@ class SandboxContainer extends React.Component {
 
           <h2>Show message here</h2>
 
+          <button onClick={() => this.handleGoBack()}>Back</button>
+
           {
             this.state.loaded ?
 
@@ -122,20 +128,19 @@ class SandboxContainer extends React.Component {
           :
             "Loading"
           }
-          <h2>Send message here</h2>
           <form
-            className="form-inline"
+            className="form-inline fixed-bottom"
             onSubmit={this.handleSubmitMessage}>
             <div className="input-group">
               <input
-                className="form-control"
+                className="form-control rounded-0"
                 onChange={this.handleMessageChange}
                 value={this.state.currentMessage}
                 type="text" />
               <button
-                className="btn btn-primary"
+                className="btn btn-primary rounded-0"
                 type="submit">
-                <i class="fas fa-paper-plane"></i>
+                <i className="fas fa-paper-plane"></i>
               </button>
             </div>
 
@@ -161,6 +166,9 @@ const mapDispatchToProps = dispatch => {
     },
     loadMessages: messages => {
       dispatch({type: 'LOAD_MESSAGES', payload: messages})
+    },
+    notInChat: () => {
+      dispatch({type: 'NOT_IN_CHAT'})
     }
   }
 }

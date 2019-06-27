@@ -1,11 +1,19 @@
 import React from 'react'
 
-import { Link } from 'react-router-dom'
-
 export default function NavBar(props) {
+  const handleGoBack = () => {
+    window.history.go(-1)
+    props.notInChat()
+  }
+
   return (
     <nav className="navbar fixed-top bg-light">
-      <i class="fas fa-search"></i>
+      {
+        props.currentUser.inChat ?
+          <i onClick={() => handleGoBack()} className="fas fa-chevron-left"></i>
+        :
+          <i className="fas fa-search"></i>
+      }
       <b onClick={() => window.scrollTo(0,0)}>fulfilld</b>
       {props.currentUser.username}
     </nav>

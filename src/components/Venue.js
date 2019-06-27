@@ -19,7 +19,7 @@ export default function Venue(props) {
               onClick={(event, venue) => props.handleLikeDislike(event, props.venue)}
               name="dislike"
               data-id={id}>
-              <i class="fas fa-times"></i>
+              <i className="fas fa-times"></i>
             </button>
           </div>
           <div className="col-6">
@@ -28,7 +28,7 @@ export default function Venue(props) {
               onClick={(event, venue) => props.handleLikeDislike(event, props.venue)}
               name="like"
               data-id={id}>
-              <i class="fas fa-heart"></i>
+              <i className="fas fa-heart"></i>
             </button>
           </div>
         </div>

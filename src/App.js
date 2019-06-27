@@ -52,7 +52,9 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <NavBar currentUser={this.props.currentUser} />
+        <NavBar
+          notInChat={this.props.notInChat}
+          currentUser={this.props.currentUser} />
 
         <div className="container mt-4 mb-4 pt-4 pb-4">
           <Switch>
@@ -62,7 +64,12 @@ class App extends React.Component {
           </Switch>
         </div>
 
-        <TabbedBar />
+        {
+          this.props.currentUser.inChat ?
+            null
+          :
+          <TabbedBar />
+        }
       </div>
     );
   }
@@ -81,13 +88,10 @@ const mapDispatchToProps = dispatch => {
     },
     logOut: () => {
       dispatch({ type: 'LOG_OUT' })
+    },
+    notInChat: () => {
+      dispatch({type: 'NOT_IN_CHAT'})
     }
-    // likeVenue: venue => {
-    //   dispatch({ type: 'LIKE_VENUE', venue: venue })
-    // },
-    // dislikeVenue: venue => {
-    //   dispatch({ type: 'DISLIKE_VENUE', venue: venue })
-    // }
   }
 }
 
