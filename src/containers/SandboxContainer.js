@@ -109,7 +109,7 @@ class SandboxContainer extends React.Component {
 
         <div className="col-6">
           <ActionCableConsumer
-          channel={{ channel: "ChatThreadChannel" }}
+          channel={{ channel: "ChatThreadChannel", restaurant_id: this.props.currentUser.selectedVenue }}
           onReceived={data => this.handleReceived(data)} />
           <button onClick={() => this.handleLogOut()}>Log Out</button>
           <h2>Show message here</h2>

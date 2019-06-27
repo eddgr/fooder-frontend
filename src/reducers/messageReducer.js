@@ -13,7 +13,8 @@ const messageReducer = (state=defaultState, action) => {
     case 'SEND_MESSAGE':
       console.log('SEND_MESSAGE action', action)
       console.log('messageReducer state', state)
-      return {messages: [...state.messages, action.payload]}
+      return {
+        messages: [...state.messages, action.payload]}
       // return state
     default:
       return state
