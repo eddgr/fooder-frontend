@@ -1,7 +1,8 @@
 const defaultState = {
   venues: [],
   liked: [],
-  disliked: []
+  disliked: [],
+  loaded: false
 }
 
 const venueReducer = (state=defaultState, action) => {
@@ -36,6 +37,12 @@ const venueReducer = (state=defaultState, action) => {
         ...state,
         venues: filteredDislikedVenue,
         disliked: [...state.disliked, action.venue]
+      }
+
+    case 'INITIAL_LOAD':
+      return {
+        ...state,
+        loaded: true
       }
 
     case 'LOG_OUT':

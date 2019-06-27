@@ -26,6 +26,16 @@ const userReducer = (state=defaultState, action) => {
         liked: [],
         disliked: []
       }
+    case 'LIKE_VENUE':
+      return {
+        ...state,
+        liked: [...state.liked, action.venue]
+      }
+    case 'DISLIKE_VENUE':
+      return {
+        ...state,
+        disliked: [...state.disliked, action.venue]
+      }
     default:
       return state
   }
