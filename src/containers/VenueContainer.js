@@ -20,7 +20,7 @@ class VenueContainer extends React.Component {
       })
       .then(r => r.json())
       .then(data => {
-        const newData = data.filter(venue => !venue.favorites.includes(8))
+        const newData = data.filter(venue => !venue.favorites.includes(this.props.currentUser.id))
         this.props.addVenues(newData)
 
         // if (this.props.currentUser.liked.length > 0) {

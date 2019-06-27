@@ -49,7 +49,8 @@ const venueReducer = (state=defaultState, action) => {
       return {
         ...state,
         liked: [],
-        disliked: []
+        disliked: [],
+        loaded: false
       }
     default:
       return state
