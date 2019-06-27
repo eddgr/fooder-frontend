@@ -87,11 +87,13 @@ class ChatContainer extends React.Component {
       })
 
       return sortedMessages.map(message => {
-        return (<div key={message.id}>
-          <strong>{message.username} {moment(message.created_at).fromNow()}: </strong>
-          {message.content}
-          </div>)
-        })
+        return (
+          <div key={message.id}>
+            <strong>{message.username} {moment(message.created_at).fromNow()}: </strong>
+            {message.content}
+          </div>
+        )
+      })
     } else {
       // if not go back
       window.history.go(-1)
@@ -105,46 +107,38 @@ class ChatContainer extends React.Component {
   // end HELPER FUNCTIONS
 
   render() {
-    console.log("Sandobx prps", this.props)
+    console.log("ChatContainer props", this.props)
     return (
       <div>
-        <h5>
-          Current Restaurant:
-          {this.props.currentUser.selectedVenue}
-        </h5>
+        <ActionCableConsumer
+        channel={{ channel: "ChatThreadChannel", restaurant_id: this.props.currentUser.selectedVenue }}
+        onReceived={data => this.handleReceived(data)} />
 
-        <div>
-          <ActionCableConsumer
-          channel={{ channel: "ChatThreadChannel", restaurant_id: this.props.currentUser.selectedVenue }}
-          onReceived={data => this.handleReceived(data)} />
-
-          {
-            this.state.loaded ?
-              <div id="chat-box" className="chat-box">
-                {this.showCurrentMessages()}
-              </div>
-            :
-              "Loading"
-          }
-          <form
-            className="form-inline fixed-bottom"
-            onSubmit={this.handleSubmitMessage}>
-            <div className="input-group w-100">
-              <input
-                className="form-control rounded-0"
-                onChange={this.handleMessageChange}
-                value={this.state.currentMessage}
-                type="text" />
-              <button
-                className="btn btn-primary rounded-0"
-                type="submit">
-                <i className="fas fa-paper-plane"></i>
-              </button>
+        {
+          this.state.loaded ?
+            <div id="chat-box" className="chat-box overflow-auto">
+              {this.showCurrentMessages()}
             </div>
+          :
+            "Loading"
+        }
+        <form
+          className="form-inline fixed-bottom"
+          onSubmit={this.handleSubmitMessage}>
+          <div className="input-group w-100">
+            <input
+              className="form-control rounded-0"
+              onChange={this.handleMessageChange}
+              value={this.state.currentMessage}
+              type="text" />
+            <button
+              className="btn btn-primary rounded-0"
+              type="submit">
+              <i className="fas fa-paper-plane"></i>
+            </button>
+          </div>
 
-          </form>
-        </div>
-
+        </form>
       </div>
     )
   }
