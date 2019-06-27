@@ -14,11 +14,20 @@ const userReducer = (state=defaultState, action) => {
     case 'SET_USER':
       console.log('SET_USER action.payload', action.payload)
       return {
+        ...state,
         id: action.payload.id,
         username: action.payload.username,
         loggedIn: true,
         liked: action.payload.show_likes,
         disliked: action.payload.show_dislikes
+      }
+    case 'NEW_USER':
+      console.log('SET_USER action.payload', action.payload)
+      return {
+        ...state,
+        id: action.payload.id,
+        username: action.payload.username,
+        loggedIn: true,
       }
     case 'LOG_OUT':
       return {

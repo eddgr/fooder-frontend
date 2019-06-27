@@ -36,13 +36,16 @@ class SignUpLogIn extends React.Component {
           .then(data => {
             localStorage.setItem('token', data.token)
             localStorage.setItem('user_id', data.id)
+
+            this.setState({
+              username: '',
+              password: '',
+            })
+
+            this.props.newUser(data)
+            this.props.setLoggedIn()
           })
         // end fetch
-        this.setState({
-          username: '',
-          password: '',
-        })
-        this.props.setLoggedIn()
         break
       case "login":
         fetch(AUTH_API + '/login', {
@@ -118,6 +121,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setUser: auth => {
       dispatch({ type: 'SET_USER', payload: auth })
+    },
+    newUser: auth => {
+      dispatch({ type: 'NEW_USER', payload: auth })
     }
   }
 }
