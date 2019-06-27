@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 import LikeVenue from '../components/LikeVenue.js'
 
@@ -33,8 +33,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    selectVenue: venueId => {
-      dispatch({ type: 'SELECT_VENUE', venueId: venueId })
+    selectVenue: venue => {
+      dispatch({ type: 'SELECT_VENUE', venue: venue })
     }
   }
 }

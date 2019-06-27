@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Venue(props) {
-  const { id, name, fsq_id, location, categories } = props.venue
+  const { id, name, fsq_id, location, categories, favorites } = props.venue
 
   return (
     <div className="card m-4" data-fsq-id={fsq_id}>
@@ -9,6 +9,12 @@ export default function Venue(props) {
       <div className="card-body">
         <h3 className="card-title">{name}</h3>
 
+        <p className="text-warning">
+          <strong>
+            {favorites.length}
+            <i className="fas fa-users pl-1"></i>
+          </strong>
+        </p>
         <p>{location}</p>
         <p>{categories}</p>
 

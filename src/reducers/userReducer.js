@@ -5,7 +5,10 @@ const defaultState = {
   liked: [],
   disliked: [],
   filtered: false,
-  selectedVenue: '',
+  selectedVenue: {
+    id: '',
+    name: ''
+  },
   inChat: false
 }
 
@@ -50,7 +53,10 @@ const userReducer = (state=defaultState, action) => {
     case 'SELECT_VENUE':
       return {
         ...state,
-        selectedVenue: action.venueId,
+        selectedVenue: {
+          id: action.venue.id,
+          name: action.venue.name
+        },
         inChat: true
       }
     case 'NOT_IN_CHAT':
