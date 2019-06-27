@@ -100,17 +100,17 @@ class SandboxContainer extends React.Component {
   render() {
     console.log("Sandobx prps", this.props)
     return (
-      <div className="m-4 row">
+      <div>
         SandboxContainer
-        <div className="col-6">
+        <div>
           Current User ID: {this.props.currentUser.id}
         </div>
 
-        <div className="col-6">
+        <div>
           <ActionCableConsumer
           channel={{ channel: "ChatThreadChannel", restaurant_id: this.props.currentUser.selectedVenue }}
           onReceived={data => this.handleReceived(data)} />
-          <button onClick={() => this.handleLogOut()}>Log Out</button>
+
           <h2>Show message here</h2>
 
           {
@@ -123,12 +123,22 @@ class SandboxContainer extends React.Component {
             "Loading"
           }
           <h2>Send message here</h2>
-          <form onSubmit={this.handleSubmitMessage}>
-            <input
-              onChange={this.handleMessageChange}
-              value={this.state.currentMessage}
-              type="text" />
-            <input type="submit" />
+          <form
+            className="form-inline"
+            onSubmit={this.handleSubmitMessage}>
+            <div className="input-group">
+              <input
+                className="form-control"
+                onChange={this.handleMessageChange}
+                value={this.state.currentMessage}
+                type="text" />
+              <button
+                className="btn btn-primary"
+                type="submit">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+
           </form>
         </div>
 
