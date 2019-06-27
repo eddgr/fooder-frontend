@@ -6,7 +6,7 @@ export default function TabbedBar() {
   return (
     <div className="fixed-bottom">
       <Link to='/'>Home</Link>
-      <Link to='/sandbox'>Liked</Link>
+      <Link to='/likes'>Likes</Link>
     </div>
   )
 }

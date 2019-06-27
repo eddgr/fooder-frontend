@@ -6,11 +6,22 @@ import Venue from '../components/Venue'
 const BACKEND_API = 'http://localhost:8000/api/v1'
 
 class VenueContainer extends React.Component {
+  state = {
+    loaded: false
+  }
   componentDidMount() {
     fetch(BACKEND_API + '/restaurants')
       .then(r => r.json())
       .then(data => {
         this.props.addVenues(data)
+
+        // if (this.props.currentUser.liked.length > 0) {
+        //   this.props.currentUser.liked.forEach(like => this.props.likeVenue(like))
+        //   this.props.currentUser.disliked.forEach(dislike => this.props.dislikeVenue(dislike))
+        // }
+        this.setState({
+          loaded: true
+        })
       })
   }
 
@@ -72,8 +83,8 @@ class VenueContainer extends React.Component {
     console.log("VenueContainer props", this.props)
     return (
       <div className="m-4">
-        VenueContainer
-        {this.displayVenues()}
+        VenueContainer<br />
+        {this.state.loaded ? this.displayVenues() : "Loading"}
       </div>
     )
   }
