@@ -6,12 +6,33 @@ import Venue from '../components/Venue'
 const BACKEND_API = 'http://localhost:8000/api/v1'
 
 class VenueContainer extends React.Component {
+  // state = {
+  //   loaded: false
+  // }
   componentDidMount() {
-    fetch(BACKEND_API + '/restaurants')
+    if (this.props.venues.loaded) {
+
+    } else {
+      fetch(BACKEND_API + '/restaurants', {
+        headers: {
+          "Authorization": localStorage.getItem('token')
+        }
+      })
       .then(r => r.json())
       .then(data => {
-        this.props.addVenues(data)
-      })
+        const newData = data.filter(venue => !venue.favorites.includes(this.props.currentUser.id))
+        this.props.addVenues(newData)
+
+        // if (this.props.currentUser.liked.length > 0) {
+          //   this.props.currentUser.liked.forEach(like => this.props.likeVenue(like))
+          //   this.props.currentUser.disliked.forEach(dislike => this.props.dislikeVenue(dislike))
+          // }
+          // this.setState({
+          //   loaded: true
+          // })
+          this.props.initialLoad()
+        })
+    }
   }
 
   // HELPER FUNCTIONS
@@ -72,8 +93,8 @@ class VenueContainer extends React.Component {
     console.log("VenueContainer props", this.props)
     return (
       <div className="m-4">
-        VenueContainer
-        {this.displayVenues()}
+        VenueContainer<br />
+        {this.props.venues.loaded ? this.displayVenues() : "Loading"}
       </div>
     )
   }
@@ -97,6 +118,9 @@ const mapDispatchToProps = dispatch => {
     },
     dislikeVenue: venue => {
       dispatch({ type: 'DISLIKE_VENUE', venue: venue })
+    },
+    initialLoad: () => {
+      dispatch({ type: 'INITIAL_LOAD' })
     }
   }
 }

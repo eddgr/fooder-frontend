@@ -1,6 +1,7 @@
 import React from 'react';
 import NavBar from './components/NavBar'
 import MainContainer from './containers/MainContainer'
+import LikeContainer from './containers/LikeContainer'
 import SignUpLogIn from './components/SignUpLogIn'
 import TabbedBar from './components/TabbedBar'
 // import Error from './components/Error'
@@ -13,6 +14,9 @@ import { connect } from 'react-redux'
 const AUTH_API = 'http://localhost:8000'
 
 class App extends React.Component {
+  state = {
+    loaded: false
+  }
   componentDidMount() {
     let getLoc = () => {
       navigator.geolocation.getCurrentPosition(position => {
@@ -38,6 +42,9 @@ class App extends React.Component {
 
           this.props.setUser(data)
         }
+        this.setState({
+          loaded: true
+        })
       })
     } // end if
   } // end componentDidMount
@@ -46,12 +53,14 @@ class App extends React.Component {
     return (
       <div className="row">
         <NavBar currentUser={this.props.currentUser} />
+
         <div className="m-4">
           <Switch>
-            <Route exact path="/" render={() => this.props.currentUser.loggedIn ? <MainContainer logOut={this.props.logOut} /> : <SignUpLogIn />} />
-            <Route path="/sandbox" component={SandboxContainer} />
+            <Route exact path="/" render={() => this.props.currentUser.loggedIn  ? <MainContainer logOut={this.props.logOut} /> : <SignUpLogIn />} />
+            <Route path="/likes" component={LikeContainer} />
           </Switch>
         </div>
+
         <TabbedBar />
       </div>
     );
@@ -72,6 +81,12 @@ const mapDispatchToProps = dispatch => {
     logOut: () => {
       dispatch({ type: 'LOG_OUT' })
     }
+    // likeVenue: venue => {
+    //   dispatch({ type: 'LIKE_VENUE', venue: venue })
+    // },
+    // dislikeVenue: venue => {
+    //   dispatch({ type: 'DISLIKE_VENUE', venue: venue })
+    // }
   }
 }
 

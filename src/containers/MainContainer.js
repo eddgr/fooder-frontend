@@ -8,7 +8,7 @@ export default function MainContainer(props) {
       localStorage.clear()
     }
     // end HELPER FUNCTIONS
-    
+
     return (
       <div className="m-4">
         <button onClick={() => handleLogOut()}>Log Out</button>

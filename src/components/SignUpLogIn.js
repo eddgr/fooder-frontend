@@ -17,15 +17,6 @@ class SignUpLogIn extends React.Component {
     })
   }
 
-  handleLogOut = () => {
-    // change to redux dispatch
-    this.setState({
-      loggedIn: false
-    })
-
-    localStorage.clear()
-  }
-
   handleSubmitAuthForm = event => {
     event.preventDefault()
     switch(event.target.name) {
@@ -50,8 +41,6 @@ class SignUpLogIn extends React.Component {
         this.setState({
           username: '',
           password: '',
-          loggedIn: true
-          // change to redux dispatch
         })
         break
       case "login":
@@ -73,9 +62,6 @@ class SignUpLogIn extends React.Component {
             this.setState({
               username: '',
               password: '',
-              // change to redux dispatch
-              currentUser: data.id,
-              loggedIn: true
             })
             this.props.setUser(data)
           })

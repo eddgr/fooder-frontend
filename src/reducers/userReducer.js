@@ -1,22 +1,40 @@
 const defaultState = {
   id: '',
   username: '',
-  loggedIn: false
+  loggedIn: false,
+  liked: [],
+  disliked: [],
+  filtered: false
 }
 
 const userReducer = (state=defaultState, action) => {
   switch (action.type) {
     case 'SET_USER':
+      console.log('SET_USER action.payload', action.payload)
       return {
         id: action.payload.id,
         username: action.payload.username,
-        loggedIn: true
+        loggedIn: true,
+        liked: action.payload.show_likes,
+        disliked: action.payload.show_dislikes
       }
     case 'LOG_OUT':
       return {
         id: '',
         username: '',
-        loggedIn: false
+        loggedIn: false,
+        liked: [],
+        disliked: []
+      }
+    case 'LIKE_VENUE':
+      return {
+        ...state,
+        liked: [...state.liked, action.venue]
+      }
+    case 'DISLIKE_VENUE':
+      return {
+        ...state,
+        disliked: [...state.disliked, action.venue]
       }
     default:
       return state

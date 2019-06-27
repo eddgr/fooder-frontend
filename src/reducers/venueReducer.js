@@ -1,13 +1,11 @@
 const defaultState = {
   venues: [],
   liked: [],
-  disliked: []
+  disliked: [],
+  loaded: false
 }
 
 const venueReducer = (state=defaultState, action) => {
-  let venuesCopy
-  let filteredVenue
-  
   switch (action.type) {
     case 'ADD_VENUES':
       console.log('venueReducer state', state)
@@ -18,28 +16,41 @@ const venueReducer = (state=defaultState, action) => {
     case 'LIKE_VENUE':
       console.log('LIKE_VENUE action.venue', action.venue)
 
-      venuesCopy = [...state.venues]
-      filteredVenue = venuesCopy.filter(venue => {
+      const filteredLikedVenue = [...state.venues].filter(venue => {
         return venue.id !== action.venue.id
       })
 
       return {
         ...state,
-        venues: filteredVenue,
+        venues: filteredLikedVenue,
         liked: [...state.liked, action.venue]
       }
+
     case 'DISLIKE_VENUE':
       console.log('DISLIKE_VENUE action.venue', action.venue)
 
-      venuesCopy = [...state.venues]
-      filteredVenue = venuesCopy.filter(venue => {
+      const filteredDislikedVenue = [...state.venues].filter(venue => {
         return venue.id !== action.venue.id
       })
 
       return {
         ...state,
-        venues: filteredVenue,
+        venues: filteredDislikedVenue,
         disliked: [...state.disliked, action.venue]
+      }
+
+    case 'INITIAL_LOAD':
+      return {
+        ...state,
+        loaded: true
+      }
+
+    case 'LOG_OUT':
+      return {
+        ...state,
+        liked: [],
+        disliked: [],
+        loaded: false
       }
     default:
       return state
