@@ -15,5 +15,5 @@ code {
 /* CUSTOM CSS */
 .chat-box {
   height: 100vh;
-  overflow: scroll;
+  overflow: auto;
 }

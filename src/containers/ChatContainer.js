@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { ActionCableConsumer } from 'react-actioncable-provider'
 
 const BACKEND_API = 'http://localhost:8000/api/v1'
+const moment = require('moment')
 
 class ChatContainer extends React.Component {
   state = {
@@ -12,11 +13,7 @@ class ChatContainer extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.messages.selectedVenue !== undefined) {
-      this.showChat()
-    } else {
-      this.props.routeProps.history.push('/likes')
-    }
+    this.showChat()
   }
 
   // HELPER FUNCTIONS
@@ -76,23 +73,29 @@ class ChatContainer extends React.Component {
   }
 
   showCurrentMessages = () => {
-    const sortedMessages = this.props.messages.messages.sort((a, b) => {
+    // checks to see if messages state exist
+    if (this.props.messages.messages) {
+      const sortedMessages = this.props.messages.messages.sort((a, b) => {
 
-      // check to see if message has a create_at date
-      if (a.created_at) {
-        return a.created_at.localeCompare(b.created_at)
-      } else {
-        // if it doesn't exist, return normal array
-        return this.props.messages.messages
-      }
-    })
+        // check to see if message has a create_at date
+        if (a.created_at) {
+          return a.created_at.localeCompare(b.created_at)
+        } else {
+          // if it doesn't exist, return normal array
+          return this.props.messages.messages
+        }
+      })
 
-    return sortedMessages.map(message => {
-      return (<div key={message.id}>
-        <strong>{message.username} {message.created_at}: </strong>
-        {message.content}
-      </div>)
-    })
+      return sortedMessages.map(message => {
+        return (<div key={message.id}>
+          <strong>{message.username} {moment(message.created_at).fromNow()}: </strong>
+          {message.content}
+          </div>)
+        })
+    } else {
+      // if not go back
+      window.history.go(-1)
+    }
   }
 
   handleGoBack = () => {
@@ -126,7 +129,7 @@ class ChatContainer extends React.Component {
           <form
             className="form-inline fixed-bottom"
             onSubmit={this.handleSubmitMessage}>
-            <div className="input-group">
+            <div className="input-group w-100">
               <input
                 className="form-control rounded-0"
                 onChange={this.handleMessageChange}
