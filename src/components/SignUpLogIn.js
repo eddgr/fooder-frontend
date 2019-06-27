@@ -77,28 +77,38 @@ class SignUpLogIn extends React.Component {
 
   render() {
     return (
-      <form>
+      <form className="form-group">
         <input
+          className="form-control"
           name="username"
           value={this.state.username}
           onChange={this.handleLoginChange}
           placeholder="username"
           type="text" />
         <input
+          className="form-control"
           name="password"
           value={this.state.password}
           onChange={this.handleLoginChange}
           placeholder="password"
           type="password" />
         <br />
-        <button
-          type="submit"
-          name="signup"
-          onClick={this.handleSubmitAuthForm}>Sign Up</button>
-        <button
-          type="submit"
-          name="login"
-          onClick={this.handleSubmitAuthForm}>Log In</button>
+        <div className="row text-center">
+          <div className="col-6">
+            <button
+              className="btn btn-primary w-100"
+              type="submit"
+              name="signup"
+              onClick={this.handleSubmitAuthForm}>Sign Up</button>
+          </div>
+          <div className="col-6">
+            <button
+              className="btn btn-primary w-100"
+              type="submit"
+              name="login"
+              onClick={this.handleSubmitAuthForm}>Log In</button>
+          </div>
+        </div>
       </form>
     )
   }

@@ -88,7 +88,10 @@ class App extends React.Component {
           this.state.loggedIn ?
             "Loading"
           :
-            <SignUpLogIn setLoggedIn={this.setLoggedIn} />
+            <div className="m-4 p-4 text-center">
+              <h1>fulfilld</h1>
+              <SignUpLogIn setLoggedIn={this.setLoggedIn} />
+            </div>
       }
       </div>
     );
