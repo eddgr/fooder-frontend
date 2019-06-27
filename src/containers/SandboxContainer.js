@@ -2,7 +2,6 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 import { ActionCableConsumer } from 'react-actioncable-provider'
-import { Redirect } from 'react-router-dom'
 
 const BACKEND_API = 'http://localhost:8000/api/v1'
 

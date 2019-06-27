@@ -6,9 +6,6 @@ import Venue from '../components/Venue'
 const BACKEND_API = 'http://localhost:8000/api/v1'
 
 class VenueContainer extends React.Component {
-  // state = {
-  //   loaded: false
-  // }
   componentDidMount() {
     if (this.props.venues.loaded) {
 
@@ -21,16 +18,10 @@ class VenueContainer extends React.Component {
       .then(r => r.json())
       .then(data => {
         const newData = data.filter(venue => !venue.favorites.includes(this.props.currentUser.id))
+
         this.props.addVenues(newData)
 
-        // if (this.props.currentUser.liked.length > 0) {
-          //   this.props.currentUser.liked.forEach(like => this.props.likeVenue(like))
-          //   this.props.currentUser.disliked.forEach(dislike => this.props.dislikeVenue(dislike))
-          // }
-          // this.setState({
-          //   loaded: true
-          // })
-          this.props.initialLoad()
+        this.props.initialLoad()
         })
     }
   }

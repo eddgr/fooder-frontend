@@ -51,10 +51,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="row">
+      <div>
         <NavBar currentUser={this.props.currentUser} />
 
-        <div className="m-4">
+        <div className="container mt-4 mb-4 pt-4 pb-4">
           <Switch>
             <Route exact path="/" render={() => this.props.currentUser.loggedIn  ? <MainContainer logOut={this.props.logOut} /> : <SignUpLogIn />} />
             <Route path="/likes" component={LikeContainer} />
