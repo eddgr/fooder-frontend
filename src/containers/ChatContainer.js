@@ -12,7 +12,7 @@ class ChatContainer extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.currentUser.selectedVenue !== '') {
+    if (this.props.messages.selectedVenue !== undefined) {
       this.showChat()
     } else {
       this.props.routeProps.history.push('/likes')
@@ -117,12 +117,11 @@ class ChatContainer extends React.Component {
 
           {
             this.state.loaded ?
-
-            <div id="chat-box" className="chat-box">
-              {this.showCurrentMessages()}
-            </div>
-          :
-            "Loading"
+              <div id="chat-box" className="chat-box">
+                {this.showCurrentMessages()}
+              </div>
+            :
+              "Loading"
           }
           <form
             className="form-inline fixed-bottom"
