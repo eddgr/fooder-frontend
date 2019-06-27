@@ -10,18 +10,20 @@ export default function NavBar(props) {
     <nav className="navbar fixed-top bg-light">
       {
         props.currentUser.inChat ?
-          <i onClick={() => handleGoBack()} className="fas fa-chevron-left"></i>
+          <>
+            <i onClick={() => handleGoBack()} className="fas fa-chevron-left"></i>
+            <b onClick={() => document.querySelector("#chat-box").scrollTo(0,0)}>
+              {props.currentUser.selectedVenue.name}
+            </b>
+          </>
         :
-          <i className="fas fa-search"></i>
+          <>
+            <i className="fas fa-search"></i>
+            <b onClick={() => window.scrollTo(0,0)}>
+              fulfilld
+            </b>
+          </>
       }
-      <b onClick={() => window.scrollTo(0,0)}>
-        {
-          props.currentUser.inChat ?
-            props.currentUser.selectedVenue.name
-          :
-            "fulfilld"
-        }
-      </b>
       {props.currentUser.username}
     </nav>
   )
