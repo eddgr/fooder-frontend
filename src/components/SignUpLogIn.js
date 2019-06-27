@@ -42,6 +42,7 @@ class SignUpLogIn extends React.Component {
           username: '',
           password: '',
         })
+        this.props.setLoggedIn()
         break
       case "login":
         fetch(AUTH_API + '/login', {
@@ -64,6 +65,7 @@ class SignUpLogIn extends React.Component {
               password: '',
             })
             this.props.setUser(data)
+            this.props.setLoggedIn()
           })
         // end fetch
         break

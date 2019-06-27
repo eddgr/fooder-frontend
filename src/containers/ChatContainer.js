@@ -5,7 +5,7 @@ import { ActionCableConsumer } from 'react-actioncable-provider'
 
 const BACKEND_API = 'http://localhost:8000/api/v1'
 
-class SandboxContainer extends React.Component {
+class ChatContainer extends React.Component {
   state = {
     currentMessage: '',
     loaded: false
@@ -105,19 +105,15 @@ class SandboxContainer extends React.Component {
     console.log("Sandobx prps", this.props)
     return (
       <div>
-        SandboxContainer
-        <div>
-          Current User ID: {this.props.currentUser.id}
-        </div>
+        <h5>
+          Current Restaurant:
+          {this.props.currentUser.selectedVenue}
+        </h5>
 
         <div>
           <ActionCableConsumer
           channel={{ channel: "ChatThreadChannel", restaurant_id: this.props.currentUser.selectedVenue }}
           onReceived={data => this.handleReceived(data)} />
-
-          <h2>Show message here</h2>
-
-          <button onClick={() => this.handleGoBack()}>Back</button>
 
           {
             this.state.loaded ?
@@ -173,4 +169,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SandboxContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);
