@@ -14,7 +14,7 @@ export default function LikeVenue(props) {
           <div className="card-body">
             <h3 className="card-title">
               <Link
-            onClick={() => props.selectVenue(props.like.id)}
+            onClick={() => props.selectVenue(props.like)}
             to='/chats'
             id={props.like.id}>
                 {props.like.name}

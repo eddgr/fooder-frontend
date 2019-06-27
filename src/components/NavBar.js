@@ -14,7 +14,14 @@ export default function NavBar(props) {
         :
           <i className="fas fa-search"></i>
       }
-      <b onClick={() => window.scrollTo(0,0)}>fulfilld</b>
+      <b onClick={() => window.scrollTo(0,0)}>
+        {
+          props.currentUser.inChat ?
+            props.currentUser.selectedVenue.name
+          :
+            "fulfilld"
+        }
+      </b>
       {props.currentUser.username}
     </nav>
   )

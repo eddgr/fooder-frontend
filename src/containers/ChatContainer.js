@@ -18,7 +18,7 @@ class ChatContainer extends React.Component {
 
   // HELPER FUNCTIONS
   showChat = () => {
-    return fetch(BACKEND_API + `/restaurants/${this.props.currentUser.selectedVenue}`)
+    return fetch(BACKEND_API + `/restaurants/${this.props.currentUser.selectedVenue.id}`)
       .then(r => r.json())
       .then(data => {
         this.props.loadMessages(data)
@@ -41,7 +41,7 @@ class ChatContainer extends React.Component {
       },
       body: JSON.stringify({
         user_id: this.props.currentUser.id,
-        restaurant_id: this.props.currentUser.selectedVenue,
+        restaurant_id: this.props.currentUser.selectedVenue.id,
         content: this.state.currentMessage
       })
     })
@@ -111,7 +111,7 @@ class ChatContainer extends React.Component {
     return (
       <div>
         <ActionCableConsumer
-        channel={{ channel: "ChatThreadChannel", restaurant_id: this.props.currentUser.selectedVenue }}
+        channel={{ channel: "ChatThreadChannel", restaurant_id: this.props.currentUser.selectedVenue.id }}
         onReceived={data => this.handleReceived(data)} />
 
         {
