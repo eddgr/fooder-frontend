@@ -2,72 +2,31 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 import { ActionCableConsumer } from 'react-actioncable-provider'
+import { Redirect } from 'react-router-dom'
 
-import { API_SECRET } from '../api'
-const AUTH_API = 'http://localhost:8000'
 const BACKEND_API = 'http://localhost:8000/api/v1'
 
 class SandboxContainer extends React.Component {
   state = {
-    venues: [], // move to redux
-    on: false,
-
-    currentUser: '',
-    currentVenue: 63,
     currentMessage: '',
-
-    username: '',
-    password: '',
-    loggedIn: false
+    loaded: false
   }
 
   componentDidMount() {
-    let getLoc = () => {
-      navigator.geolocation.getCurrentPosition(position => {
-        localStorage.setItem('lat', position.coords.latitude)
-        localStorage.setItem('long', position.coords.longitude)
-      })
+    if (this.props.currentUser.selectedVenue !== '') {
+      this.showChat()
+    } else {
+      this.props.routeProps.history.push('/likes')
     }
-
-    getLoc()
-
-    if (localStorage.lat && localStorage.long && this.state.on) {
-      fetch(`https://api.foursquare.com/v2/venues/explore?section=food&ll=${localStorage.getItem('lat')},${localStorage.getItem('long')}&client_id=${API_SECRET.id}&client_secret=${API_SECRET.secret}&v=${API_SECRET.version}`)
-        .then(r => r.json())
-    }
-
-    // check if logged in
-
-    if (!!localStorage.token) {
-      fetch(AUTH_API + '/profile', {
-        method: 'POST',
-        headers: {
-          "Authorization": localStorage.getItem("token")
-        }
-      })
-      .then(r => r.json())
-      .then(data => {
-        if (!!data.username) {
-          localStorage.setItem("user_id", data.id)
-
-          this.setState({
-            currentUser: data.id,
-            loggedIn: true
-          })
-
-          this.showChat()
-        }
-      })
-    } // end if
-  } // end componentDidMount
+  }
 
   // HELPER FUNCTIONS
-
   showChat = () => {
-    return fetch(BACKEND_API + `/restaurants/${this.state.currentVenue}`)
+    return fetch(BACKEND_API + `/restaurants/${this.props.currentUser.selectedVenue}`)
       .then(r => r.json())
       .then(data => {
         this.props.loadMessages(data)
+        this.setState({ loaded: true })
         this.scrollToBottom()
       })
   }
@@ -85,8 +44,8 @@ class SandboxContainer extends React.Component {
         Accept: "application/json"
       },
       body: JSON.stringify({
-        user_id: this.state.currentUser,
-        restaurant_id: this.state.currentVenue,
+        user_id: this.props.currentUser.id,
+        restaurant_id: this.props.currentUser.selectedVenue,
         content: this.state.currentMessage
       })
     })
@@ -98,76 +57,12 @@ class SandboxContainer extends React.Component {
     })
   }
 
-  handleLoginChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
-  }
-
   handleSubmitMessage = event => {
     event.preventDefault()
     this.sendMessage()
     this.setState({
       currentMessage: ''
     })
-  }
-
-  handleSubmitAuthForm = event => {
-    event.preventDefault()
-    switch(event.target.name) {
-      case "signup":
-        fetch(BACKEND_API + '/users', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-          },
-          body: JSON.stringify({
-            username: this.state.username,
-            password: this.state.password
-          })
-        })
-          .then(r => r.json())
-          .then(data => {
-            localStorage.setItem('token', data.token)
-            localStorage.setItem('user_id', data.id)
-          })
-
-        this.setState({
-          username: '',
-          password: '',
-          loggedIn: true
-        })
-        break
-      case "login":
-        fetch(AUTH_API + '/login', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-          },
-          body: JSON.stringify({
-            username: this.state.username,
-            password: this.state.password
-          })
-        })
-          .then(r => r.json())
-          .then(data => {
-            localStorage.setItem('token', data.token)
-            localStorage.setItem('user_id', data.id)
-            this.setState({
-              currentUser: data.id,
-              username: '',
-              password: '',
-              loggedIn: true
-            })
-            this.showChat()
-          })
-
-        break
-      default:
-        console.log("boop")
-    }
   }
 
   handleReceived = data => {
@@ -181,75 +76,63 @@ class SandboxContainer extends React.Component {
     }
   }
 
-  handleLogOut = () => {
-    this.setState({
-      loggedIn: false
+  showCurrentMessages = () => {
+    const sortedMessages = this.props.messages.messages.sort((a, b) => {
+
+      // check to see if message has a create_at date
+      if (a.created_at) {
+        return a.created_at.localeCompare(b.created_at)
+      } else {
+        // if it doesn't exist, return normal array
+        return this.props.messages.messages
+      }
     })
 
-    localStorage.clear()
+    return sortedMessages.map(message => {
+      return (<div key={message.id}>
+        <strong>{message.username} {message.created_at}: </strong>
+        {message.content}
+      </div>)
+    })
   }
 
   // end HELPER FUNCTIONS
 
   render() {
+    console.log("Sandobx prps", this.props)
     return (
       <div className="m-4 row">
         SandboxContainer
         <div className="col-6">
-          Current User ID: {localStorage.getItem('user_id')}
-          <br />
-          Venues: {this.state.venues.length}
+          Current User ID: {this.props.currentUser.id}
         </div>
-        {
-          this.state.loggedIn ?
-          <div className="col-6">
-            <ActionCableConsumer
-            channel={{ channel: "ChatThreadChannel" }}
-            onReceived={data => this.handleReceived(data)} />
-            <button onClick={() => this.handleLogOut()}>Log Out</button>
-            <h2>Show message here</h2>
+
+        <div className="col-6">
+          <ActionCableConsumer
+          channel={{ channel: "ChatThreadChannel", restaurant_id: this.props.currentUser.selectedVenue }}
+          onReceived={data => this.handleReceived(data)} />
+          <button onClick={() => this.handleLogOut()}>Log Out</button>
+          <h2>Show message here</h2>
+
+          {
+            this.state.loaded ?
+
             <div id="chat-box" className="chat-box">
-              {this.props.state.messages.map(message => {
-                return (<div key={message.id}>
-                  <strong>{message.username} {message.created_at}: </strong>
-                  {message.content}
-                </div>)
-              })}
+              {this.showCurrentMessages()}
             </div>
-            <h2>Send message here</h2>
-            <form onSubmit={this.handleSubmitMessage}>
-              <input
-                onChange={this.handleMessageChange}
-                value={this.state.currentMessage}
-                type="text" />
-              <input type="submit" />
-            </form>
-          </div>
           :
-          <form>
+            "Loading"
+          }
+          <h2>Send message here</h2>
+          <form onSubmit={this.handleSubmitMessage}>
             <input
-              name="username"
-              value={this.state.username}
-              onChange={this.handleLoginChange}
-              placeholder="username"
+              onChange={this.handleMessageChange}
+              value={this.state.currentMessage}
               type="text" />
-            <input
-              name="password"
-              value={this.state.password}
-              onChange={this.handleLoginChange}
-              placeholder="password"
-              type="password" />
-            <br />
-            <button
-              type="submit"
-              name="signup"
-              onClick={this.handleSubmitAuthForm}>Sign Up</button>
-            <button
-              type="submit"
-              name="login"
-              onClick={this.handleSubmitAuthForm}>Log In</button>
+            <input type="submit" />
           </form>
-        }
+        </div>
+
       </div>
     )
   }
@@ -257,7 +140,8 @@ class SandboxContainer extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    state: state.messages
+    messages: state.messages,
+    currentUser: state.currentUser
   }
 }
 
