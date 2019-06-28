@@ -32,6 +32,12 @@ export default function Venue(props) {
       <img src="..." className="card-img-top" alt="..." />
       <div className="card-body">
         <h3 className="card-title text-center">{name}</h3>
+          <p className="text-center text-black-50">
+            <strong>
+              <i className="fas fa-utensils pr-1"></i>
+              {categories}
+            </strong>
+          </p>
         <div className="row mb-3">
           <span className="text-warning text-center col-6">
             <strong>
@@ -46,8 +52,8 @@ export default function Venue(props) {
             </strong>
           </span>
         </div>
+
         <p>{location}</p>
-        <p>{categories}</p>
 
         <div className="row justify-content-center text-center">
           <div className="col-6">
