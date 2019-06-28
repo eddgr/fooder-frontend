@@ -106,7 +106,7 @@ class ChatContainer extends React.Component {
               :
                 <div className="mr-0 ml-0 mt-2 mb-2" key={message.id}>
 
-                  <p>
+                  <p className="mb-0 pl-1">
                     <strong>
                       {message.username}
                     </strong>
