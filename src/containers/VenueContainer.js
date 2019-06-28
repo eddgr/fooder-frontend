@@ -5,6 +5,7 @@ import Venue from '../components/Venue'
 
 const BACKEND_API = 'http://localhost:8000/api/v1'
 
+
 class VenueContainer extends React.Component {
   componentDidMount() {
     if (this.props.venues.loaded) {
@@ -61,18 +62,20 @@ class VenueContainer extends React.Component {
 
   // HELPER FUNCTIONS
   displayVenues = () => {
-    return this.props.venues.venues.map(venue => {
-      return (
-        <Venue
-          userLat={this.props.currentUser.location.lat}
-          userLong={this.props.currentUser.location.long}
-          key={venue.id}
-          handleLikeDislike={this.handleLikeDislike}
-          likeVenue={this.props.likeVenue}
-          dislikeVenue={this.props.dislikeVenue}
-          venue={venue} />
-      )
-    })
+    return (
+      this.props.venues.venues.map(venue => {
+        return (
+          <Venue
+            userLat={this.props.currentUser.location.lat}
+            userLong={this.props.currentUser.location.long}
+            key={venue.id}
+            handleLikeDislike={this.handleLikeDislike}
+            likeVenue={this.props.likeVenue}
+            dislikeVenue={this.props.dislikeVenue}
+            venue={venue} />
+        )
+      })
+    )
   }
 
   handleLikeDislike = (event, venue) => {

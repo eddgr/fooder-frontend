@@ -83,10 +83,10 @@ const userReducer = (state=defaultState, action) => {
         ...state,
         inChat: false
       }
-    case 'SEND_MESSAGE':
+    case 'SEND_MESSAGES':
       console.log('userReducer SEND_MESSAGE action', action.payload)
       // filter out liked venue
-      const filterSelectedRest = state.liked.filter(rest => rest.id === state.selectedVenue.id)[0]
+      const filterSelectedRest = state.liked.filter(rest => rest.id === state.selectedVenue.id)
 
       // then add action.payload to liked.messages array
      filterSelectedRest.messages.push(action.payload)
