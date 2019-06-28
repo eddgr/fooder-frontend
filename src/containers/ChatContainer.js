@@ -84,14 +84,48 @@ class ChatContainer extends React.Component {
           // if it doesn't exist, return normal array
           return this.props.messages.messages
         }
-      })
+      }) // end sortedMessages
 
       return sortedMessages.map(message => {
         return (
-          <div key={message.id}>
-            <strong>{message.username} {moment(message.created_at).fromNow()}: </strong>
-            {message.content}
-          </div>
+          <>
+            {
+              this.props.currentUser.username === message.username ?
+                <div className="text-right mr-0 ml-0 mt-2 mb-2" key={message.id}>
+
+                  <p className="text-left d-inline-block mb-0 flex p-2 pr-3 pl-3 bg-primary rounded-lg text-white">
+                    {message.content}
+                  </p>
+                  <p className="text-black-50 pr-1">
+                    <small>
+                      {moment(message.created_at).fromNow()}
+                    </small>
+                  </p>
+
+                </div>
+              :
+                <div className="mr-0 ml-0 mt-2 mb-2" key={message.id}>
+
+                  <p>
+                    <strong>
+                      {message.username}
+                    </strong>
+                  </p>
+
+                  <div>
+                    <p className="d-inline-block p-2 pr-3 pl-3 mb-0 bg-light rounded-lg text-dark">
+                      {message.content}
+                    </p>
+                    <p className="pl-1 text-black-50">
+                      <small>
+                        {moment(message.created_at).fromNow()}
+                      </small>
+                    </p>
+                  </div>
+
+                </div>
+              }
+          </>
         )
       })
     } else {
