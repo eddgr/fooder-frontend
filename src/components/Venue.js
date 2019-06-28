@@ -30,22 +30,22 @@ export default function Venue(props) {
   return (
     <div className="card m-4" data-fsq-id={fsq_id}>
       <img src="..." className="card-img-top" alt="..." />
-      <div className="card-body">
-        <h3 className="card-title text-center">{name}</h3>
-          <p className="text-center text-black-50">
+      <div className="card-body text-center">
+        <h3 className="card-title">{name}</h3>
+          <p className="text-black-50">
             <strong>
               <i className="fas fa-utensils pr-1"></i>
               {categories}
             </strong>
           </p>
         <div className="row mb-3">
-          <span className="text-warning text-center col-6">
+          <span className="text-warning col-6">
             <strong>
               {favorites.length}
               <i className="fas fa-users pl-1"></i>
             </strong>
           </span>
-          <span className="text-info text-center col-6">
+          <span className="text-info col-6">
             <strong>
               <i className="fas fa-map-pin pr-1"></i>
               {parseFloat(distance(props.userLat, props.userLong, lat, long)).toFixed(2)}m
@@ -53,7 +53,11 @@ export default function Venue(props) {
           </span>
         </div>
 
-        <p>{location}</p>
+        <p className="text-black-50">
+          <small>
+            {location}
+          </small>
+        </p>
 
         <div className="row justify-content-center text-center">
           <div className="col-6">
