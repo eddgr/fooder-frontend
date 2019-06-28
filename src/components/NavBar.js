@@ -15,6 +15,7 @@ export default function NavBar(props) {
             <b onClick={() => document.querySelector("#chat-box").scrollTo(0,0)}>
               {props.currentUser.selectedVenue.name}
             </b>
+            <i className="fas fa-info-circle"></i>
           </>
         :
           <>
@@ -22,9 +23,9 @@ export default function NavBar(props) {
             <b onClick={() => window.scrollTo(0,0)}>
               fulfilld
             </b>
+            {props.currentUser.username}
           </>
       }
-      {props.currentUser.username}
     </nav>
   )
 }

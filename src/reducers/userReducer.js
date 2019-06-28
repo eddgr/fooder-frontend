@@ -59,7 +59,10 @@ const userReducer = (state=defaultState, action) => {
     case 'LIKE_VENUE':
       return {
         ...state,
-        liked: [...state.liked, action.venue]
+        liked: [...state.liked, {
+          ...action.venue,
+          favorites: [...action.venue.favorites, state.id]
+        }]
       }
     case 'DISLIKE_VENUE':
       return {

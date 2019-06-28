@@ -76,7 +76,7 @@ class VenueContainer extends React.Component {
   }
 
   handleLikeDislike = (event, venue) => {
-    switch(event.target.name) {
+    switch(event.currentTarget.name) {
       case "like":
         console.log("like")
         fetch(BACKEND_API + '/favorites', {
