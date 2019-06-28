@@ -10,7 +10,14 @@ export default function LikeVenue(props) {
       const lastMessage = props.like.messages.slice(-1)
       return (
         <>
-          <strong>{lastMessage[0].user_name}</strong>
+          <strong>
+            {
+              lastMessage[0].user_name ?
+                lastMessage[0].user_name
+              :
+                lastMessage[0].username
+            }
+          </strong>
           <br />
           {lastMessage[0].content.substring(0, 20)}
           {lastMessage[0].content.length > 20 ? "..." : null}
