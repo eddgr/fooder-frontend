@@ -29,7 +29,9 @@ class SignUpLogIn extends React.Component {
           },
           body: JSON.stringify({
             username: this.state.username,
-            password: this.state.password
+            password: this.state.password,
+            lat: localStorage.getItem("lat"),
+            long: localStorage.getItem("long")
           })
         })
           .then(r => r.json())
@@ -56,7 +58,9 @@ class SignUpLogIn extends React.Component {
           },
           body: JSON.stringify({
             username: this.state.username,
-            password: this.state.password
+            password: this.state.password,
+            lat: localStorage.getItem("lat"),
+            long: localStorage.getItem("long")
           })
         })
           .then(r => r.json())

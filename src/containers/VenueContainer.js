@@ -31,6 +31,8 @@ class VenueContainer extends React.Component {
     return this.props.venues.venues.map(venue => {
       return (
         <Venue
+          userLat={this.props.currentUser.location.lat}
+          userLong={this.props.currentUser.location.long}
           key={venue.id}
           handleLikeDislike={this.handleLikeDislike}
           likeVenue={this.props.likeVenue}

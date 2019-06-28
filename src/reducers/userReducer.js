@@ -9,7 +9,11 @@ const defaultState = {
     id: '',
     name: ''
   },
-  inChat: false
+  inChat: false,
+  location: {
+    lat: '',
+    long: ''
+  }
 }
 
 const userReducer = (state=defaultState, action) => {
@@ -22,15 +26,23 @@ const userReducer = (state=defaultState, action) => {
         username: action.payload.username,
         loggedIn: true,
         liked: action.payload.show_likes,
-        disliked: action.payload.show_dislikes
+        disliked: action.payload.show_dislikes,
+        location: {
+          lat: action.payload.lat,
+          long: action.payload.long
+        }
       }
     case 'NEW_USER':
-      console.log('SET_USER action.payload', action.payload)
+      console.log('NEW_USER action.payload', action.payload)
       return {
         ...state,
         id: action.payload.id,
         username: action.payload.username,
         loggedIn: true,
+        location: {
+          lat: action.payload.lat,
+          long: action.payload.long
+        }
       }
     case 'LOG_OUT':
       return {
@@ -38,7 +50,11 @@ const userReducer = (state=defaultState, action) => {
         username: '',
         loggedIn: false,
         liked: [],
-        disliked: []
+        disliked: [],
+        location: {
+          lat: '',
+          long: ''
+        }
       }
     case 'LIKE_VENUE':
       return {
