@@ -41,8 +41,14 @@ class App extends React.Component {
       fetch(AUTH_API + '/profile', {
         method: 'POST',
         headers: {
-          "Authorization": localStorage.getItem("token")
-        }
+          "Authorization": localStorage.getItem("token"),
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          lat: localStorage.getItem("lat"),
+          long: localStorage.getItem("long")
+        })
       })
       .then(r => r.json())
       .then(data => {
