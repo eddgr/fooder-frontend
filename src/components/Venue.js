@@ -1,4 +1,5 @@
 import React from 'react'
+import Cards, { Card } from 'react-swipe-card'
 
 export default function Venue(props) {
   const { id, name, fsq_id, location, categories, favorites, lat, long } = props.venue
@@ -48,7 +49,7 @@ export default function Venue(props) {
           <span className="text-info col-6">
             <strong>
               <i className="fas fa-map-pin pr-1"></i>
-              {parseFloat(distance(props.userLat, props.userLong, lat, long)).toFixed(2)}m
+              {parseFloat(distance(props.userLat, props.userLong, lat, long)).toFixed(2)} mi
             </strong>
           </span>
         </div>

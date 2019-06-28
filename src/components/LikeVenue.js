@@ -3,9 +3,35 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function LikeVenue(props) {
+  const moment = require('moment')
+
+  const latestMessage = () => {
+    if (props.like.messages.length > 0) {
+      const lastMessage = props.like.messages.slice(-1)
+      return (
+        <>
+          <strong>
+            {
+              lastMessage[0].user_name ?
+                lastMessage[0].user_name
+              :
+                lastMessage[0].username
+            }
+          </strong>
+          <br />
+          {lastMessage[0].content.substring(0, 20)}
+          {lastMessage[0].content.length > 20 ? "..." : null}
+          <br />
+          <small><em>
+            {moment(lastMessage[0].created_at).fromNow()}
+          </em></small>
+        </>
+      )
+    }
+  }
 
   return (
-    <div className="card m-4">
+    <div className="card rounded-0 mt-2 mb-2">
       <div className="row no-gutters">
         <div className="col-4">
           <img src="..." className="card-img" alt="..." />
@@ -13,23 +39,29 @@ export default function LikeVenue(props) {
 
         <div className="col-8">
           <div className="card-body">
-            <h3 className="card-title">
-              <Link
-            onClick={() => props.selectVenue(props.like)}
-            to='/chats'
-            id={props.like.id}>
-                {props.like.name}
-              </Link>
-            </h3>
+            <div className="row card-title">
+              <span className="col-8">
+                <Link
+                  className="font-weight-bold"
+                  onClick={() => props.selectVenue(props.like)}
+                  to='/chats'
+                  id={props.like.id}>
+                  {props.like.name.substring(0,10)}
+                  {props.like.name.length > 10 ? '...' : null}
+                </Link>
+              </span>
 
-            <p className="text-warning">
-              <strong>
-                {props.like.favorites.length}
-                <i className="fas fa-users pl-1"></i>
-              </strong>
-            </p>
-            <p>{props.like.categories}</p>
-            <p>{props.like.location}</p>
+              <span className="col-4 text-warning text-right">
+                <strong>
+                  {props.like.favorites.length}
+                  <i className="fas fa-users pl-1"></i>
+                </strong>
+              </span>
+            </div>
+
+            <div className="text-black-50">
+              {latestMessage()}
+            </div>
           </div>
         </div>
       </div>

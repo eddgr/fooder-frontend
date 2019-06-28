@@ -1,7 +1,5 @@
 const defaultState = {
   venues: [],
-  liked: [],
-  disliked: [],
   loaded: false
 }
 
@@ -22,8 +20,7 @@ const venueReducer = (state=defaultState, action) => {
 
       return {
         ...state,
-        venues: filteredLikedVenue,
-        liked: [...state.liked, action.venue]
+        venues: filteredLikedVenue
       }
 
     case 'DISLIKE_VENUE':
@@ -35,8 +32,7 @@ const venueReducer = (state=defaultState, action) => {
 
       return {
         ...state,
-        venues: filteredDislikedVenue,
-        disliked: [...state.disliked, action.venue]
+        venues: filteredDislikedVenue
       }
 
     case 'INITIAL_LOAD':

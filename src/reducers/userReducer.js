@@ -59,7 +59,10 @@ const userReducer = (state=defaultState, action) => {
     case 'LIKE_VENUE':
       return {
         ...state,
-        liked: [...state.liked, action.venue]
+        liked: [...state.liked, {
+          ...action.venue,
+          favorites: [...action.venue.favorites, state.id]
+        }]
       }
     case 'DISLIKE_VENUE':
       return {
@@ -79,6 +82,23 @@ const userReducer = (state=defaultState, action) => {
       return {
         ...state,
         inChat: false
+      }
+    case 'SEND_MESSAGES':
+      console.log('userReducer SEND_MESSAGE action', action.payload)
+      // filter out liked venue
+      const filterSelectedRest = state.liked.filter(rest => rest.id === state.selectedVenue.id)
+
+      // then add action.payload to liked.messages array
+     filterSelectedRest.messages.push(action.payload)
+
+      // find index of filtered rest
+      const stateLikedCopy = [...state.liked]
+      // splice to add it back in
+      stateLikedCopy.splice(stateLikedCopy.findIndex(rest => rest === filterSelectedRest), 1, filterSelectedRest)
+
+      return {
+        ...state,
+        liked: stateLikedCopy
       }
     default:
       return state

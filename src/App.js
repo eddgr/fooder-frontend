@@ -57,10 +57,7 @@ class App extends React.Component {
 
           this.props.setUser(data)
         }
-        this.setState({
-          loaded: true,
-          loggedIn: true
-        })
+        this.setLoggedIn()
       })
     } // end if
   } // end componentDidMount
