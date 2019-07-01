@@ -6,7 +6,12 @@ import LikeVenue from '../components/LikeVenue.js'
 
 class LikeContainer extends React.Component {
   showLikes = () => {
-    return this.props.likes.map(like => {
+    const sortByMessage = this.props.likes.sort((a,b) => {
+      return b.updated_at.localeCompare(a.updated_at)
+    })
+
+    // debugger
+    return sortByMessage.map(like => {
       return (
         <LikeVenue
           key={like.id}
@@ -16,6 +21,17 @@ class LikeContainer extends React.Component {
       )
     })
   }
+  // showLikes = () => {
+  //   return this.props.likes.map(like => {
+  //     return (
+  //       <LikeVenue
+  //         key={like.id}
+  //         like={like}
+  //         updateMessages={this.props.updateMessages}
+  //         selectVenue={this.props.selectVenue} />
+  //     )
+  //   })
+  // }
 
   render() {
     return (

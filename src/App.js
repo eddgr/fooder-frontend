@@ -92,7 +92,7 @@ class App extends React.Component {
             "Loading"
           :
             <div className="m-4 p-4 text-center">
-              <h1>fulfilld</h1>
+              <h1>fooder</h1>
               <SignUpLogIn setLoggedIn={this.setLoggedIn} />
             </div>
       }

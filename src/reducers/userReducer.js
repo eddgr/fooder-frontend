@@ -83,23 +83,6 @@ const userReducer = (state=defaultState, action) => {
         ...state,
         inChat: false
       }
-    // case 'SEND_MESSAGES':
-    //   console.log('userReducer SEND_MESSAGE action', action.payload)
-    //   // filter out liked venue
-    //   const filterSelectedRest = state.liked.filter(rest => rest.id === state.selectedVenue.id)
-    //
-    //   // then add action.payload to liked.messages array
-    //  filterSelectedRest.messages.push(action.payload)
-    //
-    //   // find index of filtered rest
-    //   const stateLikedCopy = [...state.liked]
-    //   // splice to add it back in
-    //   stateLikedCopy.splice(stateLikedCopy.findIndex(rest => rest === filterSelectedRest), 1, filterSelectedRest)
-    //
-    //   return {
-    //     ...state,
-    //     liked: stateLikedCopy
-    //   }
     case 'UPDATE_MESSAGES':
       console.log('userReducer UPDATE_MESSAGES action', action.payload)
       // filter out liked venue
