@@ -88,10 +88,10 @@ class ChatContainer extends React.Component {
 
       return sortedMessages.map(message => {
         return (
-          <>
+          <React.Fragment key={message.id}>
             {
               this.props.currentUser.username === message.username ?
-                <div className="text-right mr-0 ml-0 mt-2 mb-2" key={message.id}>
+                <div className="text-right mr-0 ml-0 mt-2 mb-2">
 
                   <p className="text-left d-inline-block mb-0 flex p-2 pr-3 pl-3 bg-primary rounded-lg text-white">
                     {message.content}
@@ -104,7 +104,7 @@ class ChatContainer extends React.Component {
 
                 </div>
               :
-                <div className="mr-0 ml-0 mt-2 mb-2" key={message.id}>
+                <div className="mr-0 ml-0 mt-2 mb-2">
 
                   <p className="mb-0 pl-1">
                     <strong>
@@ -125,7 +125,7 @@ class ChatContainer extends React.Component {
 
                 </div>
               }
-          </>
+          </React.Fragment>
         )
       })
     } else {
