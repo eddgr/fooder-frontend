@@ -139,7 +139,7 @@ class VenueContainer extends React.Component {
     console.log("VenueContainer props", this.props)
     return (
       <div>
-        {this.props.venues.loaded ? this.displayVenues() : "Loading"}
+        {this.props.venues.loaded ? this.displayVenues() : "Loading..."}
       </div>
     )
   }

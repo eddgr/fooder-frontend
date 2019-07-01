@@ -5,8 +5,6 @@ import LikeContainer from './containers/LikeContainer'
 import ChatContainer from './containers/ChatContainer'
 import SignUpLogIn from './components/SignUpLogIn'
 import TabbedBar from './components/TabbedBar'
-// import Error from './components/Error'
-
 
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -60,6 +58,10 @@ class App extends React.Component {
         this.setLoggedIn()
       })
     } // end if
+
+    this.setState({
+      loaded: true
+    })
   } // end componentDidMount
 
   render() {
@@ -81,20 +83,18 @@ class App extends React.Component {
             </div>
 
             {
-              this.props.currentUser.inChat ?
+              this.props.currentUser.inChat || !this.state.loggedIn ?
                 null
               :
               <TabbedBar />
             }
           </>
         :
-          this.state.loggedIn ?
-            "Loading"
-          :
-            <div className="m-4 p-4 text-center">
+          !this.state.loggedIn &&
+            (<div className="m-4 p-4 text-center">
               <h1>fooder</h1>
               <SignUpLogIn setLoggedIn={this.setLoggedIn} />
-            </div>
+            </div>)
       }
       </div>
     );

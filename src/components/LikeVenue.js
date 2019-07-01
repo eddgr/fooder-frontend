@@ -17,18 +17,19 @@ export default function LikeVenue(props) {
 
       return (
         <>
-          <strong>
-            {
-              lastMessage[0].user_name ?
-                lastMessage[0].user_name
-              :
-                lastMessage[0].username
-            }
-          </strong>
-          <br />
-          {lastMessage[0].content.substring(0, 20)}
-          {lastMessage[0].content.length > 20 ? "..." : null}
-          <br />
+          <p className="mb-n1">
+            <strong className="pr-1">
+              {
+                lastMessage[0].user_name ?
+                  lastMessage[0].user_name
+                :
+                  lastMessage[0].username
+              }:
+            </strong>
+
+              {lastMessage[0].content.substring(0, 16)}
+              {lastMessage[0].content.length > 16 ? "..." : null}
+          </p>
           <small><em>
             {moment(lastMessage[0].created_at).fromNow()}
           </em></small>
@@ -45,12 +46,12 @@ export default function LikeVenue(props) {
 
       <div className="row no-gutters">
         <div className="col-4">
-          <img src="..." className="card-img" alt="..." />
+          <img src={props.like.tip_photo} className="card-img rounded-0 border-0 align-middle" alt="..." />
         </div>
 
         <div className="col-8">
           <div className="card-body">
-            <div className="row card-title">
+            <div className="row card-title mb-1">
               <span className="col-8">
                 <Link
                   className="font-weight-bold"
