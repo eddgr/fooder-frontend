@@ -11,6 +11,7 @@ class LikeContainer extends React.Component {
         <LikeVenue
           key={like.id}
           like={like}
+          updateMessages={this.props.updateMessages}
           selectVenue={this.props.selectVenue} />
       )
     })
@@ -35,6 +36,9 @@ const mapDispatchToProps = dispatch => {
   return {
     selectVenue: venue => {
       dispatch({ type: 'SELECT_VENUE', venue: venue })
+    },
+    updateMessages: messageObj => {
+      dispatch({ type: 'UPDATE_MESSAGES', payload: messageObj })
     }
   }
 }
