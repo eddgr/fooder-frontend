@@ -25,7 +25,9 @@ const userReducer = (state=defaultState, action) => {
         id: action.payload.id,
         username: action.payload.username,
         loggedIn: true,
-        liked: action.payload.show_likes,
+        liked: action.payload.show_likes.sort((a,b) => {
+          return b.updated_at.localeCompare(a.updated_at)
+        }),
         disliked: action.payload.show_dislikes,
         location: {
           lat: action.payload.lat,
@@ -83,24 +85,7 @@ const userReducer = (state=defaultState, action) => {
         ...state,
         inChat: false
       }
-    // case 'SEND_MESSAGES':
-    //   console.log('userReducer SEND_MESSAGE action', action.payload)
-    //   // filter out liked venue
-    //   const filterSelectedRest = state.liked.filter(rest => rest.id === state.selectedVenue.id)
-    //
-    //   // then add action.payload to liked.messages array
-    //  filterSelectedRest.messages.push(action.payload)
-    //
-    //   // find index of filtered rest
-    //   const stateLikedCopy = [...state.liked]
-    //   // splice to add it back in
-    //   stateLikedCopy.splice(stateLikedCopy.findIndex(rest => rest === filterSelectedRest), 1, filterSelectedRest)
-    //
-    //   return {
-    //     ...state,
-    //     liked: stateLikedCopy
-    //   }
-    case 'UPDATE_MESSAGES':
+    case 'SEND_MESSAGE':
       console.log('userReducer UPDATE_MESSAGES action', action.payload)
       // filter out liked venue
       const filterSelectedRestaurant = state.liked.filter(rest => rest.id === action.payload.restaurant_id)[0]
@@ -112,11 +97,14 @@ const userReducer = (state=defaultState, action) => {
       const stateLikedDuplicate = [...state.liked]
       // splice to add it back in
       stateLikedDuplicate.splice(stateLikedDuplicate.findIndex(rest => rest === filterSelectedRestaurant), 1, filterSelectedRestaurant)
-      // debugger
+
+      const sortLiked = stateLikedDuplicate.sort((a,b) => {
+        return b.updated_at.localeCompare(a.updated_at)
+      })
 
       return {
         ...state,
-        liked: stateLikedDuplicate
+        liked: sortLiked
       }
     default:
       return state

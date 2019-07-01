@@ -8,58 +8,13 @@ export default function LikeVenue(props) {
 
   const updateMessagePreview = messageObj => {
     props.updateMessages(messageObj)
-  //   return <>
-  //     <strong>
-  //       {
-  //         messageObj.user_name ?
-  //         messageObj.user_name
-  //         :
-  //         messageObj.username
-  //       }
-  //     </strong>
-  //     <br />
-  //     {messageObj.content.substring(0, 20)}
-  //     {messageObj.content.length > 20 ? "..." : null}
-  //     <br />
-  //     <small><em>
-  //       {moment(messageObj.created_at).fromNow()}
-  //     </em></small>
-  //   </>
+    props.updateStateLikes(props.like.id, messageObj)
   }
-  //
-  // const latestMessage = () => {
-  //   if (messageObj) {
-  //
-  //   } else {
-  //     if (props.like.messages.length > 0) {
-  //       const lastMessage = props.like.messages.slice(-1)
-  //       return (
-  //         <>
-  //           <strong>
-  //             {
-  //               lastMessage[0].user_name ?
-  //                 lastMessage[0].user_name
-  //               :
-  //                 lastMessage[0].username
-  //             }
-  //           </strong>
-  //           <br />
-  //           {lastMessage[0].content.substring(0, 20)}
-  //           {lastMessage[0].content.length > 20 ? "..." : null}
-  //           <br />
-  //           <small><em>
-  //             {moment(lastMessage[0].created_at).fromNow()}
-  //           </em></small>
-  //         </>
-  //       )
-  //     }
-  //   }
-  // }
 
   const latestMessage = () => {
     if (props.like.messages.length > 0) {
       const lastMessage = props.like.messages.slice(-1)
-      // debugger
+
       return (
         <>
           <strong>

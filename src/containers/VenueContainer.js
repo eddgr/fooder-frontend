@@ -62,20 +62,35 @@ class VenueContainer extends React.Component {
 
   // HELPER FUNCTIONS
   displayVenues = () => {
-    return (
-      this.props.venues.venues.map(venue => {
-        return (
-          <Venue
-            userLat={this.props.currentUser.location.lat}
-            userLong={this.props.currentUser.location.long}
-            key={venue.id}
-            handleLikeDislike={this.handleLikeDislike}
-            likeVenue={this.props.likeVenue}
-            dislikeVenue={this.props.dislikeVenue}
-            venue={venue} />
-        )
-      })
-    )
+    if (this.props.venues.venues.length > 0) {
+      return (
+        this.props.venues.venues.map(venue => {
+          return (
+            <Venue
+              userLat={this.props.currentUser.location.lat}
+              userLong={this.props.currentUser.location.long}
+              key={venue.id}
+              handleLikeDislike={this.handleLikeDislike}
+              likeVenue={this.props.likeVenue}
+              dislikeVenue={this.props.dislikeVenue}
+              venue={venue} />
+          )
+        })
+      )
+    } else {
+      return (
+        <>
+          No more venues near you!
+          <br />
+          restaurants you've liked:
+          {this.props.currentUser.liked.slice(-5).map(rest => {
+            return (
+              <li>{rest.name}</li>
+            )
+          })}
+        </>
+      )
+    }
   }
 
   handleLikeDislike = (event, venue) => {

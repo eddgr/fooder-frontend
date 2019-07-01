@@ -17,3 +17,7 @@ code {
   height: calc(100vh - 100px);
   /* 100px = ~ top + bottom navbars */
 }
+
+.card-height {
+  height: 60vh
+}

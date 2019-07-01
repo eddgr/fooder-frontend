@@ -21,7 +21,7 @@ export default function NavBar(props) {
           <>
             <i className="fas fa-search"></i>
             <b onClick={() => window.scrollTo(0,0)}>
-              fulfilld
+              fooder
             </b>
             {props.currentUser.username}
           </>
