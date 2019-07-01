@@ -18,7 +18,11 @@ class ChatContainer extends React.Component {
 
   // HELPER FUNCTIONS
   showChat = () => {
-    return fetch(BACKEND_API + `/restaurants/${this.props.currentUser.selectedVenue.id}`)
+    return fetch(BACKEND_API + `/restaurants/${this.props.currentUser.selectedVenue.id}`, {
+      headers: {
+        "Authorization": localStorage.getItem("token")
+      }
+    })
       .then(r => r.json())
       .then(data => {
         this.props.loadMessages(data)
@@ -37,7 +41,8 @@ class ChatContainer extends React.Component {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json"
+        Accept: "application/json",
+        Authorization: localStorage.getItem("token")
       },
       body: JSON.stringify({
         user_id: this.props.currentUser.id,

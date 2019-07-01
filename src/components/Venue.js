@@ -1,5 +1,4 @@
 import React from 'react'
-// import Cards, { Card } from 'react-swipe-card'
 
 export default function Venue(props) {
   const { id, name, fsq_id, location, categories, favorites, lat, long } = props.venue
