@@ -1,5 +1,5 @@
 import React from 'react'
-import Cards, { Card } from 'react-swipe-card'
+// import Cards, { Card } from 'react-swipe-card'
 
 export default function Venue(props) {
   const { id, name, fsq_id, location, categories, favorites, lat, long } = props.venue
@@ -30,6 +30,7 @@ export default function Venue(props) {
 
   return (
     <div className="card m-4" data-fsq-id={fsq_id}>
+
       <img src="..." className="card-img-top" alt="..." />
       <div className="card-body text-center">
         <h3 className="card-title">{name}</h3>

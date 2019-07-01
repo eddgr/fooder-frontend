@@ -1,13 +1,65 @@
 import React from 'react'
 
 import { Link } from 'react-router-dom'
+import { ActionCableConsumer } from 'react-actioncable-provider'
 
 export default function LikeVenue(props) {
   const moment = require('moment')
 
+  const updateMessagePreview = messageObj => {
+    props.updateMessages(messageObj)
+  //   return <>
+  //     <strong>
+  //       {
+  //         messageObj.user_name ?
+  //         messageObj.user_name
+  //         :
+  //         messageObj.username
+  //       }
+  //     </strong>
+  //     <br />
+  //     {messageObj.content.substring(0, 20)}
+  //     {messageObj.content.length > 20 ? "..." : null}
+  //     <br />
+  //     <small><em>
+  //       {moment(messageObj.created_at).fromNow()}
+  //     </em></small>
+  //   </>
+  }
+  //
+  // const latestMessage = () => {
+  //   if (messageObj) {
+  //
+  //   } else {
+  //     if (props.like.messages.length > 0) {
+  //       const lastMessage = props.like.messages.slice(-1)
+  //       return (
+  //         <>
+  //           <strong>
+  //             {
+  //               lastMessage[0].user_name ?
+  //                 lastMessage[0].user_name
+  //               :
+  //                 lastMessage[0].username
+  //             }
+  //           </strong>
+  //           <br />
+  //           {lastMessage[0].content.substring(0, 20)}
+  //           {lastMessage[0].content.length > 20 ? "..." : null}
+  //           <br />
+  //           <small><em>
+  //             {moment(lastMessage[0].created_at).fromNow()}
+  //           </em></small>
+  //         </>
+  //       )
+  //     }
+  //   }
+  // }
+
   const latestMessage = () => {
     if (props.like.messages.length > 0) {
       const lastMessage = props.like.messages.slice(-1)
+      // debugger
       return (
         <>
           <strong>
@@ -32,6 +84,10 @@ export default function LikeVenue(props) {
 
   return (
     <div className="card rounded-0 mt-2 mb-2">
+      <ActionCableConsumer
+      channel={{ channel: "ChatThreadChannel", restaurant_id: props.like.id }}
+      onReceived={data => updateMessagePreview(data.payload)} />
+
       <div className="row no-gutters">
         <div className="col-4">
           <img src="..." className="card-img" alt="..." />

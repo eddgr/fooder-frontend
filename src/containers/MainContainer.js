@@ -1,6 +1,8 @@
 import React from 'react'
 import VenueContainer from './VenueContainer'
 
+import Cards, { Card } from 'react-swipe-card'
+
 export default function MainContainer(props) {
     // HELPER FUNCTIONS
     const handleLogOut = () => {
