@@ -5,7 +5,8 @@ export default function MainContainer(props) {
     // HELPER FUNCTIONS
     const handleLogOut = () => {
       props.logOut()
-      localStorage.clear()
+      localStorage.token = ''
+      localStorage.user_id = ''
     }
     // end HELPER FUNCTIONS
 

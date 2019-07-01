@@ -1,8 +1,7 @@
 import React from 'react'
-// import Cards, { Card } from 'react-swipe-card'
 
 export default function Venue(props) {
-  const { id, name, fsq_id, location, categories, favorites, lat, long } = props.venue
+  const { id, name, fsq_id, location, categories, favorites, lat, long, tip_photo } = props.venue
 
   const distance = (lat1, lon1, lat2, lon2, unit) => {
     if ((lat1 === lat2) && (lon1 === lon2)) {
@@ -29,9 +28,9 @@ export default function Venue(props) {
   console.log('Venue props', props)
 
   return (
-    <div className="card m-4" data-fsq-id={fsq_id}>
+    <div className="card col-sm p-0 mb-2" data-fsq-id={fsq_id}>
 
-      <img src="..." className="card-img-top" alt="..." />
+      <img src={tip_photo} className="card-img-top border-0" alt="..." />
       <div className="card-body text-center">
         <h3 className="card-title">{name}</h3>
           <p className="text-black-50">

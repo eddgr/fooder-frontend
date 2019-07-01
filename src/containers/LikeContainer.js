@@ -9,6 +9,16 @@ class LikeContainer extends React.Component {
     likes: this.props.likes
   }
 
+  componentDidMount() {
+    if (this.state.likes.length <= 0) {
+      setTimeout(() => {
+        this.setState({
+          likes: this.props.likes
+        })
+      }, 1000)
+    }
+  }
+
   updateStateLikes = (restId, messageObj) => {
     // update the liked venue's updated_at so that it can resort itself to the top when new messages come in
     this.state.likes.find(r => r.id === restId).updated_at = messageObj.updated_at

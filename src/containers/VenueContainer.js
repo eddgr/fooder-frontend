@@ -101,7 +101,8 @@ class VenueContainer extends React.Component {
           method: 'POST',
           headers: {
             "Content-Type": "application/json",
-            Accept: "application/json"
+            Accept: "application/json",
+            Authorization: localStorage.getItem('token')
           },
           body: JSON.stringify({
             user_id: this.props.currentUser.id,
@@ -117,7 +118,8 @@ class VenueContainer extends React.Component {
           method: 'POST',
           headers: {
             "Content-Type": "application/json",
-            Accept: "application/json"
+            Accept: "application/json",
+            Authorization: localStorage.getItem("token")
           },
           body: JSON.stringify({
             user_id: this.props.currentUser.id,
@@ -137,7 +139,7 @@ class VenueContainer extends React.Component {
     console.log("VenueContainer props", this.props)
     return (
       <div>
-        {this.props.venues.loaded ? this.displayVenues() : "Loading"}
+        {this.props.venues.loaded ? this.displayVenues() : "Loading..."}
       </div>
     )
   }

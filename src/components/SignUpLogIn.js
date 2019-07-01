@@ -36,16 +36,25 @@ class SignUpLogIn extends React.Component {
         })
           .then(r => r.json())
           .then(data => {
-            localStorage.setItem('token', data.token)
-            localStorage.setItem('user_id', data.id)
+            if (!data.error) {
 
-            this.setState({
-              username: '',
-              password: '',
-            })
+              localStorage.setItem('token', data.token)
+              localStorage.setItem('user_id', data.id)
+              // localStorage.setItem('lat', data.lat)
+              // localStorage.setItem('long', data.long)
 
-            this.props.newUser(data)
-            this.props.setLoggedIn()
+              this.setState({
+                username: '',
+                password: '',
+              })
+
+              this.props.newUser(data)
+              this.props.setLoggedIn()
+            } else {
+              console.log(data.error)
+            }
+
+
           })
         // end fetch
         break
@@ -67,6 +76,8 @@ class SignUpLogIn extends React.Component {
           .then(data => {
             localStorage.setItem('token', data.token)
             localStorage.setItem('user_id', data.id)
+            // localStorage.setItem('lat', data.lat)
+            // localStorage.setItem('long', data.long)
             this.setState({
               username: '',
               password: '',
@@ -98,6 +109,7 @@ class SignUpLogIn extends React.Component {
           value={this.state.password}
           onChange={this.handleLoginChange}
           placeholder="password"
+          required
           type="password" />
         <br />
         <div className="row text-center">
