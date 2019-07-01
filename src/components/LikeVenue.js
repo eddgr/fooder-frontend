@@ -8,6 +8,7 @@ export default function LikeVenue(props) {
 
   const updateMessagePreview = messageObj => {
     props.updateMessages(messageObj)
+    props.updateStateLikes(props.like.id, messageObj)
   }
 
   const latestMessage = () => {
