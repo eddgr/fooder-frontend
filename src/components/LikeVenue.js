@@ -48,39 +48,38 @@ export default function LikeVenue(props) {
       channel={{ channel: "ChatThreadChannel", restaurant_id: id }}
       onReceived={data => updateMessagePreview(data.payload)} />
 
-      <div className="row no-gutters">
-        <div className="col-4">
-          <img src={tip_photo} className="card-img rounded-0 border-0 align-middle" alt="..." />
-        </div>
+      <Link
+        onClick={() => props.selectVenue(props.like)}
+        to='/chats'
+        id={id}>
+        <div className="row no-gutters">
+          <div className="col-4">
+            <img src={tip_photo} className="card-img rounded-0 border-0 align-middle" alt="..." />
+          </div>
 
-        <div className="col-8">
-          <div className="card-body">
-            <div className="row card-title mb-1">
-              <span className="col-8">
-                <Link
-                  className="font-weight-bold"
-                  onClick={() => props.selectVenue(props.like)}
-                  to='/chats'
-                  id={id}>
-                  {name.substring(0,10)}
-                  {name.length > 10 ? '...' : null}
-                </Link>
-              </span>
+          <div className="col-8">
+            <div className="card-body">
+              <div className="row card-title mb-1">
+                <span className="col-8 font-weight-bold">
+                    {name.substring(0,10)}
+                    {name.length > 10 ? '...' : null}
+                </span>
 
-              <span className="col-4 text-warning text-right">
-                <strong>
-                  {favorites.length}
-                  <i className="fas fa-users pl-1"></i>
-                </strong>
-              </span>
-            </div>
+                <span className="col-4 text-warning text-right">
+                  <strong>
+                    {favorites.length}
+                    <i className="fas fa-users pl-1"></i>
+                  </strong>
+                </span>
+              </div>
 
-            <div className="text-black-50">
-              {latestMessage()}
+              <div className="text-black-50">
+                {latestMessage()}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   )
 }

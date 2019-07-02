@@ -4,12 +4,13 @@ import MainContainer from './containers/MainContainer'
 import LikeContainer from './containers/LikeContainer'
 import ChatContainer from './containers/ChatContainer'
 import SignUpLogIn from './components/SignUpLogIn'
+import VenueDetails from './components/VenueDetails'
 import TabbedBar from './components/TabbedBar'
 
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-const AUTH_API = 'http://localhost:8000'
+import adapter from './services/adapter'
 
 class App extends React.Component {
   state = {
@@ -36,19 +37,7 @@ class App extends React.Component {
 
     // check if logged in
     if (!!localStorage.token) {
-      fetch(AUTH_API + '/profile', {
-        method: 'POST',
-        headers: {
-          "Authorization": localStorage.getItem("token"),
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          lat: localStorage.getItem("lat"),
-          long: localStorage.getItem("long")
-        })
-      })
-      .then(r => r.json())
+      adapter.initialLoad()
       .then(data => {
         if (!!data.username) {
           localStorage.setItem("user_id", data.id)
@@ -77,6 +66,7 @@ class App extends React.Component {
             <div className="container mt-4 mb-4 pt-4 pb-4">
               <Switch>
                 <Route exact path="/" render={() => this.props.currentUser.loggedIn  ? <MainContainer logOut={this.props.logOut} /> : <SignUpLogIn setLoggedIn={this.setLoggedIn} />} />
+                <Route path="/venues/:id" component={VenueDetails} />
                 <Route path="/likes" component={LikeContainer} />
                 <Route path="/chats" render={routeProps => <ChatContainer routeProps={routeProps} />} />
               </Switch>

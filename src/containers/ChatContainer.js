@@ -18,7 +18,7 @@ class ChatContainer extends React.Component {
 
   // HELPER FUNCTIONS
   showChat = () => {
-    adapter.fetchMessages(this.props.currentUser.selectedVenue.id)
+    adapter.fetchVenue(this.props.currentUser.selectedVenue.id)
       .then(data => {
         this.props.loadMessages(data)
         this.setState({ loaded: true })

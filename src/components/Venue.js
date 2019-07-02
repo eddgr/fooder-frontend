@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Link } from 'react-router-dom'
+
 export default function Venue(props) {
   const { id, name, fsq_id, location, categories, favorites, lat, long, tip_photo } = props.venue
 
@@ -30,9 +32,13 @@ export default function Venue(props) {
   return (
     <div className="card col-sm p-0 mb-2" data-fsq-id={fsq_id}>
 
-      <img src={tip_photo} className="card-img-top border-0" alt="..." />
+      <Link to={`/venues/${id}`}>
+        <img src={tip_photo} className="card-img-top border-0" alt="..." />
+      </Link>
+      
       <div className="card-body text-center">
         <h3 className="card-title">{name}</h3>
+
           <p className="text-black-50">
             <strong>
               <i className="fas fa-utensils pr-1"></i>
