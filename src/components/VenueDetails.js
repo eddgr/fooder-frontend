@@ -29,6 +29,35 @@ class VenueDetails extends React.Component {
   }
 
   // HELPER FUNCTIONS
+  handleLikeDislike = (event, venue) => {
+    switch(event.currentTarget.name) {
+      case "like":
+        console.log("like")
+        adapter.likeDislikeReq({
+          user_id: this.props.currentUser.id,
+          restaurant_id: venue.id,
+          liked: true
+        })
+        this.props.likeVenue(venue)
+        this.setState({
+          likedByUser: true
+        })
+        break
+      case "dislike":
+        console.log("dislike")
+        adapter.likeDislikeReq({
+          user_id: this.props.currentUser.id,
+          restaurant_id: venue.id,
+          liked: false
+        })
+        this.props.dislikeVenue(venue)
+        window.history.go(-1)
+        break
+      default:
+        console.log("Like or Dislike")
+    }
+  }
+
   handleUnlike = event => {
     const venueObj = {
       user_id: event.currentTarget.dataset.userId,
@@ -42,7 +71,6 @@ class VenueDetails extends React.Component {
     })
 
   }
-  // end HELPER FUNCTIONS
 
   details = () => {
     const { name, hours, location, price, tip_photo, tip_text, categories } = this.state.venue
@@ -100,13 +128,17 @@ class VenueDetails extends React.Component {
                 <>
                   <div className="col-6">
                     <button
-                    className="btn btn-danger w-100">
+                      name="dislike"
+                      onClick={event => this.handleLikeDislike(event, this.state.venue)}
+                      className="btn btn-danger w-100">
                       <i className="fas fa-times"></i>
                     </button>
                   </div>
                   <div className="col-6">
                     <button
-                    className="btn btn-success w-100">
+                      name="like"
+                      onClick={event => this.handleLikeDislike(event, this.state.venue)}
+                      className="btn btn-success w-100">
                       <i className="fas fa-heart"></i>
                     </button>
                   </div>
@@ -118,6 +150,7 @@ class VenueDetails extends React.Component {
       </>
     )
   }
+  // end HELPER FUNCTIONS
 
   render() {
     console.log('VenueDetails', this.state)
@@ -139,6 +172,12 @@ const mapDispatchToProps = dispatch => {
   return {
     unlikeVenue: venueObj => {
       dispatch({ type: 'UNLIKE_VENUE', payload: venueObj })
+    },
+    likeVenue: venue => {
+      dispatch({ type: 'LIKE_VENUE', venue: venue })
+    },
+    dislikeVenue: venue => {
+      dispatch({ type: 'DISLIKE_VENUE', venue: venue })
     }
   }
 }
