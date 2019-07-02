@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function NavBar(props) {
   const handleGoBack = () => {
@@ -15,7 +16,9 @@ export default function NavBar(props) {
             <b onClick={() => document.querySelector("#chat-box").scrollTo(0,0)}>
               {props.currentUser.selectedVenue.name}
             </b>
-            <i className="fas fa-info-circle"></i>
+            <Link onClick={() => props.notInChat()} to={`venues/${props.currentUser.selectedVenue.id}`}>
+              <i className="fas fa-info-circle"></i>
+            </Link>
           </>
         :
           <>

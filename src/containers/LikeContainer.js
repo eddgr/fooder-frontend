@@ -15,7 +15,7 @@ class LikeContainer extends React.Component {
         this.setState({
           likes: this.props.likes
         })
-      }, 1000)
+      }, 1500)
     }
   }
 

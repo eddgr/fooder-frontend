@@ -1,10 +1,10 @@
 import React from 'react'
-
 import { connect } from 'react-redux'
 import { ActionCableConsumer } from 'react-actioncable-provider'
 
-const BACKEND_API = 'http://localhost:8000/api/v1'
-const moment = require('moment')
+import adapter from '../services/adapter'
+
+import moment from 'moment'
 
 class ChatContainer extends React.Component {
   state = {
@@ -18,12 +18,7 @@ class ChatContainer extends React.Component {
 
   // HELPER FUNCTIONS
   showChat = () => {
-    return fetch(BACKEND_API + `/restaurants/${this.props.currentUser.selectedVenue.id}`, {
-      headers: {
-        "Authorization": localStorage.getItem("token")
-      }
-    })
-      .then(r => r.json())
+    adapter.fetchVenue(this.props.currentUser.selectedVenue.id)
       .then(data => {
         this.props.loadMessages(data)
         this.setState({ loaded: true })
@@ -37,19 +32,7 @@ class ChatContainer extends React.Component {
   }
 
   sendMessage = () => {
-    return fetch('http://localhost:8000/api/v1/messages', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: localStorage.getItem("token")
-      },
-      body: JSON.stringify({
-        user_id: this.props.currentUser.id,
-        restaurant_id: this.props.currentUser.selectedVenue.id,
-        content: this.state.currentMessage
-      })
-    })
+    adapter.sendMessage(this.props.currentUser.id, this.props.currentUser.selectedVenue.id, this.state.currentMessage)
   }
 
   handleMessageChange = event => {
