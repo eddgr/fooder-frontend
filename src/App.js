@@ -61,12 +61,13 @@ class App extends React.Component {
           <>
             <NavBar
               notInChat={this.props.notInChat}
+              inChat={this.props.inChat}
               currentUser={this.props.currentUser} />
 
             <div className="container mt-4 mb-4 pt-4 pb-4">
               <Switch>
                 <Route exact path="/" render={() => this.props.currentUser.loggedIn  ? <MainContainer logOut={this.props.logOut} /> : <SignUpLogIn setLoggedIn={this.setLoggedIn} />} />
-                <Route path="/venues/:id" component={VenueDetails} />
+                <Route path="/venues/:id" render={routeProps => <VenueDetails routeProps={routeProps} currentUser={this.props.currentUser} />} />
                 <Route path="/likes" component={LikeContainer} />
                 <Route path="/chats" render={routeProps => <ChatContainer routeProps={routeProps} />} />
               </Switch>
@@ -106,7 +107,10 @@ const mapDispatchToProps = dispatch => {
       dispatch({ type: 'LOG_OUT' })
     },
     notInChat: () => {
-      dispatch({type: 'NOT_IN_CHAT'})
+      dispatch({ type: 'NOT_IN_CHAT' })
+    },
+    inChat: () => {
+      dispatch({ type: 'IN_CHAT' })
     }
   }
 }

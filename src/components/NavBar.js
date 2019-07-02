@@ -16,7 +16,7 @@ export default function NavBar(props) {
             <b onClick={() => document.querySelector("#chat-box").scrollTo(0,0)}>
               {props.currentUser.selectedVenue.name}
             </b>
-            <Link to={`venues/${props.currentUser.selectedVenue.id}`}>
+            <Link onClick={() => props.notInChat()} to={`venues/${props.currentUser.selectedVenue.id}`}>
               <i className="fas fa-info-circle"></i>
             </Link>
           </>

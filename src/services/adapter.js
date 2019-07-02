@@ -32,6 +32,14 @@ const likeDislikeReq = venueObj => {
   })
 }
 
+const unlikeReq = venueObj => {
+  return fetch(BACKEND_API + `favorites/${venueObj.restaurant_id}`, {
+    method: "DELETE",
+    headers,
+    body: JSON.stringify(venueObj)
+  })
+}
+
 const signUpReq = (username, password) => {
   return fetch(BACKEND_API + 'users', {
     method: 'POST',
@@ -83,4 +91,4 @@ const sendMessage = (user_id, restaurant_id, content) => {
   })
 }
 
-export default { initialLoad, fetchRestaurants, likeDislikeReq, signUpReq, logInReq, fetchVenue, sendMessage }
+export default { initialLoad, fetchRestaurants, likeDislikeReq, unlikeReq, signUpReq, logInReq, fetchVenue, sendMessage }

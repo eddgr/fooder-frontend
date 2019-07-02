@@ -71,6 +71,14 @@ const userReducer = (state=defaultState, action) => {
         ...state,
         disliked: [...state.disliked, action.venue]
       }
+    case 'UNLIKE_VENUE':
+      console.log('UNLIKE_VENUE', action.payload)
+      const unlikedVenue = [...state.liked].filter(venue => venue.id !== parseInt(action.payload.restaurant_id))
+      // const unlikedVenue = [...state.liked].find(venue => venue.id === parseInt(action.payload.restaurant_id))
+      return {
+        ...state,
+        liked: unlikedVenue
+      }
     case 'SELECT_VENUE':
       return {
         ...state,
@@ -78,6 +86,11 @@ const userReducer = (state=defaultState, action) => {
           id: action.venue.id,
           name: action.venue.name
         },
+        inChat: true
+      }
+    case 'IN_CHAT':
+      return {
+        ...state,
         inChat: true
       }
     case 'NOT_IN_CHAT':
