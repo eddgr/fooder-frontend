@@ -3,22 +3,19 @@ import { connect } from 'react-redux'
 
 import Venue from '../components/Venue'
 
-const BACKEND_API = 'http://localhost:8000/api/v1'
-
+import adapter from '../services/adapter'
 
 class VenueContainer extends React.Component {
   componentDidMount() {
     if (this.props.venues.loaded) {
 
     } else {
-      fetch(BACKEND_API + '/restaurants', {
-        headers: {
-          "Authorization": localStorage.getItem('token')
-        }
-      })
-      .then(r => r.json())
+      adapter.fetchRestaurants()
       .then(data => {
-        const newData = data.filter(venue => !venue.favorites.includes(this.props.currentUser.id))
+        const newData = data.filter(venue => {
+          return !venue.favorites.includes(this.props.currentUser.id) && !venue.dislikes.includes(this.props.currentUser.id)
+          // filter out if current user likes and dislikes a venue
+        })
 
         // add distance function
         const distance = (lat1, lon1, lat2, lon2, unit) => {
@@ -97,35 +94,19 @@ class VenueContainer extends React.Component {
     switch(event.currentTarget.name) {
       case "like":
         console.log("like")
-        fetch(BACKEND_API + '/favorites', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: localStorage.getItem('token')
-          },
-          body: JSON.stringify({
-            user_id: this.props.currentUser.id,
-            restaurant_id: venue.id,
-            liked: true
-          })
+        adapter.likeDislikeReq({
+          user_id: this.props.currentUser.id,
+          restaurant_id: venue.id,
+          liked: true
         })
         this.props.likeVenue(venue)
         break
       case "dislike":
         console.log("dislike")
-        fetch(BACKEND_API + '/favorites', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: localStorage.getItem("token")
-          },
-          body: JSON.stringify({
-            user_id: this.props.currentUser.id,
-            restaurant_id: venue.id,
-            liked: false
-          })
+        adapter.likeDislikeReq({
+          user_id: this.props.currentUser.id,
+          restaurant_id: venue.id,
+          liked: false
         })
         this.props.dislikeVenue(venue)
         break

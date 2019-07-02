@@ -4,16 +4,18 @@ import { Link } from 'react-router-dom'
 import { ActionCableConsumer } from 'react-actioncable-provider'
 
 export default function LikeVenue(props) {
+  const { id, messages, tip_photo, name, favorites } = props.like
+
   const moment = require('moment')
 
   const updateMessagePreview = messageObj => {
     props.updateMessages(messageObj)
-    props.updateStateLikes(props.like.id, messageObj)
+    props.updateStateLikes(id, messageObj)
   }
 
   const latestMessage = () => {
-    if (props.like.messages.length > 0) {
-      const lastMessage = props.like.messages.slice(-1)
+    if (messages.length > 0) {
+      const lastMessage = messages.slice(-1)
 
       return (
         <>
@@ -41,12 +43,12 @@ export default function LikeVenue(props) {
   return (
     <div className="card rounded-0 mt-2 mb-2">
       <ActionCableConsumer
-      channel={{ channel: "ChatThreadChannel", restaurant_id: props.like.id }}
+      channel={{ channel: "ChatThreadChannel", restaurant_id: id }}
       onReceived={data => updateMessagePreview(data.payload)} />
 
       <div className="row no-gutters">
         <div className="col-4">
-          <img src={props.like.tip_photo} className="card-img rounded-0 border-0 align-middle" alt="..." />
+          <img src={tip_photo} className="card-img rounded-0 border-0 align-middle" alt="..." />
         </div>
 
         <div className="col-8">
@@ -57,15 +59,15 @@ export default function LikeVenue(props) {
                   className="font-weight-bold"
                   onClick={() => props.selectVenue(props.like)}
                   to='/chats'
-                  id={props.like.id}>
-                  {props.like.name.substring(0,10)}
-                  {props.like.name.length > 10 ? '...' : null}
+                  id={id}>
+                  {name.substring(0,10)}
+                  {name.length > 10 ? '...' : null}
                 </Link>
               </span>
 
               <span className="col-4 text-warning text-right">
                 <strong>
-                  {props.like.favorites.length}
+                  {favorites.length}
                   <i className="fas fa-users pl-1"></i>
                 </strong>
               </span>
