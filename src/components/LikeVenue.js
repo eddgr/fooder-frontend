@@ -3,10 +3,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { ActionCableConsumer } from 'react-actioncable-provider'
 
+import moment from 'moment'
+
 export default function LikeVenue(props) {
   const { id, messages, tip_photo, name, favorites } = props.like
 
-  const moment = require('moment')
+  // const moment = require('moment')
 
   const updateMessagePreview = messageObj => {
     props.updateMessages(messageObj)

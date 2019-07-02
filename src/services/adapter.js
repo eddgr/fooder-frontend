@@ -18,19 +18,57 @@ const likeDislikeReq = venueObj => {
     headers,
     body: JSON.stringify(venueObj)
   })
-
 }
 
-const signUpReq = () => {
-
+const signUpReq = (username, password) => {
+  return fetch(BACKEND_API + 'users', {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({
+      username: username,
+      password: password,
+      lat: localStorage.getItem("lat"),
+      long: localStorage.getItem("long")
+    })
+  })
+    .then(r => r.json())
 }
 
-const logInReq = () => {
-
+const logInReq = (username, password) => {
+  return fetch(API_URL + '/login', {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({
+      username: username,
+      password: password,
+      lat: localStorage.getItem("lat"),
+      long: localStorage.getItem("long")
+    })
+  })
+    .then(r => r.json())
 }
 
-const fetchMessages = () => {
-
+const fetchMessages = (venue_id) => {
+  return fetch(BACKEND_API + `restaurants/${venue_id}`, headers)
+    .then(r => r.json())
 }
 
-export default { fetchRestaurants, likeDislikeReq, signUpReq, logInReq, fetchMessages }
+const sendMessage = (user_id, restaurant_id, content) => {
+  return fetch(BACKEND_API + 'messages', {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      user_id,
+      restaurant_id,
+      content
+    })
+  })
+}
+
+export default { fetchRestaurants, likeDislikeReq, signUpReq, logInReq, fetchMessages, sendMessage }

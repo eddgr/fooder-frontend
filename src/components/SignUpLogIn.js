@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-const AUTH_API = 'http://localhost:8000'
-const BACKEND_API = 'http://localhost:8000/api/v1'
+import adapter from '../services/adapter'
 
 class SignUpLogIn extends React.Component {
   state = {
@@ -21,27 +20,11 @@ class SignUpLogIn extends React.Component {
     event.preventDefault()
     switch(event.target.name) {
       case "signup":
-        fetch(BACKEND_API + '/users', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-          },
-          body: JSON.stringify({
-            username: this.state.username,
-            password: this.state.password,
-            lat: localStorage.getItem("lat"),
-            long: localStorage.getItem("long")
-          })
-        })
-          .then(r => r.json())
+        adapter.signUpReq(this.state.username, this.state.password)
           .then(data => {
             if (!data.error) {
-
               localStorage.setItem('token', data.token)
               localStorage.setItem('user_id', data.id)
-              // localStorage.setItem('lat', data.lat)
-              // localStorage.setItem('long', data.long)
 
               this.setState({
                 username: '',
@@ -53,31 +36,15 @@ class SignUpLogIn extends React.Component {
             } else {
               console.log(data.error)
             }
-
-
           })
         // end fetch
         break
       case "login":
-        fetch(AUTH_API + '/login', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-          },
-          body: JSON.stringify({
-            username: this.state.username,
-            password: this.state.password,
-            lat: localStorage.getItem("lat"),
-            long: localStorage.getItem("long")
-          })
-        })
-          .then(r => r.json())
+        adapter.logInReq(this.state.username, this.state.password)
           .then(data => {
             localStorage.setItem('token', data.token)
             localStorage.setItem('user_id', data.id)
-            // localStorage.setItem('lat', data.lat)
-            // localStorage.setItem('long', data.long)
+
             this.setState({
               username: '',
               password: '',
