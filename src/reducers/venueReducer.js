@@ -22,7 +22,11 @@ const venueReducer = (state=defaultState, action) => {
         ...state,
         venues: filteredLikedVenue
       }
-
+    case 'UNLIKE_VENUE':
+      return {
+        ...state,
+        venues: [...state.venues, action.venue]
+      }
     case 'DISLIKE_VENUE':
       console.log('DISLIKE_VENUE action.venue', action.venue)
 

@@ -64,7 +64,7 @@ class VenueDetails extends React.Component {
       restaurant_id: event.currentTarget.dataset.restId
     }
     adapter.unlikeReq(venueObj)
-    this.props.unlikeVenue(venueObj)
+    this.props.unlikeVenue(venueObj, this.state.venue)
     this.setState({
       ...this.state,
       likedByUser: false
@@ -170,8 +170,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    unlikeVenue: venueObj => {
-      dispatch({ type: 'UNLIKE_VENUE', payload: venueObj })
+    unlikeVenue: (venueObj, venue) => {
+      dispatch({ type: 'UNLIKE_VENUE', payload: venueObj, venue: venue })
     },
     likeVenue: venue => {
       dispatch({ type: 'LIKE_VENUE', venue: venue })
