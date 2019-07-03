@@ -25,7 +25,7 @@ class VenueDetails extends React.Component {
           likedByUser: true
         })
       }
-    }, 1500)
+    }, 1000)
   }
 
   // HELPER FUNCTIONS
