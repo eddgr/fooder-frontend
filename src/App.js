@@ -12,6 +12,7 @@ import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import adapter from './services/adapter'
+import withAuth from './hocs/withAuth'
 
 class App extends React.Component {
   state = {
@@ -56,6 +57,7 @@ class App extends React.Component {
   } // end componentDidMount
 
   render() {
+    console.log('App props', this.props)
     return (
       <div>
       {
@@ -98,7 +100,8 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    loggedIn: state.loggedIn
   }
 }
 
@@ -119,4 +122,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(withAuth(App))

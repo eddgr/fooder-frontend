@@ -1,9 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
-export default function NavBar(props) {
+function NavBar(props) {
   const handleGoBack = () => {
-    window.history.go(-1)
+    props.history.push('/likes')
     props.notInChat()
   }
 
@@ -27,7 +27,7 @@ export default function NavBar(props) {
         :
           <>
             {props.currentUser.id !== '' ? <i className="fas fa-search"></i> : null}
-            <h1 id="logo" onClick={() => window.scrollTo(0,0)}>
+            <h1 id="logo" className="mx-auto" onClick={() => window.scrollTo(0,0)}>
               fooder
             </h1>
             {
@@ -41,3 +41,5 @@ export default function NavBar(props) {
     </nav>
   )
 }
+
+export default withRouter(NavBar)

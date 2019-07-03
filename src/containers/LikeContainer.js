@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
 
 import LikeVenue from '../components/LikeVenue.js'
+import withAuth from '../hocs/withAuth'
 
 class LikeContainer extends React.Component {
   state = {
@@ -78,4 +79,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LikeContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(withAuth(LikeContainer))
