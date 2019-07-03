@@ -72,18 +72,19 @@ class SignUpLogIn extends React.Component {
 
   render() {
     return (
-      <div className="login">
-        <h2 className="text-center mt-4 mb-4">Connect with food minded people.</h2>
+      <div id="login">
+        <h1>fooder</h1>
+        <p className="mb-4">Connect with food minded people.</p>
         <form className="form-group mt-4">
           <input
-            className="form-control p-4"
+            className="form-control pt-4 pb-4"
             name="username"
             value={this.state.username}
             onChange={this.handleLoginChange}
             placeholder="Username"
             type="text" />
           <input
-            className="form-control mt-4 p-4"
+            className="form-control mt-4 pt-4 pb-4"
             name="password"
             value={this.state.password}
             onChange={this.handleLoginChange}
@@ -94,14 +95,14 @@ class SignUpLogIn extends React.Component {
           <div className="row text-center">
             <div className="col-6">
               <button
-                className="btn btn-primary w-100"
+                className="btn btn-info w-100"
                 type="submit"
                 name="signup"
                 onClick={this.handleSubmitAuthForm}>Sign Up</button>
             </div>
             <div className="col-6">
               <button
-                className="btn btn-outline-primary w-100"
+                className="btn btn-outline-info w-100"
                 type="submit"
                 name="login"
                 onClick={this.handleSubmitAuthForm}>Log In</button>

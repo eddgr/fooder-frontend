@@ -15,6 +15,10 @@ export default function LikeVenue(props) {
     props.updateStateLikes(id, messageObj)
   }
 
+  const iphone5 = window.matchMedia("(max-width: 320px)")
+
+  // debugger
+
   const latestMessage = () => {
     if (messages.length > 0) {
       const lastMessage = messages.slice(-1)
@@ -53,11 +57,17 @@ export default function LikeVenue(props) {
         to='/chats'
         id={id}>
         <div className="row no-gutters">
-          <div className="col-4">
-            <img src={tip_photo} className="card-img rounded-0 border-0 align-middle" alt="..." />
-          </div>
 
-          <div className="col-8">
+          {
+            iphone5.matches ?
+              null
+              :
+              <div className="col-4">
+                <img src={tip_photo} className="card-img rounded-0 border-0 align-middle" alt="..." />
+              </div>
+          }
+
+          <div className={iphone5.matches ? "col" : "col-8"}>
             <div className="card-body">
               <div className="row card-title mb-1">
                 <span className="col-8 font-weight-bold">
