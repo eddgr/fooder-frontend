@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import adapter from '../services/adapter'
 
@@ -7,6 +8,12 @@ class SignUpLogIn extends React.Component {
   state = {
     username: '',
     password: ''
+  }
+
+  componentDidMount() {
+    if (localStorage.token && localStorage.user_id) {
+      this.props.history.push('/')
+    }
   }
 
   // HELPER FUNCTIONS
@@ -33,6 +40,7 @@ class SignUpLogIn extends React.Component {
 
               this.props.newUser(data)
               this.props.setLoggedIn()
+              this.props.history.push('/')
             } else {
               console.log(data.error)
             }
@@ -47,6 +55,7 @@ class SignUpLogIn extends React.Component {
 
             this.props.setUser(data)
             this.props.setLoggedIn()
+            this.props.history.push('/')
 
             this.setState({
               username: '',
@@ -62,6 +71,7 @@ class SignUpLogIn extends React.Component {
   // end HELPER FUNCTIONS
 
   render() {
+    console.log(this.props)
     return (
       <form className="form-group">
         <input
@@ -112,4 +122,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(SignUpLogIn)
+export default connect(null, mapDispatchToProps)(withRouter(SignUpLogIn))

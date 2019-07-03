@@ -17,9 +17,9 @@ export default function NavBar(props) {
         props.currentUser.inChat ?
           <>
             <i onClick={() => handleGoBack()} className="fas fa-chevron-left"></i>
-            <b onClick={() => document.querySelector("#chat-box").scrollTo(0,0)}>
+            <h1 id="venue" onClick={() => document.querySelector("#chat-box").scrollTo(0,0)}>
               {props.currentUser.selectedVenue.name}
-            </b>
+            </h1>
             <Link onClick={() => moreInfo()} to={`venues/${props.currentUser.selectedVenue.id}`}>
               <i className="fas fa-info-circle text-dark"></i>
             </Link>
@@ -27,9 +27,9 @@ export default function NavBar(props) {
         :
           <>
             {props.currentUser.id !== '' ? <i className="fas fa-search"></i> : null}
-            <b onClick={() => window.scrollTo(0,0)}>
+            <h1 id="logo" onClick={() => window.scrollTo(0,0)}>
               fooder
-            </b>
+            </h1>
             {
               props.currentUser.selectedVenue.id === parseInt(window.location.pathname.replace(/\/venues\//, '')) ?
                <Link to="/chats"><i className="text-dark far fa-comments"></i></Link>
