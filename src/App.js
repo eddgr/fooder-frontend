@@ -1,6 +1,6 @@
 import React from 'react';
 import NavBar from './components/NavBar'
-import MainContainer from './containers/MainContainer'
+import VenueContainer from './containers/VenueContainer'
 import LikeContainer from './containers/LikeContainer'
 import ChatContainer from './containers/ChatContainer'
 import ProfileContainer from './containers/ProfileContainer'
@@ -76,11 +76,11 @@ class App extends React.Component {
 
             <div className={this.state.loggedIn ? "container mt-4 mb-4 pt-4 pb-4" : null}>
               <Switch>
-                <Route exact path="/" render={() => this.props.currentUser.loggedIn  ? <MainContainer logOut={this.props.logOut} /> : <SignUpLogIn setLoggedIn={this.setLoggedIn} />} />
+                <Route exact path="/" render={() => this.props.currentUser.loggedIn  ? <VenueContainer /> : <SignUpLogIn setLoggedIn={this.setLoggedIn} />} />
                 <Route path="/venues/:id" render={routeProps => <VenueDetails routeProps={routeProps} currentUser={this.props.currentUser} />} />
                 <Route exact path="/likes" component={LikeContainer} />
                 <Route exact path="/login" render={() => <SignUpLogIn setLoggedIn={this.setLoggedIn}/>} />
-                <Route exact path="/profile" component={ProfileContainer} />
+                <Route exact path="/profile" render={() => <ProfileContainer logOut={this.props.logOut} />} />
                 <Route exact path="/chats" render={routeProps => <ChatContainer routeProps={routeProps} inChat={this.props.inChat} />} />
               </Switch>
             </div>
