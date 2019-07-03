@@ -69,7 +69,7 @@ class App extends React.Component {
                 <Route exact path="/" render={() => this.props.currentUser.loggedIn  ? <MainContainer logOut={this.props.logOut} /> : <SignUpLogIn setLoggedIn={this.setLoggedIn} />} />
                 <Route path="/venues/:id" render={routeProps => <VenueDetails routeProps={routeProps} currentUser={this.props.currentUser} />} />
                 <Route path="/likes" component={LikeContainer} />
-                <Route path="/chats" render={routeProps => <ChatContainer routeProps={routeProps} />} />
+                <Route path="/chats" render={routeProps => <ChatContainer routeProps={routeProps} inChat={this.props.inChat} />} />
               </Switch>
             </div>
 
@@ -77,7 +77,7 @@ class App extends React.Component {
               this.props.currentUser.inChat || !this.state.loggedIn ?
                 null
               :
-              <TabbedBar />
+              <TabbedBar notInChat={this.props.notInChat} />
             }
           </>
         :

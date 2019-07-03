@@ -45,12 +45,13 @@ class SignUpLogIn extends React.Component {
             localStorage.setItem('token', data.token)
             localStorage.setItem('user_id', data.id)
 
+            this.props.setUser(data)
+            this.props.setLoggedIn()
+
             this.setState({
               username: '',
               password: '',
             })
-            this.props.setUser(data)
-            this.props.setLoggedIn()
           })
         // end fetch
         break

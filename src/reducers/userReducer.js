@@ -53,6 +53,12 @@ const userReducer = (state=defaultState, action) => {
         loggedIn: false,
         liked: [],
         disliked: [],
+        filtered: false,
+        selectedVenue: {
+          id: '',
+          name: ''
+        },
+        inChat: false,
         location: {
           lat: '',
           long: ''
