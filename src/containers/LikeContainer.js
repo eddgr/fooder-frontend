@@ -55,7 +55,7 @@ class LikeContainer extends React.Component {
     console.log("LikeContainer state", this.state)
     return (
       <div>
-        {this.showLikes()}
+        {this.state.likes.length <= 0 ? 'See all the venues you have liked here.' : this.showLikes()}
       </div>
     )
   }

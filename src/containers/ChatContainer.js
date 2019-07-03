@@ -64,59 +64,63 @@ class ChatContainer extends React.Component {
   showCurrentMessages = () => {
     // checks to see if messages state exist
     if (this.props.messages.messages) {
-      const sortedMessages = this.props.messages.messages.sort((a, b) => {
+      if (this.props.messages.messages.length !== 0) {
+        const sortedMessages = this.props.messages.messages.sort((a, b) => {
 
-        // check to see if message has a create_at date
-        if (a.created_at) {
-          return a.created_at.localeCompare(b.created_at)
-        } else {
-          // if it doesn't exist, return normal array
-          return this.props.messages.messages
-        }
-      }) // end sortedMessages
+          // check to see if message has a create_at date
+          if (a.created_at) {
+            return a.created_at.localeCompare(b.created_at)
+          } else {
+            // if it doesn't exist, return normal array
+            return this.props.messages.messages
+          }
+        }) // end sortedMessages
 
-      return sortedMessages.map(message => {
-        return (
-          <React.Fragment key={message.id}>
-            {
-              this.props.currentUser.username === message.username ?
-                <div className="text-right mr-0 ml-0 mt-2 mb-2">
+        return sortedMessages.map(message => {
+          return (
+            <React.Fragment key={message.id}>
+              {
+                this.props.currentUser.username === message.username ?
+                  <div className="text-right mr-0 ml-0 mt-2 mb-2">
 
-                  <p className="text-left d-inline-block mb-0 flex p-2 pr-3 pl-3 bg-primary rounded-lg text-white">
-                    {message.content}
-                  </p>
-                  <p className="text-black-50 pr-1">
-                    <small>
-                      {moment(message.created_at).fromNow()}
-                    </small>
-                  </p>
-
-                </div>
-              :
-                <div className="mr-0 ml-0 mt-2 mb-2">
-
-                  <p className="mb-0 pl-1">
-                    <strong>
-                      {message.username}
-                    </strong>
-                  </p>
-
-                  <div>
-                    <p className="d-inline-block p-2 pr-3 pl-3 mb-0 bg-light rounded-lg text-dark">
+                    <p className="text-left d-inline-block mb-0 flex p-2 pr-3 pl-3 bg-primary rounded-lg text-white">
                       {message.content}
                     </p>
-                    <p className="pl-1 text-black-50">
+                    <p className="text-black-50 pr-1">
                       <small>
                         {moment(message.created_at).fromNow()}
                       </small>
                     </p>
-                  </div>
 
-                </div>
-              }
-          </React.Fragment>
-        )
-      })
+                  </div>
+                :
+                  <div className="mr-0 ml-0 mt-2 mb-2">
+
+                    <p className="mb-0 pl-1">
+                      <strong>
+                        {message.username}
+                      </strong>
+                    </p>
+
+                    <div>
+                      <p className="d-inline-block p-2 pr-3 pl-3 mb-0 bg-light rounded-lg text-dark">
+                        {message.content}
+                      </p>
+                      <p className="pl-1 text-black-50">
+                        <small>
+                          {moment(message.created_at).fromNow()}
+                        </small>
+                      </p>
+                    </div>
+
+                  </div>
+                }
+            </React.Fragment>
+          )
+        })
+      } else {
+        return "No messages yet."
+      }
     } else {
       // if not go back
       window.history.go(-1)
