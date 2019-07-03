@@ -36,7 +36,7 @@ function NavBar(props) {
           props.currentUser.selectedVenue.id === parseInt(window.location.pathname.replace(/\/venues\//, '')) ?
             <Link to="/chats"><i className="text-dark far fa-comments"></i></Link>
          :
-            <Link to="/profile">{props.currentUser.username}</Link>
+            <Link to="/profile"><i className="far fa-user-circle text-dark"></i></Link>
         }
       </>
     )
