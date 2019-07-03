@@ -85,6 +85,14 @@ const userReducer = (state=defaultState, action) => {
         ...state,
         liked: unlikedVenue
       }
+    case 'UNDISLIKE_VENUE':
+      console.log('UNDISLIKE_VENUE', action.payload)
+      const undislikedVenue = [...state.disliked].filter(venue => venue.id !== parseInt(action.payload.restaurant_id))
+      // const unlikedVenue = [...state.liked].find(venue => venue.id === parseInt(action.payload.restaurant_id))
+      return {
+        ...state,
+        disliked: undislikedVenue
+      }
     case 'SELECT_VENUE':
       return {
         ...state,
