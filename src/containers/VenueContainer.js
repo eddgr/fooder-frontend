@@ -11,11 +11,11 @@ class VenueContainer extends React.Component {
 
     } else {
       adapter.fetchRestaurants()
-      .then(data => {
-        const newData = data.filter(venue => {
-          return !venue.favorites.includes(this.props.currentUser.id) && !venue.dislikes.includes(this.props.currentUser.id)
-          // filter out if current user likes and dislikes a venue
-        })
+        .then(data => {
+          const newData = data.filter(venue => {
+            return !venue.favorites.includes(this.props.currentUser.id) && !venue.dislikes.includes(this.props.currentUser.id)
+            // filter out if current user likes and dislikes a venue
+          })
 
         // add distance function
         const distance = (lat1, lon1, lat2, lon2, unit) => {
@@ -53,7 +53,7 @@ class VenueContainer extends React.Component {
         this.props.addVenues(newDistanceData)
 
         this.props.initialLoad()
-        })
+      }) // end then
     }
   }
 

@@ -1,16 +1,14 @@
 const API_URL = 'http://localhost:8000'
 const BACKEND_API = 'http://localhost:8000/api/v1/'
 
-const headers = {
-  "Content-Type": "application/json",
-  Accept: "application/json",
-  Authorization: localStorage.getItem("token")
-}
-
 const initialLoad = () => {
   return fetch(API_URL + '/profile', {
     method: 'POST',
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: localStorage.getItem("token")
+    },
     body: JSON.stringify({
       lat: localStorage.getItem("lat"),
       long: localStorage.getItem("long")
@@ -20,14 +18,24 @@ const initialLoad = () => {
 }
 
 const fetchRestaurants = () => {
-  return fetch(BACKEND_API + 'restaurants', headers)
+  return fetch(BACKEND_API + 'restaurants', {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: localStorage.getItem("token")
+    }
+  })
     .then(r => r.json())
 }
 
 const likeDislikeReq = venueObj => {
   return fetch(BACKEND_API + 'favorites', {
     method: 'POST',
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: localStorage.getItem("token")
+    },
     body: JSON.stringify(venueObj)
   })
 }
@@ -35,7 +43,11 @@ const likeDislikeReq = venueObj => {
 const unlikeReq = venueObj => {
   return fetch(BACKEND_API + `favorites/${venueObj.restaurant_id}`, {
     method: "DELETE",
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: localStorage.getItem("token")
+    },
     body: JSON.stringify(venueObj)
   })
 }
@@ -45,7 +57,8 @@ const signUpReq = (username, password) => {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
-      Accept: "application/json"
+      Accept: "application/json",
+      Authorization: localStorage.getItem("token")
     },
     body: JSON.stringify({
       username: username,
@@ -62,7 +75,8 @@ const logInReq = (username, password) => {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
-      Accept: "application/json"
+      Accept: "application/json",
+      Authorization: localStorage.getItem("token")
     },
     body: JSON.stringify({
       username: username,
@@ -75,14 +89,24 @@ const logInReq = (username, password) => {
 }
 
 const fetchVenue = (venue_id) => {
-  return fetch(BACKEND_API + `restaurants/${venue_id}`, headers)
+  return fetch(BACKEND_API + `restaurants/${venue_id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: localStorage.getItem("token")
+    }
+  })
     .then(r => r.json())
 }
 
 const sendMessage = (user_id, restaurant_id, content) => {
   return fetch(BACKEND_API + 'messages', {
     method: "POST",
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: localStorage.getItem("token")
+    },
     body: JSON.stringify({
       user_id,
       restaurant_id,

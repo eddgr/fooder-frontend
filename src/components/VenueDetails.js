@@ -73,7 +73,7 @@ class VenueDetails extends React.Component {
   }
 
   details = () => {
-    const { name, hours, location, price, tip_photo, tip_text, categories } = this.state.venue
+    const { name, hours, location, tip_photo, tip_text, categories } = this.state.venue
 
     return (
       <>
@@ -115,15 +115,17 @@ class VenueDetails extends React.Component {
           <div className="row justify-content-center text-center">
             {
               this.state.likedByUser ?
-                <div className="col-6">
-                  <button
-                  data-user-id={this.props.currentUser.id}
-                  data-rest-id={this.props.routeProps.match.params.id}
-                  onClick={event => this.handleUnlike(event)}
-                  className="btn btn-outline-success w-100">
-                    <i className="fas fa-heart"></i>
-                  </button>
-                </div>
+                <>
+                  <div className="col">
+                    <button
+                    data-user-id={this.props.currentUser.id}
+                    data-rest-id={this.props.routeProps.match.params.id}
+                    onClick={event => this.handleUnlike(event)}
+                    className="btn btn-outline-success w-100">
+                      <i className="fas fa-heart"></i>
+                    </button>
+                  </div>
+                </>
               :
                 <>
                   <div className="col-6">

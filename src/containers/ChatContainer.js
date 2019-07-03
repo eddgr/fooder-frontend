@@ -14,6 +14,7 @@ class ChatContainer extends React.Component {
 
   componentDidMount() {
     this.showChat()
+    this.props.inChat()
   }
 
   // HELPER FUNCTIONS

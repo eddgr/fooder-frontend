@@ -7,6 +7,7 @@ export default function MainContainer(props) {
       props.logOut()
       localStorage.token = ''
       localStorage.user_id = ''
+      window.location.href = '/'
     }
     // end HELPER FUNCTIONS
 
