@@ -32,7 +32,7 @@ class ProfileContainer extends React.Component {
 
     return likeDislike.map(venue => {
       return (
-        <div key={venue.id} className="col-4 pb-4">
+        <div key={venue.id} className="col-4 p-1">
           <Link to={`/venues/${venue.id}`}>
             <img src={venue.tip_photo} alt={venue.name} className="w-100" />
           </Link>
@@ -50,7 +50,7 @@ class ProfileContainer extends React.Component {
           <h2>{username}</h2>
         </div>
 
-        <div className="row justify-content-center mb-4 border-top border-bottom border-light">
+        <div className="row justify-content-center mb-1 border-top border-bottom border-light">
           <span className={this.state.showLikes ? "col-6 p-2 bg-light" : "col-6 p-2"} data-name="liked" onClick={event => this.handleClick(event)}>
             <strong>{liked.length}</strong> Likes
           </span>
