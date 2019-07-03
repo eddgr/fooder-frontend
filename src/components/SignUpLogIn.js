@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import adapter from '../services/adapter'
 
@@ -7,6 +8,12 @@ class SignUpLogIn extends React.Component {
   state = {
     username: '',
     password: ''
+  }
+
+  componentDidMount() {
+    if (localStorage.token && localStorage.user_id) {
+      this.props.history.push('/')
+    }
   }
 
   // HELPER FUNCTIONS
@@ -33,6 +40,7 @@ class SignUpLogIn extends React.Component {
 
               this.props.newUser(data)
               this.props.setLoggedIn()
+              this.props.history.push('/')
             } else {
               console.log(data.error)
             }
@@ -47,6 +55,7 @@ class SignUpLogIn extends React.Component {
 
             this.props.setUser(data)
             this.props.setLoggedIn()
+            this.props.history.push('/')
 
             this.setState({
               username: '',
@@ -63,40 +72,43 @@ class SignUpLogIn extends React.Component {
 
   render() {
     return (
-      <form className="form-group">
-        <input
-          className="form-control"
-          name="username"
-          value={this.state.username}
-          onChange={this.handleLoginChange}
-          placeholder="username"
-          type="text" />
-        <input
-          className="form-control"
-          name="password"
-          value={this.state.password}
-          onChange={this.handleLoginChange}
-          placeholder="password"
-          required
-          type="password" />
-        <br />
-        <div className="row text-center">
-          <div className="col-6">
-            <button
-              className="btn btn-primary w-100"
-              type="submit"
-              name="signup"
-              onClick={this.handleSubmitAuthForm}>Sign Up</button>
+      <div className="login">
+        <h2 className="text-center mt-4 mb-4">Connect with food minded people.</h2>
+        <form className="form-group mt-4">
+          <input
+            className="form-control p-4"
+            name="username"
+            value={this.state.username}
+            onChange={this.handleLoginChange}
+            placeholder="Username"
+            type="text" />
+          <input
+            className="form-control mt-4 p-4"
+            name="password"
+            value={this.state.password}
+            onChange={this.handleLoginChange}
+            placeholder="Password"
+            required
+            type="password" />
+          <br />
+          <div className="row text-center">
+            <div className="col-6">
+              <button
+                className="btn btn-primary w-100"
+                type="submit"
+                name="signup"
+                onClick={this.handleSubmitAuthForm}>Sign Up</button>
+            </div>
+            <div className="col-6">
+              <button
+                className="btn btn-outline-primary w-100"
+                type="submit"
+                name="login"
+                onClick={this.handleSubmitAuthForm}>Log In</button>
+            </div>
           </div>
-          <div className="col-6">
-            <button
-              className="btn btn-primary w-100"
-              type="submit"
-              name="login"
-              onClick={this.handleSubmitAuthForm}>Log In</button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     )
   }
 }
@@ -112,4 +124,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(SignUpLogIn)
+export default connect(null, mapDispatchToProps)(withRouter(SignUpLogIn))

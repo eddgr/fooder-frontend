@@ -1,10 +1,12 @@
 import { combineReducers } from "redux"
-import messageReducer from './messageReducer'
-import venueReducer from './venueReducer'
-import userReducer from './userReducer'
+import messages from './messageReducer'
+import venues from './venueReducer'
+import currentUser from './userReducer'
+import loggedIn from './loggedInReducer'
 
 export default combineReducers({
-  messages: messageReducer,
-  venues: venueReducer,
-  currentUser: userReducer
+  messages,
+  venues,
+  currentUser,
+  loggedIn
 })

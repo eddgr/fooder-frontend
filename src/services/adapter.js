@@ -14,7 +14,6 @@ const initialLoad = () => {
       long: localStorage.getItem("long")
     })
   })
-    .then(r => r.json())
 }
 
 const fetchRestaurants = () => {

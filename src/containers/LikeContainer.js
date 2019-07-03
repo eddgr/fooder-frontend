@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
 
 import LikeVenue from '../components/LikeVenue.js'
+import withAuth from '../hocs/withAuth'
 
 class LikeContainer extends React.Component {
   state = {
@@ -55,7 +56,7 @@ class LikeContainer extends React.Component {
     console.log("LikeContainer state", this.state)
     return (
       <div>
-        {this.showLikes()}
+        {this.state.likes.length <= 0 ? 'See all the venues you have liked here.' : this.showLikes()}
       </div>
     )
   }
@@ -78,4 +79,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LikeContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(withAuth(LikeContainer))

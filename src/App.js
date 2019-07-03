@@ -3,6 +3,7 @@ import NavBar from './components/NavBar'
 import MainContainer from './containers/MainContainer'
 import LikeContainer from './containers/LikeContainer'
 import ChatContainer from './containers/ChatContainer'
+import ProfileContainer from './containers/ProfileContainer'
 import SignUpLogIn from './components/SignUpLogIn'
 import VenueDetails from './components/VenueDetails'
 import TabbedBar from './components/TabbedBar'
@@ -11,6 +12,7 @@ import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import adapter from './services/adapter'
+import withAuth from './hocs/withAuth'
 
 class App extends React.Component {
   state = {
@@ -38,6 +40,7 @@ class App extends React.Component {
     // check if logged in
     if (!!localStorage.token) {
       adapter.initialLoad()
+      .then(r => r.json())
       .then(data => {
         if (!!data.username) {
           localStorage.setItem("user_id", data.id)
@@ -54,6 +57,7 @@ class App extends React.Component {
   } // end componentDidMount
 
   render() {
+    console.log('App props', this.props)
     return (
       <div>
       {
@@ -68,8 +72,10 @@ class App extends React.Component {
               <Switch>
                 <Route exact path="/" render={() => this.props.currentUser.loggedIn  ? <MainContainer logOut={this.props.logOut} /> : <SignUpLogIn setLoggedIn={this.setLoggedIn} />} />
                 <Route path="/venues/:id" render={routeProps => <VenueDetails routeProps={routeProps} currentUser={this.props.currentUser} />} />
-                <Route path="/likes" component={LikeContainer} />
-                <Route path="/chats" render={routeProps => <ChatContainer routeProps={routeProps} inChat={this.props.inChat} />} />
+                <Route exact path="/likes" component={LikeContainer} />
+                <Route exact path="/login" render={() => <SignUpLogIn setLoggedIn={this.setLoggedIn}/>} />
+                <Route exact path="/profile" component={ProfileContainer} />
+                <Route exact path="/chats" render={routeProps => <ChatContainer routeProps={routeProps} inChat={this.props.inChat} />} />
               </Switch>
             </div>
 
@@ -94,7 +100,8 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    loggedIn: state.loggedIn
   }
 }
 
@@ -115,4 +122,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(withAuth(App))

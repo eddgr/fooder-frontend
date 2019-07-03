@@ -13,6 +13,19 @@ code {
 }
 
 /* CUSTOM CSS */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  /* font-family: 'Roboto', sans-serif; */
+}
+
+#logo, #venue {
+  margin: 0;
+  font-size: 1em;
+}
+
 .chat-box {
   height: calc(100vh - 100px);
   /* 100px = ~ top + bottom navbars */
@@ -20,4 +33,12 @@ code {
 
 .card-height {
   height: 60vh
+}
+
+.login {
+  display: flex;
+  overflow: hidden;
+  height: calc(100vh - 100px);
+  flex-direction: column;
+  justify-content: center;
 }

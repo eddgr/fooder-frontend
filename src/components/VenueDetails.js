@@ -106,11 +106,18 @@ class VenueDetails extends React.Component {
 
           <hr />
 
-          <p className="text-info font-italic">
-            <i className="fas fa-quote-left"></i> {tip_text} <i className="fas fa-quote-right"></i>
-          </p>
+          {
+            tip_text ?
+              <>
+                <p className="text-info font-italic">
+                  <i className="fas fa-quote-left"></i> {tip_text} <i className="fas fa-quote-right"></i>
+                </p>
 
-          <hr />
+                <hr />
+              </>
+            :
+              null
+          }
 
           <div className="row justify-content-center text-center">
             {
