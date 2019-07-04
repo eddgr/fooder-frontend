@@ -2,7 +2,9 @@ const defaultState = {
   id: '',
   username: '',
   loggedIn: false,
-  loading: false,
+
+  loading: true,
+
   liked: [],
   disliked: [],
   filtered: false,
@@ -19,19 +21,19 @@ const defaultState = {
 
 const userReducer = (state=defaultState, action) => {
   switch (action.type) {
-    case 'LOADING':
-      return {
-        ...state,
-        loading: true
-      }
+    // case 'LOADED':
+    //   return {
+    //     ...state,
+    //     loading: false
+    //   }
     case 'SET_USER':
       console.log('SET_USER action.payload', action.payload)
       return {
         ...state,
         id: action.payload.id,
         username: action.payload.username,
-        loading: false,
         loggedIn: true,
+        loading: false,
         liked: action.payload.show_likes.sort((a,b) => {
           return b.updated_at.localeCompare(a.updated_at)
         }),
@@ -58,7 +60,7 @@ const userReducer = (state=defaultState, action) => {
         id: '',
         username: '',
         loggedIn: false,
-        loading: false,
+        loading: true,
         liked: [],
         disliked: [],
         filtered: false,

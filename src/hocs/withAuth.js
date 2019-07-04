@@ -7,7 +7,6 @@ export default function withAuth(ComponentToBeWrapped) {
   class Something extends React.Component {
     componentDidMount() {
       try {
-        // debugger
         this.props.logIn()
           .catch(e => {
             this.props.history.push("/login")
@@ -24,10 +23,6 @@ export default function withAuth(ComponentToBeWrapped) {
         {...this.props}
         />
     }
-  }
-
-  const mapStateToProps = state => {
-
   }
 
   return withRouter(connect(null, {

@@ -8,8 +8,6 @@ import adapter from '../services/adapter'
 class VenueContainer extends React.Component {
   componentDidMount() {
     if (this.props.venues.loading) {
-      return <div>Loading...</div>
-    } else {
       adapter.fetchRestaurants()
         .then(data => {
           const newData = data.filter(venue => {
@@ -46,13 +44,12 @@ class VenueContainer extends React.Component {
           let aDistance = distance(this.props.currentUser.location.lat, this.props.currentUser.location.long, a.lat, a.long)
           let bDistance = distance(this.props.currentUser.location.lat, this.props.currentUser.location.long, b.lat, b.long)
 
-          // return aDistance.localeCompare(bDistance)
           return aDistance - bDistance
         })
 
         this.props.addVenues(newDistanceData)
 
-        // this.props.initialLoad()
+        this.props.initialLoad()
       }) // end then
     }
   }

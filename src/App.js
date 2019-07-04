@@ -13,22 +13,9 @@ import VenueDetails from './components/VenueDetails'
 import TabbedBar from './components/TabbedBar'
 
 // HOCs
-import adapter from './services/adapter'
 import withAuth from './hocs/withAuth'
 
 class App extends React.Component {
-  state = {
-    loaded: false,
-    loggedIn: false
-  }
-
-  setLoggedIn = () => {
-    this.setState({
-      loggedIn: true,
-      loaded: true
-    })
-  }
-
   componentDidMount() {
     let getLoc = () => {
       navigator.geolocation.getCurrentPosition(position => {
@@ -38,24 +25,6 @@ class App extends React.Component {
     }
 
     getLoc()
-
-    // check if logged in
-    // if (!!localStorage.token) {
-    //   adapter.initialLoad()
-    //   .then(r => r.json())
-    //   .then(data => {
-    //     if (!!data.username) {
-    //       localStorage.setItem("user_id", data.id)
-    //
-    //       this.props.setUser(data)
-    //     }
-    //   })
-    //   this.setLoggedIn()
-    // } // end if
-
-    this.setState({
-      loaded: true
-    })
   } // end componentDidMount
 
   // HELPER FUNCTIONS
@@ -63,7 +32,6 @@ class App extends React.Component {
   mainApp = () => {
     return (
       <>
-
         {
           this.props.currentUser.loggedIn ?
             <NavBar
@@ -74,15 +42,15 @@ class App extends React.Component {
             null
         }
 
-        <div className={!this.props.currentUser.loading ? "container mt-4 mb-4 pt-4 pb-4" : null}>
+        <div className={this.props.currentUser.loggedIn ? "container mt-4 mb-4 pt-4 pb-4" : null}>
           <Switch>
-            <Route exact path="/" render={() => this.props.currentUser.loggedIn  ? <VenueContainer /> : <SignUpLogIn setLoggedIn={this.setLoggedIn} />} />
+            <Route exact path="/" component={VenueContainer} />
 
             <Route path="/venues/:id" render={routeProps => <VenueDetails routeProps={routeProps} currentUser={this.props.currentUser} />} />
 
             <Route exact path="/likes" component={LikeContainer} />
 
-            <Route exact path="/login" render={() => <SignUpLogIn setLoggedIn={this.setLoggedIn}/>} />
+            <Route exact path="/login" component={SignUpLogIn} />
 
             <Route exact path="/profile" render={() => <ProfileContainer logOut={this.props.logOut} />} />
 
@@ -99,50 +67,22 @@ class App extends React.Component {
       </>
     )
   }
-
-
   // end HELPER FUNCTIONS
 
   render() {
     console.log('App props', this.props)
     return (
       <>
-        { !this.props.currentUser.loading && this.mainApp() }
-
-        {/*
-          this.props.currentUser.loading && 'Loading...'
-        */}
-        {
-          this.props.currentUser.loggedIn ?
-            this.props.currentUser.loading && 'Loading...'
-          :
-            <SignUpLogIn setLoggedIn={this.setLoggedIn} />
-        }
+        {this.props.currentUser.loading ? <SignUpLogIn /> : this.mainApp()}
       </>
     )
   }
-  // render() {
-  //   console.log('App props', this.props)
-  //   return (
-  //     <>
-  //     {
-  //       !this.props.currentUser.loading ?
-  //         this.mainApp()
-  //       :
-  //         !this.props.currentUser.loggedIn &&
-  //           (<div className="m-4 p-4 text-center">
-  //             <h1>fooder</h1>
-  //             <SignUpLogIn setLoggedIn={this.setLoggedIn} />
-  //           </div>)
-  //     }
-  //     </>
-  //   )
-  // }
 }
 
 const mapStateToProps = state => {
   return {
     currentUser: state.currentUser
+    // loadingState: state.loading
   }
 }
 

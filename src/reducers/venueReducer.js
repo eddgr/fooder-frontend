@@ -1,6 +1,6 @@
 const defaultState = {
   venues: [],
-  loaded: false
+  loading: true
 }
 
 const venueReducer = (state=defaultState, action) => {
@@ -8,8 +8,8 @@ const venueReducer = (state=defaultState, action) => {
     case 'ADD_VENUES':
       console.log('venueReducer state', state)
       return {
-        ...state,
-        venues: action.payload
+        venues: action.payload,
+        loading: false
       }
     case 'LIKE_VENUE':
       console.log('LIKE_VENUE action.venue', action.venue)
@@ -20,7 +20,8 @@ const venueReducer = (state=defaultState, action) => {
 
       return {
         ...state,
-        venues: filteredLikedVenue
+        venues: filteredLikedVenue,
+        loading: false
       }
     case 'UNLIKE_VENUE':
       return {
@@ -47,7 +48,7 @@ const venueReducer = (state=defaultState, action) => {
     case 'INITIAL_LOAD':
       return {
         ...state,
-        loaded: true
+        loading: false
       }
 
     case 'LOG_OUT':
@@ -55,7 +56,7 @@ const venueReducer = (state=defaultState, action) => {
         ...state,
         liked: [],
         disliked: [],
-        loaded: false
+        loading: false
       }
     default:
       return state

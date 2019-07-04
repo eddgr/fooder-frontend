@@ -11,9 +11,11 @@ class SignUpLogIn extends React.Component {
   }
 
   componentDidMount() {
-    if (localStorage.token && localStorage.user_id) {
-      this.props.history.push('/')
-    }
+    // this.props.loaded()
+
+    // if (localStorage.token && localStorage.user_id) {
+    //   this.props.history.push('/')
+    // }
   }
 
   // HELPER FUNCTIONS
@@ -39,7 +41,6 @@ class SignUpLogIn extends React.Component {
               })
 
               this.props.newUser(data)
-              this.props.setLoggedIn()
               this.props.history.push('/')
             } else {
               console.log(data.error)
@@ -54,7 +55,6 @@ class SignUpLogIn extends React.Component {
             localStorage.setItem('user_id', data.id)
 
             this.props.setUser(data)
-            this.props.setLoggedIn()
             this.props.history.push('/')
 
             this.setState({
@@ -114,13 +114,9 @@ class SignUpLogIn extends React.Component {
   // end HELPER FUNCTIONS
 
   render() {
+    console.log('SignUpLogIn props', this.props);
     return (
-
-        this.props.currentUser.loading ?
-          'Loading...'
-        :
-          this.showForm()
-
+      this.showForm()
     )
   }
 }
@@ -138,6 +134,9 @@ const mapDispatchToProps = dispatch => {
     },
     newUser: auth => {
       dispatch({ type: 'NEW_USER', payload: auth })
+    },
+    loaded: () => {
+      dispatch({ type: 'LOADED' })
     }
   }
 }
