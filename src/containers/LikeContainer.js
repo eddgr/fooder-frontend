@@ -20,6 +20,7 @@ class LikeContainer extends React.Component {
     }
   }
 
+  // HELPER FUNCTIONS
   updateStateLikes = (restId, messageObj) => {
     // update the liked venue's updated_at so that it can resort itself to the top when new messages come in
     this.state.likes.find(r => r.id === restId).updated_at = messageObj.updated_at
@@ -52,11 +53,21 @@ class LikeContainer extends React.Component {
     })
   }
 
+  emptyLikes = () => {
+    return (
+      <div id="empty-likes" className="text-info">
+        <i class="fas fa-utensils display-4 mb-4"></i>
+        See all the venues you have liked here.
+      </div>
+    )
+  }
+  // end HELPER FUNCTIONS
+
   render() {
     console.log("LikeContainer state", this.state)
     return (
       <div>
-        {this.state.likes.length <= 0 ? 'See all the venues you have liked here.' : this.showLikes()}
+        {this.state.likes.length <= 0 ? this.emptyLikes() : this.showLikes()}
       </div>
     )
   }

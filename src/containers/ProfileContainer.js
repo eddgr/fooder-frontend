@@ -10,7 +10,6 @@ class ProfileContainer extends React.Component {
 
   // HELPER FUNCTIONS
   handleClick = event => {
-    console.log(event.currentTarget.name)
     if (event.currentTarget.dataset.name === 'liked') {
       this.setState({
         showLikes: true
