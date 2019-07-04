@@ -21,19 +21,16 @@ export default function withAuth(ComponentToBeWrapped) {
 
     render() {
       return <ComponentToBeWrapped
-        loggedIn={this.props.loggedIn}
         {...this.props}
         />
     }
   }
 
   const mapStateToProps = state => {
-    return {
-      loggedIn: state.loggedIn
-    }
+
   }
 
-  return withRouter(connect(mapStateToProps, {
+  return withRouter(connect(null, {
     logIn: logInAsync
   })(Something))
 }

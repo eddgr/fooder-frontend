@@ -1,29 +1,31 @@
 import adapter from '../services/adapter'
 
-export function logIn() {
+export const logIn = data => {
   return {
-    type: 'LOGGED_IN'
+    type: 'SET_USER', payload: data
   }
 }
 
-export function logInAsync(dispatch) {
-  // dispatch({
-  //   type: 'LOGGED_IN'
-  // })
-
+export const logInAsync = () => {
   if (!localStorage.token) {
     throw new Error('Please log in')
   }
 
-  adapter.initialLoad()
+  return dispatch => {
+    // add loading here
+
+    // then fetch
+    adapter.initialLoad()
     .then(r => {
       if (r.status === 401) {
         throw new Error('Unauthorized')
       }
       return r.json()
     })
-    
-    // .then(() => {
-    //   dispatch({ type: 'LOGGED_IN' })
-    // })
+    .then(data => {
+      setTimeout(() => {
+        dispatch(logIn(data))
+      }, 1500)
+    })
+  } // end dispatch
 }

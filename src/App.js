@@ -49,8 +49,8 @@ class App extends React.Component {
 
           this.props.setUser(data)
         }
-        this.setLoggedIn()
       })
+      this.setLoggedIn()
     } // end if
 
     this.setState({
@@ -102,14 +102,13 @@ class App extends React.Component {
             </div>)
       }
       </>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => {
   return {
-    currentUser: state.currentUser,
-    loggedIn: state.loggedIn
+    currentUser: state.currentUser
   }
 }
 
