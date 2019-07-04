@@ -24,11 +24,14 @@ class LikeContainer extends React.Component {
   updateStateLikes = (restId, messageObj) => {
     // update the liked venue's updated_at so that it can resort itself to the top when new messages come in
     this.state.likes.find(r => r.id === restId).updated_at = messageObj.updated_at
+    // update the text that is displayed in the chat preview
+    this.state.likes.find(r => r.id === restId).messages.push(messageObj)
 
     // sort the venues
     const sortMessage = this.state.likes.sort((a,b) => {
       return b.updated_at.localeCompare(a.updated_at)
     })
+    // debugger
 
     // update the local state
     this.setState({

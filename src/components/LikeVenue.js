@@ -12,7 +12,7 @@ export default function LikeVenue(props) {
 
   const updateMessagePreview = messageObj => {
     props.updateMessages(messageObj)
-    props.updateStateLikes(id, messageObj)
+    props.updateStateLikes(props.like.id, messageObj)
   }
 
   const iphone5 = window.matchMedia("(max-width: 320px)")
@@ -21,25 +21,25 @@ export default function LikeVenue(props) {
 
   const latestMessage = () => {
     if (messages.length > 0) {
-      const lastMessage = messages.slice(-1)
-
+      const lastMessage = messages.slice(-1)[0]
+      // debugger
       return (
         <>
           <p className="mb-n1">
             <strong className="pr-1">
               {
-                lastMessage[0].user_name ?
-                  lastMessage[0].user_name
+                lastMessage.user_name ?
+                  lastMessage.user_name
                 :
-                  lastMessage[0].username
+                  lastMessage.username
               }:
             </strong>
 
-              {lastMessage[0].content.substring(0, 16)}
-              {lastMessage[0].content.length > 16 ? "..." : null}
+            {lastMessage.content.substring(0, 16)}
+            {lastMessage.content.length > 16 ? "..." : null}
           </p>
           <small><em>
-            {moment(lastMessage[0].created_at).fromNow()}
+            {moment(lastMessage.created_at).fromNow()}
           </em></small>
         </>
       )

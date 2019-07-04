@@ -104,15 +104,15 @@ class App extends React.Component {
       <>
         { !this.props.currentUser.loading && this.mainApp() }
 
-        {
-            this.props.currentUser.loading && 'Loading...'
-        }
         {/*
+          this.props.currentUser.loading && 'Loading...'
+        */}
+        {
           this.props.currentUser.loggedIn ?
             this.props.currentUser.loading && 'Loading...'
           :
             <SignUpLogIn setLoggedIn={this.setLoggedIn} />
-        */}
+        }
       </>
     )
   }
