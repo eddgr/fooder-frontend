@@ -53,6 +53,7 @@ export default function LikeVenue(props) {
       onReceived={data => updateMessagePreview(data.payload)} />
 
       <Link
+        className="card-link"
         onClick={() => props.selectVenue(props.like)}
         to='/chats'
         id={id}>
@@ -70,7 +71,7 @@ export default function LikeVenue(props) {
           <div className={iphone5.matches ? "col" : "col-8"}>
             <div className="card-body">
               <div className="row card-title mb-1">
-                <span className="col-8 font-weight-bold">
+                <span className="col-8 font-weight-bold text-info">
                     {name.substring(0,10)}
                     {name.length > 10 ? '...' : null}
                 </span>

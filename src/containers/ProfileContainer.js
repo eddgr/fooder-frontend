@@ -8,8 +8,8 @@ class ProfileContainer extends React.Component {
     showLikes: true
   }
 
+  // HELPER FUNCTIONS
   handleClick = event => {
-    console.log(event.currentTarget.name)
     if (event.currentTarget.dataset.name === 'liked') {
       this.setState({
         showLikes: true
@@ -32,7 +32,7 @@ class ProfileContainer extends React.Component {
 
     return likeDislike.map(venue => {
       return (
-        <div key={venue.id} className="col-4 pb-4">
+        <div key={venue.id} className="col-4 p-1">
           <Link to={`/venues/${venue.id}`}>
             <img src={venue.tip_photo} alt={venue.name} className="w-100" />
           </Link>
@@ -40,6 +40,16 @@ class ProfileContainer extends React.Component {
       )
     })
   }
+
+  handleLogOut = () => {
+    this.props.logOut()
+    // localStorage.token = ''
+    // localStorage.user_id = ''
+    localStorage.clear()
+    window.location.href = '/'
+  }
+  // end HELPER FUNCTIONS
+
   render() {
     console.log("ProfileContainer props", this.props)
     const { username, liked, disliked } = this.props.currentUser
@@ -48,9 +58,10 @@ class ProfileContainer extends React.Component {
       <div className="text-center">
         <div className="m-4">
           <h2>{username}</h2>
+          <button className="btn btn-outline-danger" onClick={() => this.handleLogOut()}>Log Out</button>
         </div>
 
-        <div className="row justify-content-center mb-4 border-top border-bottom border-light">
+        <div className="row justify-content-center mb-1 border-top border-bottom border-light">
           <span className={this.state.showLikes ? "col-6 p-2 bg-light" : "col-6 p-2"} data-name="liked" onClick={event => this.handleClick(event)}>
             <strong>{liked.length}</strong> Likes
           </span>

@@ -83,7 +83,7 @@ class ChatContainer extends React.Component {
                 this.props.currentUser.username === message.username ?
                   <div className="text-right mr-0 ml-0 mt-2 mb-2">
 
-                    <p className="text-left d-inline-block mb-0 flex p-2 pr-3 pl-3 bg-primary rounded-lg text-white">
+                    <p className="text-left d-inline-block mb-0 flex p-2 pr-3 pl-3 bg-info rounded-lg text-white">
                       {message.content}
                     </p>
                     <p className="text-black-50 pr-1">
@@ -159,7 +159,7 @@ class ChatContainer extends React.Component {
               value={this.state.currentMessage}
               type="text" />
             <button
-              className="btn btn-primary rounded-0"
+              className="btn btn-info rounded-0"
               type="submit">
               <i className="fas fa-paper-plane"></i>
             </button>

@@ -72,7 +72,7 @@ class SignUpLogIn extends React.Component {
 
   render() {
     return (
-      <div id="login">
+      <div id="login" className="col-md-4">
         <h1>fooder</h1>
         <p className="mb-4">Connect with food minded people.</p>
         <form className="form-group mt-4">
