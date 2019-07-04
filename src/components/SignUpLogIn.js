@@ -68,9 +68,8 @@ class SignUpLogIn extends React.Component {
         console.log("boop")
     }
   }
-  // end HELPER FUNCTIONS
 
-  render() {
+  showForm = () => {
     return (
       <div id="login" className="col-md-4">
         <h1>fooder</h1>
@@ -112,6 +111,24 @@ class SignUpLogIn extends React.Component {
       </div>
     )
   }
+  // end HELPER FUNCTIONS
+
+  render() {
+    return (
+
+        this.props.currentUser.loading ?
+          'Loading...'
+        :
+          this.showForm()
+
+    )
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    currentUser: state.currentUser
+  }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -125,4 +142,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(SignUpLogIn))
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SignUpLogIn))

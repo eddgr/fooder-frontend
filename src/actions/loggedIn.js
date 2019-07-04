@@ -1,5 +1,11 @@
 import adapter from '../services/adapter'
 
+export const loading = () => {
+  return {
+    type: 'LOADING'
+  }
+}
+
 export const logIn = data => {
   return {
     type: 'SET_USER', payload: data
@@ -13,6 +19,7 @@ export const logInAsync = () => {
 
   return dispatch => {
     // add loading here
+    dispatch(loading())
 
     // then fetch
     adapter.initialLoad()

@@ -2,7 +2,7 @@ const defaultState = {
   id: '',
   username: '',
   loggedIn: false,
-  loading: true,
+  loading: false,
   liked: [],
   disliked: [],
   filtered: false,
@@ -19,6 +19,11 @@ const defaultState = {
 
 const userReducer = (state=defaultState, action) => {
   switch (action.type) {
+    case 'LOADING':
+      return {
+        ...state,
+        loading: true
+      }
     case 'SET_USER':
       console.log('SET_USER action.payload', action.payload)
       return {
@@ -53,6 +58,7 @@ const userReducer = (state=defaultState, action) => {
         id: '',
         username: '',
         loggedIn: false,
+        loading: false,
         liked: [],
         disliked: [],
         filtered: false,

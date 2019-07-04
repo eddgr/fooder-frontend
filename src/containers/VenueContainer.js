@@ -7,8 +7,8 @@ import adapter from '../services/adapter'
 
 class VenueContainer extends React.Component {
   componentDidMount() {
-    if (this.props.venues.loaded) {
-
+    if (this.props.venues.loading) {
+      return <div>Loading...</div>
     } else {
       adapter.fetchRestaurants()
         .then(data => {
@@ -52,7 +52,7 @@ class VenueContainer extends React.Component {
 
         this.props.addVenues(newDistanceData)
 
-        this.props.initialLoad()
+        // this.props.initialLoad()
       }) // end then
     }
   }
@@ -82,7 +82,7 @@ class VenueContainer extends React.Component {
           restaurants you've liked:
           {this.props.currentUser.liked.slice(-5).map(rest => {
             return (
-              <li>{rest.name}</li>
+              <li key={rest.id}>{rest.name}</li>
             )
           })}
         </>
@@ -120,7 +120,7 @@ class VenueContainer extends React.Component {
     console.log("VenueContainer props", this.props)
     return (
       <div>
-        {this.props.venues.loaded ? this.displayVenues() : "Loading..."}
+        {this.props.venues.loading ? 'Loading...' : this.displayVenues()}
       </div>
     )
   }
