@@ -2,6 +2,7 @@ const defaultState = {
   id: '',
   username: '',
   loggedIn: false,
+  loading: true,
   liked: [],
   disliked: [],
   filtered: false,
@@ -25,6 +26,7 @@ const userReducer = (state=defaultState, action) => {
         id: action.payload.id,
         username: action.payload.username,
         loggedIn: true,
+        loading: false,
         liked: action.payload.show_likes.sort((a,b) => {
           return b.updated_at.localeCompare(a.updated_at)
         }),

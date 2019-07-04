@@ -40,70 +40,99 @@ class App extends React.Component {
     getLoc()
 
     // check if logged in
-    if (!!localStorage.token) {
-      adapter.initialLoad()
-      .then(r => r.json())
-      .then(data => {
-        if (!!data.username) {
-          localStorage.setItem("user_id", data.id)
-
-          this.props.setUser(data)
-        }
-      })
-      this.setLoggedIn()
-    } // end if
+    // if (!!localStorage.token) {
+    //   adapter.initialLoad()
+    //   .then(r => r.json())
+    //   .then(data => {
+    //     if (!!data.username) {
+    //       localStorage.setItem("user_id", data.id)
+    //
+    //       this.props.setUser(data)
+    //     }
+    //   })
+    //   this.setLoggedIn()
+    // } // end if
 
     this.setState({
       loaded: true
     })
   } // end componentDidMount
 
+  // HELPER FUNCTIONS
+
+  mainApp = () => {
+    return (
+      <>
+
+        {
+          this.props.currentUser.loggedIn ?
+            <NavBar
+              notInChat={this.props.notInChat}
+              inChat={this.props.inChat}
+              currentUser={this.props.currentUser} />
+          :
+            null
+        }
+
+        <div className={!this.props.currentUser.loading ? "container mt-4 mb-4 pt-4 pb-4" : null}>
+          <Switch>
+            <Route exact path="/" render={() => this.props.currentUser.loggedIn  ? <VenueContainer /> : <SignUpLogIn setLoggedIn={this.setLoggedIn} />} />
+            <Route path="/venues/:id" render={routeProps => <VenueDetails routeProps={routeProps} currentUser={this.props.currentUser} />} />
+            <Route exact path="/likes" component={LikeContainer} />
+            <Route exact path="/login" render={() => <SignUpLogIn setLoggedIn={this.setLoggedIn}/>} />
+            <Route exact path="/profile" render={() => <ProfileContainer logOut={this.props.logOut} />} />
+            <Route exact path="/chats" render={routeProps => <ChatContainer routeProps={routeProps} inChat={this.props.inChat} />} />
+          </Switch>
+        </div>
+
+        {
+          this.props.currentUser.inChat || !this.props.currentUser.loggedIn ?
+            null
+          :
+          <TabbedBar notInChat={this.props.notInChat} />
+        }
+      </>
+    )
+  }
+
+
+  // end HELPER FUNCTIONS
+
   render() {
     console.log('App props', this.props)
     return (
       <>
-      {
-        this.state.loaded ?
-          <>
+        { !this.props.currentUser.loading && this.mainApp() }
 
-            {
-              this.state.loggedIn ?
-                <NavBar
-                  notInChat={this.props.notInChat}
-                  inChat={this.props.inChat}
-                  currentUser={this.props.currentUser} />
-              :
-                null
-            }
-
-            <div className={this.state.loggedIn ? "container mt-4 mb-4 pt-4 pb-4" : null}>
-              <Switch>
-                <Route exact path="/" render={() => this.props.currentUser.loggedIn  ? <VenueContainer /> : <SignUpLogIn setLoggedIn={this.setLoggedIn} />} />
-                <Route path="/venues/:id" render={routeProps => <VenueDetails routeProps={routeProps} currentUser={this.props.currentUser} />} />
-                <Route exact path="/likes" component={LikeContainer} />
-                <Route exact path="/login" render={() => <SignUpLogIn setLoggedIn={this.setLoggedIn}/>} />
-                <Route exact path="/profile" render={() => <ProfileContainer logOut={this.props.logOut} />} />
-                <Route exact path="/chats" render={routeProps => <ChatContainer routeProps={routeProps} inChat={this.props.inChat} />} />
-              </Switch>
-            </div>
-
-            {
-              this.props.currentUser.inChat || !this.state.loggedIn ?
-                null
-              :
-              <TabbedBar notInChat={this.props.notInChat} />
-            }
-          </>
-        :
-          !this.state.loggedIn &&
-            (<div className="m-4 p-4 text-center">
-              <h1>fooder</h1>
-              <SignUpLogIn setLoggedIn={this.setLoggedIn} />
-            </div>)
-      }
+        {
+            this.props.currentUser.loading && 'Loading...'
+        }
+        {/*
+          this.props.currentUser.loggedIn ?
+            this.props.currentUser.loading && 'Loading...'
+          :
+            <SignUpLogIn setLoggedIn={this.setLoggedIn} />
+        */}
       </>
     )
   }
+  // render() {
+  //   console.log('App props', this.props)
+  //   return (
+  //     <>
+  //     {
+  //       !this.props.currentUser.loading ?
+  //         this.mainApp()
+  //       :
+  //         !this.props.currentUser.loggedIn &&
+  //           (<div className="m-4 p-4 text-center">
+  //             <h1>fooder</h1>
+  //             <SignUpLogIn setLoggedIn={this.setLoggedIn} />
+  //           </div>)
+  //     }
+  //     </>
+  //   )
+  // }
 }
 
 const mapStateToProps = state => {
