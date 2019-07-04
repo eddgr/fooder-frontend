@@ -25,6 +25,9 @@ class LikeContainer extends React.Component {
     // update the liked venue's updated_at so that it can resort itself to the top when new messages come in
     this.state.likes.find(r => r.id === restId).updated_at = messageObj.updated_at
 
+    // update the text that is displayed in the chat preview
+    this.state.likes.find(r => r.id === restId).messages.push(messageObj)
+
     // sort the venues
     const sortMessage = this.state.likes.sort((a,b) => {
       return b.updated_at.localeCompare(a.updated_at)
@@ -56,7 +59,7 @@ class LikeContainer extends React.Component {
   emptyLikes = () => {
     return (
       <div id="empty-likes" className="text-info">
-        <i class="fas fa-utensils display-4 mb-4"></i>
+        <i className="fas fa-utensils display-4 mb-4"></i>
         See all the venues you have liked here.
       </div>
     )

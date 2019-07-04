@@ -7,9 +7,7 @@ import adapter from '../services/adapter'
 
 class VenueContainer extends React.Component {
   componentDidMount() {
-    if (this.props.venues.loaded) {
-
-    } else {
+    if (this.props.venues.loading) {
       adapter.fetchRestaurants()
         .then(data => {
           const newData = data.filter(venue => {
@@ -46,7 +44,6 @@ class VenueContainer extends React.Component {
           let aDistance = distance(this.props.currentUser.location.lat, this.props.currentUser.location.long, a.lat, a.long)
           let bDistance = distance(this.props.currentUser.location.lat, this.props.currentUser.location.long, b.lat, b.long)
 
-          // return aDistance.localeCompare(bDistance)
           return aDistance - bDistance
         })
 
@@ -82,7 +79,7 @@ class VenueContainer extends React.Component {
           restaurants you've liked:
           {this.props.currentUser.liked.slice(-5).map(rest => {
             return (
-              <li>{rest.name}</li>
+              <li key={rest.id}>{rest.name}</li>
             )
           })}
         </>
@@ -120,7 +117,7 @@ class VenueContainer extends React.Component {
     console.log("VenueContainer props", this.props)
     return (
       <div>
-        {this.props.venues.loaded ? this.displayVenues() : "Loading..."}
+        {this.props.venues.loading ? 'Loading...' : this.displayVenues()}
       </div>
     )
   }

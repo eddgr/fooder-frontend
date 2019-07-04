@@ -63,10 +63,14 @@ class ProfileContainer extends React.Component {
 
         <div className="row justify-content-center mb-1 border-top border-bottom border-light">
           <span className={this.state.showLikes ? "col-6 p-2 bg-light" : "col-6 p-2"} data-name="liked" onClick={event => this.handleClick(event)}>
-            <strong>{liked.length}</strong> Likes
+            <small>
+              <strong>{liked.length}</strong> Likes
+            </small>
           </span>
           <span className={this.state.showLikes ? "col-6 p-2" : "col-6 p-2 bg-light"} data-name="disliked" onClick={event => this.handleClick(event)}>
-            <strong>{disliked.length}</strong> Dislikes
+            <small>
+              <strong>{disliked.length}</strong> Dislikes
+            </small>
           </span>
         </div>
 

@@ -11,9 +11,11 @@ class SignUpLogIn extends React.Component {
   }
 
   componentDidMount() {
-    if (localStorage.token && localStorage.user_id) {
-      this.props.history.push('/')
-    }
+    // this.props.loaded()
+
+    // if (localStorage.token && localStorage.user_id) {
+    //   this.props.history.push('/')
+    // }
   }
 
   // HELPER FUNCTIONS
@@ -39,7 +41,6 @@ class SignUpLogIn extends React.Component {
               })
 
               this.props.newUser(data)
-              this.props.setLoggedIn()
               this.props.history.push('/')
             } else {
               console.log(data.error)
@@ -54,7 +55,6 @@ class SignUpLogIn extends React.Component {
             localStorage.setItem('user_id', data.id)
 
             this.props.setUser(data)
-            this.props.setLoggedIn()
             this.props.history.push('/')
 
             this.setState({
@@ -68,9 +68,8 @@ class SignUpLogIn extends React.Component {
         console.log("boop")
     }
   }
-  // end HELPER FUNCTIONS
 
-  render() {
+  showForm = () => {
     return (
       <div id="login" className="col-md-4">
         <h1>fooder</h1>
@@ -112,6 +111,20 @@ class SignUpLogIn extends React.Component {
       </div>
     )
   }
+  // end HELPER FUNCTIONS
+
+  render() {
+    console.log('SignUpLogIn props', this.props);
+    return (
+      this.showForm()
+    )
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    currentUser: state.currentUser
+  }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -121,8 +134,11 @@ const mapDispatchToProps = dispatch => {
     },
     newUser: auth => {
       dispatch({ type: 'NEW_USER', payload: auth })
+    },
+    loaded: () => {
+      dispatch({ type: 'LOADED' })
     }
   }
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(SignUpLogIn))
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SignUpLogIn))

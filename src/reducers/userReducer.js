@@ -2,6 +2,9 @@ const defaultState = {
   id: '',
   username: '',
   loggedIn: false,
+
+  loading: true,
+
   liked: [],
   disliked: [],
   filtered: false,
@@ -18,6 +21,11 @@ const defaultState = {
 
 const userReducer = (state=defaultState, action) => {
   switch (action.type) {
+    // case 'LOADED':
+    //   return {
+    //     ...state,
+    //     loading: false
+    //   }
     case 'SET_USER':
       console.log('SET_USER action.payload', action.payload)
       return {
@@ -25,6 +33,7 @@ const userReducer = (state=defaultState, action) => {
         id: action.payload.id,
         username: action.payload.username,
         loggedIn: true,
+        loading: false,
         liked: action.payload.show_likes.sort((a,b) => {
           return b.updated_at.localeCompare(a.updated_at)
         }),
@@ -51,6 +60,7 @@ const userReducer = (state=defaultState, action) => {
         id: '',
         username: '',
         loggedIn: false,
+        loading: true,
         liked: [],
         disliked: [],
         filtered: false,
@@ -118,7 +128,7 @@ const userReducer = (state=defaultState, action) => {
       const filterSelectedRestaurant = state.liked.filter(rest => rest.id === action.payload.restaurant_id)[0]
 
       // then add action.payload to liked.messages array
-     filterSelectedRestaurant.messages.push(action.payload)
+      filterSelectedRestaurant.messages.push(action.payload)
 
       // find index of filtered rest
       const stateLikedDuplicate = [...state.liked]

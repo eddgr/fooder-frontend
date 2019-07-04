@@ -23,7 +23,7 @@ body {
 
 #logo, #venue {
   margin: 0;
-  font-size: 1em;
+  font-size: 1.2rem;
 }
 
 .chat-box {
@@ -44,6 +44,7 @@ body {
   height: 100vh;
   flex-direction: column;
   justify-content: center;
+  z-index: 1;
 }
 
 #empty-likes {
@@ -52,4 +53,9 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.loading {
+  position: absolute;
+  z-index: 100;
 }

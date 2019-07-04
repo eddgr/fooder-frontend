@@ -13,6 +13,9 @@ class ChatContainer extends React.Component {
   }
 
   componentDidMount() {
+    if (!localStorage.token) {
+      window.location.href = '/login'
+    }
     this.showChat()
     this.props.inChat()
   }
@@ -147,7 +150,7 @@ class ChatContainer extends React.Component {
               {this.showCurrentMessages()}
             </div>
           :
-            "Loading"
+            "Loading..."
         }
         <form
           className="form-inline fixed-bottom"
