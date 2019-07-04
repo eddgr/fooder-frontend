@@ -1,4 +1,8 @@
 import React from 'react';
+import { Route, Switch } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+// Containers and Components
 import NavBar from './components/NavBar'
 import VenueContainer from './containers/VenueContainer'
 import LikeContainer from './containers/LikeContainer'
@@ -8,9 +12,7 @@ import SignUpLogIn from './components/SignUpLogIn'
 import VenueDetails from './components/VenueDetails'
 import TabbedBar from './components/TabbedBar'
 
-import { Route, Switch } from 'react-router-dom'
-import { connect } from 'react-redux'
-
+// HOCs
 import adapter from './services/adapter'
 import withAuth from './hocs/withAuth'
 
