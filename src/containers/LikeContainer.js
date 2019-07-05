@@ -11,12 +11,15 @@ class LikeContainer extends React.Component {
   }
 
   componentDidMount() {
-    if (this.state.likes.length <= 0) {
-      setTimeout(() => {
-        this.setState({
-          likes: this.props.likes
-        })
-      }, 1500)
+    if (this.props.loading) {
+      if (this.state.likes.length <= 0) {
+        setTimeout(() => {
+          this.setState({
+            likes: this.props.likes
+          })
+        }, 1500)
+      }
+      this.props.loaded()
     }
   }
 
@@ -79,6 +82,7 @@ class LikeContainer extends React.Component {
 const mapStateToProps = state => {
   return {
     likes: state.currentUser.liked
+    // loading: state.currentUser.loading
   }
 }
 
@@ -89,6 +93,9 @@ const mapDispatchToProps = dispatch => {
     },
     updateMessages: messageObj => {
       dispatch({ type: 'SEND_MESSAGE', payload: messageObj })
+    },
+    loaded: () => {
+      dispatch({ type: 'LOADED' })
     }
   }
 }

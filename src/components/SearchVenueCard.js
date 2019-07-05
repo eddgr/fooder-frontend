@@ -1,17 +1,11 @@
 import React from 'react'
 
 import { Link } from 'react-router-dom'
-import { ActionCableConsumer } from 'react-actioncable-provider'
 
 import moment from 'moment'
 
 export default function LikeVenue(props) {
-  const { id, messages, tip_photo, name, favorites } = props.like
-
-  const updateMessagePreview = messageObj => {
-    props.updateMessages(messageObj)
-    props.updateStateLikes(props.like.id, messageObj)
-  }
+  const { id, messages, tip_photo, name, favorites } = props.venue
 
   const iphone5 = window.matchMedia("(max-width: 320px)")
 
@@ -43,14 +37,9 @@ export default function LikeVenue(props) {
 
   return (
     <div className="card rounded-0 mt-2 mb-2">
-      <ActionCableConsumer
-      channel={{ channel: "ChatThreadChannel", restaurant_id: id }}
-      onReceived={data => updateMessagePreview(data.payload)} />
-
       <Link
         className="card-link"
-        onClick={() => props.selectVenue(props.like)}
-        to='/chats'
+        to={`/venues/${id}`}
         id={id}>
         <div className="row no-gutters">
 

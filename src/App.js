@@ -8,6 +8,7 @@ import VenueContainer from './containers/VenueContainer'
 import LikeContainer from './containers/LikeContainer'
 import ChatContainer from './containers/ChatContainer'
 import ProfileContainer from './containers/ProfileContainer'
+import SearchContainer from './containers/SearchContainer'
 import SignUpLogIn from './components/SignUpLogIn'
 import VenueDetails from './components/VenueDetails'
 import TabbedBar from './components/TabbedBar'
@@ -51,6 +52,8 @@ class App extends React.Component {
             <Route exact path="/likes" component={LikeContainer} />
 
             <Route exact path="/login" component={SignUpLogIn} />
+
+            <Route exact path="/search" component={SearchContainer} />
 
             <Route exact path="/profile" render={() => <ProfileContainer logOut={this.props.logOut} />} />
 
