@@ -28,7 +28,7 @@ function NavBar(props) {
   }
 
   const searchIcon = () => {
-    if (window.location.pathname === '/search') {
+    if (window.location.pathname === '/search' || window.location.pathname.includes('/venues/') ) {
       return <i onClick={() => window.history.go(-1)} className="fas fa-chevron-left" />
     }
     return <Link to="/search"><i className="fas fa-search text-dark"></i></Link>
