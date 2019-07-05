@@ -19,7 +19,7 @@ const store = createStore(
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      <ActionCableProvider url={"wss://fooder-app-frontend.herokuapp.com/cable"}>
+      <ActionCableProvider url={"wss://fooder-app-backend.herokuapp.com/cable"}>
         <App />
       </ActionCableProvider>
     </Provider>
