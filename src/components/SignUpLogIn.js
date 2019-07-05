@@ -7,12 +7,12 @@ import adapter from '../services/adapter'
 class SignUpLogIn extends React.Component {
   state = {
     username: '',
-    password: ''
+    password: '',
+    errorMsg: ''
   }
 
   componentDidMount() {
     // this.props.loaded()
-
     // if (localStorage.token && localStorage.user_id) {
     //   this.props.history.push('/')
     // }
@@ -43,6 +43,7 @@ class SignUpLogIn extends React.Component {
               this.props.newUser(data)
               this.props.history.push('/')
             } else {
+              this.setState({errorMsg: data.error})
               console.log(data.error)
             }
           })
@@ -51,16 +52,22 @@ class SignUpLogIn extends React.Component {
       case "login":
         adapter.logInReq(this.state.username, this.state.password)
           .then(data => {
-            localStorage.setItem('token', data.token)
-            localStorage.setItem('user_id', data.id)
+            if (!data.error) {
+              localStorage.setItem('token', data.token)
+              localStorage.setItem('user_id', data.id)
 
-            this.props.setUser(data)
-            this.props.history.push('/')
+              this.props.setUser(data)
+              this.props.history.push('/')
 
-            this.setState({
-              username: '',
-              password: '',
-            })
+              this.setState({
+                username: '',
+                password: '',
+                errorMsg: ''
+              })
+            } else {
+              this.setState({errorMsg: data.error})
+              console.log(data.error)
+            }
           })
         // end fetch
         break
@@ -74,6 +81,11 @@ class SignUpLogIn extends React.Component {
       <div id="login" className="col-md-4">
         <h1>fooder</h1>
         <p className="mb-4">Connect with food minded people.</p>
+
+        {this.state.errorMsg !== '' && <div class="alert alert-danger" role="alert">
+          {this.state.errorMsg}
+        </div>}
+
         <form className="form-group mt-4">
           <input
             className="form-control pt-4 pb-4"

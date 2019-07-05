@@ -1,10 +1,10 @@
 import adapter from '../services/adapter'
 
-// export const loading = () => {
-//   return {
-//     type: 'LOADING'
-//   }
-// }
+export const loading = () => {
+  return {
+    type: 'LOADING'
+  }
+}
 
 export const logIn = data => {
   return {
@@ -19,7 +19,7 @@ export const logInAsync = () => {
 
   return dispatch => {
     // add loading here
-    // dispatch(loading())
+    dispatch(loading())
 
     // then fetch
     adapter.initialLoad()
@@ -32,7 +32,7 @@ export const logInAsync = () => {
     .then(data => {
       setTimeout(() => {
         dispatch(logIn(data))
-      }, 1500)
+      }, 1500) // change back to 1500
     })
   } // end dispatch
 }

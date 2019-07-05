@@ -27,15 +27,22 @@ function NavBar(props) {
     )
   }
 
+  const searchIcon = () => {
+    if (window.location.pathname === '/search' || window.location.pathname.includes('/venues/') ) {
+      return <i onClick={() => window.history.go(-1)} className="fas fa-chevron-left" />
+    }
+    return <Link to="/search"><i className="fas fa-search text-dark"></i></Link>
+  }
+
   const normNav = () => {
     return (
       <>
-        {props.currentUser.id !== '' ? <i className="fas fa-search"></i> : null}
+        {props.currentUser.id !== '' ? searchIcon() : null}
 
         <h1 id="logo" className="mx-auto" onClick={() => window.scrollTo(0,0)}>
           fooder
         </h1>
-        
+
         {
           props.currentUser.selectedVenue.id === parseInt(window.location.pathname.replace(/\/venues\//, '')) ?
             <Link to="/chats"><i className="text-dark far fa-comments"></i></Link>

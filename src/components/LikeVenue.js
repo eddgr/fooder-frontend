@@ -8,8 +8,6 @@ import moment from 'moment'
 export default function LikeVenue(props) {
   const { id, messages, tip_photo, name, favorites } = props.like
 
-  // const moment = require('moment')
-
   const updateMessagePreview = messageObj => {
     props.updateMessages(messageObj)
     props.updateStateLikes(props.like.id, messageObj)
@@ -17,12 +15,9 @@ export default function LikeVenue(props) {
 
   const iphone5 = window.matchMedia("(max-width: 320px)")
 
-  // debugger
-
   const latestMessage = () => {
     if (messages.length > 0) {
       const lastMessage = messages.slice(-1)[0]
-      // debugger
       return (
         <>
           <p className="mb-n1">
