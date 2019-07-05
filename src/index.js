@@ -10,10 +10,10 @@ import { createStore, applyMiddleware } from 'redux'
 import rootReducer from './reducers/index'
 import { BrowserRouter } from 'react-router-dom'
 import thunk from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension';
+// import { composeWithDevTools } from 'redux-devtools-extension';
 
 const store = createStore(
-  rootReducer, composeWithDevTools(applyMiddleware(thunk))
+  rootReducer, applyMiddleware(thunk)
 )
 
 ReactDOM.render(
