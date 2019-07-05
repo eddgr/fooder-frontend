@@ -63,6 +63,7 @@ class VenueDetails extends React.Component {
         })
         this.props.dislikeVenue(venue)
         this.setState({
+          likedByUser: true,
           dislikedByUser: true
         })
         break
@@ -138,10 +139,10 @@ class VenueDetails extends React.Component {
       <>
         <img className="card-img-top" src={tip_photo} alt={name} />
         <div className="card-body">
-          <h3 className="card-title">{name}</h3>
+          <h3 className="card-title text-info">{name}</h3>
 
           <div className="text-black-50">
-            <p className="mb-0 font-weight-bold">
+            <p className="font-weight-bold">
                 <i className="fas fa-utensils pr-1"></i> {categories}
             </p>
 
@@ -168,7 +169,7 @@ class VenueDetails extends React.Component {
           {
             tip_text ?
               <>
-                <p className="text-info font-italic">
+                <p className="text-warning font-italic">
                   <i className="fas fa-quote-left"></i> {tip_text} <i className="fas fa-quote-right"></i>
                 </p>
 

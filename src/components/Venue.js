@@ -38,39 +38,27 @@ export default class Venue extends React.Component {
       <div className="card col-sm p-0 mb-2" data-fsq-id={fsq_id}>
 
         <Link to={`/venues/${id}`}>
-          <img src={tip_photo} className="card-img-top border-0" alt={name} />
+          <div className="venue-card">
+            <img src={tip_photo} className="card-img-top border-0" alt={name} />
+            <div className="venue-card-text">
+              <h2 className="card-title text-light">{name}</h2>
+              <span className="text-light col-6">
+                <strong>
+                  {favorites.length}
+                  <i className="fas fa-users pl-1"></i>
+                </strong>
+              </span>
+              <span className="text-light col-6">
+                <strong>
+                  <i className="fas fa-map-pin pr-1"></i>
+                  {parseFloat(distance(this.props.userLat, this.props.userLong, lat, long)).toFixed(2)} mi
+                </strong>
+              </span>
+            </div>
+          </div>
         </Link>
 
         <div className="card-body text-center">
-          <h3 className="card-title">{name}</h3>
-
-          <p className="text-black-50">
-            <strong>
-              <i className="fas fa-utensils pr-1"></i>
-              {categories}
-            </strong>
-          </p>
-          <div className="row mb-3">
-            <span className="text-warning col-6">
-              <strong>
-                {favorites.length}
-                <i className="fas fa-users pl-1"></i>
-              </strong>
-            </span>
-            <span className="text-info col-6">
-              <strong>
-                <i className="fas fa-map-pin pr-1"></i>
-                {parseFloat(distance(this.props.userLat, this.props.userLong, lat, long)).toFixed(2)} mi
-              </strong>
-            </span>
-          </div>
-
-          <p className="text-black-50">
-            <small>
-              {location}
-            </small>
-          </p>
-
           <div className="row justify-content-center text-center">
             <div className="col-6">
               <button
