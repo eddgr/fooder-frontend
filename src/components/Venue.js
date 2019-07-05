@@ -10,7 +10,7 @@ export default class Venue extends React.Component {
 
   render() {
     console.log('Venue props', this.props)
-    const { id, name, fsq_id, location, categories, favorites, lat, long, tip_photo } = this.props.venue
+    const { id, name, fsq_id, favorites, lat, long, tip_photo } = this.props.venue
 
     const distance = (lat1, lon1, lat2, lon2, unit) => {
       if ((lat1 === lat2) && (lon1 === lon2)) {

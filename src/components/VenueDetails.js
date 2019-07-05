@@ -137,9 +137,13 @@ class VenueDetails extends React.Component {
 
     return (
       <>
-        <img className="card-img-top" src={tip_photo} alt={name} />
+        <div className="venue-card">
+          <img className="card-img-top" src={tip_photo} alt={name} />
+          <div className="venue-card-text">
+            <h2 className="card-title text-light">{name}</h2>
+          </div>
+        </div>
         <div className="card-body">
-          <h3 className="card-title text-info">{name}</h3>
 
           <div className="text-black-50">
             <p className="font-weight-bold">
