@@ -27,10 +27,17 @@ function NavBar(props) {
     )
   }
 
+  const searchIcon = () => {
+    if (window.location.pathname === '/search') {
+      return <i onClick={() => window.history.go(-1)} className="fas fa-chevron-left" />
+    }
+    return <Link to="/search"><i className="fas fa-search text-dark"></i></Link>
+  }
+
   const normNav = () => {
     return (
       <>
-        {props.currentUser.id !== '' ? <Link to="/search"><i className="fas fa-search text-dark"></i></Link> : null}
+        {props.currentUser.id !== '' ? searchIcon() : null}
 
         <h1 id="logo" className="mx-auto" onClick={() => window.scrollTo(0,0)}>
           fooder
