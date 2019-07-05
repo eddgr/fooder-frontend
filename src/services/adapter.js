@@ -1,5 +1,7 @@
-const API_URL = 'http://localhost:8000'
-const BACKEND_API = 'http://localhost:8000/api/v1/'
+// const API_URL = 'http://localhost:8000'
+// const BACKEND_API = 'http://localhost:8000/api/v1/'
+const API_URL = 'https://fooder-app-backend.herokuapp.com'
+const BACKEND_API = 'https://fooder-app-backend.herokuapp.com/api/v1/'
 
 const initialLoad = () => {
   return fetch(API_URL + '/profile', {

@@ -12,7 +12,7 @@ export default function withAuth(ComponentToBeWrapped) {
             this.props.history.push("/login")
           })
       } catch (e) {
-        if (e.message === "Please log in") {
+        if (e.message === "Please log in" || e.error === 'Not Found') {
           this.props.history.push("/login")
         }
       }
