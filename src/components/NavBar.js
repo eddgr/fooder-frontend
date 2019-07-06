@@ -17,7 +17,8 @@ function NavBar(props) {
         <i onClick={() => handleGoBack()} className="fas fa-chevron-left"></i>
 
         <h1 id="venue" onClick={() => document.querySelector("#chat-box").scrollTo(0,0)}>
-          {props.currentUser.selectedVenue.name}
+          {props.currentUser.selectedVenue.name.substring(0, 16)}
+          {props.currentUser.selectedVenue.name.length > 16 ? "..." : null}
         </h1>
 
         <Link onClick={() => moreInfo()} to={`venues/${props.currentUser.selectedVenue.id}`}>

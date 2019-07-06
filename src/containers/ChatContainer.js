@@ -64,6 +64,15 @@ class ChatContainer extends React.Component {
     }
   }
 
+  emptyMessages = () => {
+    return (
+      <div id="empty-likes" className="text-info">
+        <i className="far fa-comment-dots display-4 mb-4"></i>
+        Be the first to chat about this venue.
+      </div>
+    )
+  }
+
   showCurrentMessages = () => {
     // checks to see if messages state exist
     if (this.props.messages.messages) {
@@ -122,7 +131,7 @@ class ChatContainer extends React.Component {
           )
         })
       } else {
-        return "No messages yet."
+        return this.emptyMessages()
       }
     } else {
       // if not go back

@@ -88,7 +88,7 @@ class SignUpLogIn extends React.Component {
         <h1>fooder</h1>
         <p className="mb-4">Connect with food minded people.</p>
 
-        {this.state.errorMsg !== '' && <div class="alert alert-danger" role="alert">
+        {this.state.errorMsg !== '' && <div className="alert alert-danger" role="alert">
           {this.state.errorMsg}
         </div>}
 

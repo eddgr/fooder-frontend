@@ -32,7 +32,7 @@ export const logInAsync = () => {
     .then(data => {
       setTimeout(() => {
         dispatch(logIn(data))
-      }, 1500) // change back to 1500
+      }, 0) // change back to 1500
     })
   } // end dispatch
 }
