@@ -133,7 +133,7 @@ class VenueDetails extends React.Component {
   }
 
   details = () => {
-    const { name, hours, location, tip_photo, tip_text, categories } = this.state.venue
+    const { name, hours, location, tip_photo, tip_text, favorites, categories } = this.state.venue
 
     return (
       <>
@@ -152,7 +152,7 @@ class VenueDetails extends React.Component {
 
             {
               hours ?
-                <p className="mb-0">
+                <p>
                   <small>
                   <i className="far fa-clock"></i> {hours}
                   </small>
@@ -173,7 +173,7 @@ class VenueDetails extends React.Component {
           {
             tip_text ?
               <>
-                <p className="text-warning font-italic">
+                <p className="text-info font-italic">
                   <i className="fas fa-quote-left"></i> {tip_text} <i className="fas fa-quote-right"></i>
                 </p>
 
