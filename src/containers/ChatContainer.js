@@ -163,6 +163,7 @@ class ChatContainer extends React.Component {
               value={this.state.currentMessage}
               type="text" />
             <button
+              onClick={event => event.preventDefault()}
               className="btn btn-info rounded-0"
               type="submit">
               <i className="fas fa-paper-plane"></i>
