@@ -16,6 +16,9 @@ class SignUpLogIn extends React.Component {
     // if (localStorage.token && localStorage.user_id) {
     //   this.props.history.push('/')
     // }
+    if (this.props.currentUser.loggedIn) {
+      this.props.history.push('/')
+    }
   }
 
   // HELPER FUNCTIONS
@@ -29,7 +32,7 @@ class SignUpLogIn extends React.Component {
     event.preventDefault()
     switch(event.target.name) {
       case "signup":
-        adapter.signUpReq(this.state.username, this.state.password)
+        adapter.signUpReq(this.state.username.toLowerCase(), this.state.password)
           .then(data => {
             if (!data.error) {
               localStorage.setItem('token', data.token)
@@ -38,10 +41,13 @@ class SignUpLogIn extends React.Component {
               this.setState({
                 username: '',
                 password: '',
+                errorMsg: ''
               })
 
               this.props.newUser(data)
-              this.props.history.push('/')
+              window.location.reload()
+              // debugger
+              // this.props.history.push('/')
             } else {
               this.setState({errorMsg: data.error})
               console.log(data.error)
@@ -50,7 +56,7 @@ class SignUpLogIn extends React.Component {
         // end fetch
         break
       case "login":
-        adapter.logInReq(this.state.username, this.state.password)
+        adapter.logInReq(this.state.username.toLowerCase(), this.state.password)
           .then(data => {
             if (!data.error) {
               localStorage.setItem('token', data.token)
