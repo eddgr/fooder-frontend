@@ -47,9 +47,11 @@ class VenueContainer extends React.Component {
           return aDistance - bDistance
         })
 
-        this.props.addVenues(newDistanceData)
-
-        this.props.initialLoad()
+        setTimeout(() => {
+          this.props.addVenues(newDistanceData)
+          this.props.initialLoad()
+        }, 1500)
+        
       }) // end then
     }
   }
