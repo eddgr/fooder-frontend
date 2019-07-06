@@ -160,6 +160,7 @@ class ChatContainer extends React.Component {
               className="form-control rounded-0"
               onChange={this.handleMessageChange}
               value={this.state.currentMessage}
+              autofocus="true"
               type="text" />
             <button
               className="btn btn-info rounded-0"
