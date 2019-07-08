@@ -36,6 +36,9 @@
     ]
   },
   "devDependencies": {
-    "redux-devtools-extension": "^2.13.8"
+    "envify": "^4.1.0",
+    "redux-devtools-extension": "^2.13.8",
+    "terser": "^4.1.2",
+    "uglifyify": "^5.0.1"
   }
 }
