@@ -42,7 +42,7 @@ export default function LikeVenue(props) {
   }
 
   return (
-    <div className="card rounded-0 mt-2 mb-2">
+    <div className="card mt-2 mb-2">
       <ActionCableConsumer
       channel={{ channel: "ChatThreadChannel", restaurant_id: id }}
       onReceived={data => updateMessagePreview(data.payload)} />
@@ -59,7 +59,7 @@ export default function LikeVenue(props) {
               null
               :
               <div className="col-4">
-                <img src={tip_photo} className="card-img rounded-0 border-0 h-100" alt="..." />
+                <img src={tip_photo} className="w-100 rounded-left border-0 h-100" alt="..." />
               </div>
           }
 

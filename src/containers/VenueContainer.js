@@ -135,10 +135,10 @@ class VenueContainer extends React.Component {
     }
   }
 
-  showMatch = () => {
+  showInfo = () => {
     return (
       this.state.showInfo &&
-      <div onClick={() => this.hideInfo()} className="shadow alert alert-info show-match">
+      <div onClick={() => this.hideInfo()} className="shadow alert alert-info show-info">
         Chat with other people who liked the same venues. Find chats in ♥
       </div>
     )
@@ -160,7 +160,7 @@ class VenueContainer extends React.Component {
             loadingScreen()
             :
             <>
-              {this.props.currentUser.liked.length <= 0 ? this.showMatch() : null}
+              {this.props.currentUser.liked.length <= 0 ? this.showInfo() : null}
 
               {this.displayVenues()}
             </>
