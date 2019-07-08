@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { ActionCableConsumer } from 'react-actioncable-provider'
 
 import adapter from '../services/adapter'
+import loadingScreen from '../components/Loading'
 
 import moment from 'moment'
 
@@ -159,7 +160,7 @@ class ChatContainer extends React.Component {
               {this.showCurrentMessages()}
             </div>
           :
-            "Loading..."
+            loadingScreen()
         }
         <form
           className="form-inline fixed-bottom"

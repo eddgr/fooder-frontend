@@ -12,7 +12,7 @@ class SignUpLogIn extends React.Component {
   }
 
   componentDidMount() {
-    // this.props.loaded()
+    this.props.loaded()
     // if (localStorage.token && localStorage.user_id) {
     //   this.props.history.push('/')
     // }

@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import Venue from '../components/Venue'
+import loadingScreen from '../components/Loading'
 
 import adapter from '../services/adapter'
 
@@ -51,7 +52,7 @@ class VenueContainer extends React.Component {
           this.props.addVenues(newDistanceData)
           this.props.initialLoad()
         }, 1500)
-        
+
       }) // end then
     }
   }
@@ -119,7 +120,7 @@ class VenueContainer extends React.Component {
     console.log("VenueContainer props", this.props)
     return (
       <div>
-        {this.props.venues.loading ? 'Loading...' : this.displayVenues()}
+        {this.props.venues.loading ? loadingScreen() : this.displayVenues()}
       </div>
     )
   }
