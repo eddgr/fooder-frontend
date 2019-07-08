@@ -1,7 +1,21 @@
-// const API_URL = 'http://localhost:8000'
-// const BACKEND_API = 'http://localhost:8000/api/v1/'
-const API_URL = 'https://fooder-app-backend.herokuapp.com'
-const BACKEND_API = 'https://fooder-app-backend.herokuapp.com/api/v1/'
+let API_URL
+let BACKEND_API
+let WEBSOCKET
+
+// check whether in production or development mode
+if (process.env.NODE_ENV === "production") {
+  API_URL = 'https://fooder-app-backend.herokuapp.com'
+  BACKEND_API = 'https://fooder-app-backend.herokuapp.com/api/v1/'
+  WEBSOCKET = "wss://fooder-app-backend.herokuapp.com/cable"
+} else {
+  API_URL = 'http://localhost:8000'
+  BACKEND_API = 'http://localhost:8000/api/v1/'
+  WEBSOCKET = "ws://localhost:8000/cable"
+}
+
+const webSocket = () => {
+  return WEBSOCKET
+}
 
 const initialLoad = () => {
   return fetch(API_URL + '/profile', {
@@ -116,4 +130,4 @@ const sendMessage = (user_id, restaurant_id, content) => {
   })
 }
 
-export default { initialLoad, fetchRestaurants, likeDislikeReq, unlikeReq, signUpReq, logInReq, fetchVenue, sendMessage }
+export default { webSocket, initialLoad, fetchRestaurants, likeDislikeReq, unlikeReq, signUpReq, logInReq, fetchVenue, sendMessage }

@@ -12,6 +12,8 @@ import { BrowserRouter } from 'react-router-dom'
 import thunk from 'redux-thunk'
 // import { composeWithDevTools } from 'redux-devtools-extension';
 
+import adapter from './services/adapter'
+
 const store = createStore(
   rootReducer, applyMiddleware(thunk)
 )
@@ -19,7 +21,7 @@ const store = createStore(
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      <ActionCableProvider url={"wss://fooder-app-backend.herokuapp.com/cable"}>
+      <ActionCableProvider url={adapter.webSocket()}>
         <App />
       </ActionCableProvider>
     </Provider>
