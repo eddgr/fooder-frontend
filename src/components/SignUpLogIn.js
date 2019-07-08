@@ -45,9 +45,9 @@ class SignUpLogIn extends React.Component {
               })
 
               this.props.newUser(data)
-              window.location.reload()
+              // window.location.reload()
               // debugger
-              // this.props.history.push('/')
+              this.props.history.push('/')
             } else {
               this.setState({errorMsg: data.error})
               console.log(data.error)

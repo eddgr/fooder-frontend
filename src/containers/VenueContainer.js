@@ -62,9 +62,9 @@ class VenueContainer extends React.Component {
   // HELPER FUNCTIONS
   emptyVenues = () => {
     return (
-      <div className="empty-venues">
+      <div className="empty-venues text-info">
         <h3>No more venues near you!</h3>
-        Re-visit the ones you've liked:
+        <p>Re-visit the ones you've liked:</p>
         <div className="row">
           {this.props.currentUser.liked.slice(-9).map(rest => {
             return (
