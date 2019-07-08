@@ -8,6 +8,10 @@ import loadingScreen from '../components/Loading'
 import adapter from '../services/adapter'
 
 class VenueContainer extends React.Component {
+  state = {
+    showInfo: true
+  }
+
   componentDidMount() {
     if (this.props.venues.loading) {
       setTimeout(() => {
@@ -70,10 +74,10 @@ class VenueContainer extends React.Component {
             return (
               <div key={rest.id} className="col-4 p-1">
                 <Link to={`/venues/${rest.id}`}>
-                    <img
-                     src={rest.tip_photo}
-                     className="w-100"
-                     alt={rest.name} />
+                  <img
+                   src={rest.tip_photo}
+                   className="w-100"
+                   alt={rest.name} />
                </Link>
              </div>
             )
@@ -133,10 +137,17 @@ class VenueContainer extends React.Component {
 
   showMatch = () => {
     return (
-      <div className="alert alert-success text-center">
+      this.state.showInfo &&
+      <div onClick={() => this.hideInfo()} className="shadow alert alert-info show-match">
         Chat with other people who liked the same venues. Find chats in ♥
       </div>
     )
+  }
+
+  hideInfo = () => {
+    this.setState({
+      showInfo: false
+    })
   }
   // end HELPER FUNCTIONS
 

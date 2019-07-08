@@ -51,7 +51,11 @@ class VenueDetails extends React.Component {
         })
         this.props.likeVenue(venue)
         this.setState({
-          likedByUser: true
+          likedByUser: true,
+          venue: {
+            ...this.state.venue,
+            favorites: [...this.state.venue.favorites, this.props.currentUser.id]
+          }
         })
         break
       case "dislike":
@@ -133,7 +137,7 @@ class VenueDetails extends React.Component {
   }
 
   details = () => {
-    const { name, hours, location, tip_photo, tip_text, favorites, categories } = this.state.venue
+    const { name, hours, location, tip_photo, tip_text, categories } = this.state.venue
 
     return (
       <>
@@ -141,30 +145,28 @@ class VenueDetails extends React.Component {
           <img className="card-img-top" src={tip_photo} alt={name} />
           <div className="venue-card-text">
             <h2 className="card-title text-light">{name}</h2>
+            <p className="text-light">
+              <strong>
+                <i className="fas fa-utensils pr-1"></i> {categories}
+              </strong>
+            </p>
           </div>
         </div>
         <div className="card-body">
 
           <div className="text-black-50">
-            <p className="font-weight-bold">
-                <i className="fas fa-utensils pr-1"></i> {categories}
-            </p>
 
             {
               hours ?
                 <p>
-                  <small>
                   <i className="far fa-clock"></i> {hours}
-                  </small>
                 </p>
               :
                 null
             }
 
             <p>
-              <small>
-                {location}
-              </small>
+              {location}
             </p>
           </div>
 
@@ -174,7 +176,7 @@ class VenueDetails extends React.Component {
             tip_text ?
               <>
                 <p className="text-info font-italic">
-                  <i className="fas fa-quote-left"></i> {tip_text} <i className="fas fa-quote-right"></i>
+                  {tip_text}
                 </p>
 
                 <hr />
