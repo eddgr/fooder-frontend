@@ -145,14 +145,16 @@ class VenueDetails extends React.Component {
           <img className="card-img-top" src={tip_photo} alt={name} />
           <div className="venue-card-text">
             <h2 className="card-title text-light">{name}</h2>
+            <p className="text-light">
+              <strong>
+                <i className="fas fa-utensils pr-1"></i> {categories}
+              </strong>
+            </p>
           </div>
         </div>
         <div className="card-body">
 
           <div className="text-black-50">
-            <p className="font-weight-bold">
-                <i className="fas fa-utensils pr-1"></i> {categories}
-            </p>
 
             {
               hours ?

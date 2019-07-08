@@ -4,10 +4,6 @@ import adapter from '../services/adapter'
 
 import SearchVenueCard from '../components/SearchVenueCard'
 
-// needs to do a fetch request to the backend and filter out results
-
-// local state
-
 export default class Search extends React.Component {
   state = {
     results: true,
