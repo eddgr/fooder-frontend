@@ -153,18 +153,14 @@ class VenueDetails extends React.Component {
             {
               hours ?
                 <p>
-                  <small>
                   <i className="far fa-clock"></i> {hours}
-                  </small>
                 </p>
               :
                 null
             }
 
             <p>
-              <small>
-                {location}
-              </small>
+              {location}
             </p>
           </div>
 
@@ -174,7 +170,7 @@ class VenueDetails extends React.Component {
             tip_text ?
               <>
                 <p className="text-info font-italic">
-                  <i className="fas fa-quote-left"></i> {tip_text} <i className="fas fa-quote-right"></i>
+                  {tip_text}
                 </p>
 
                 <hr />
