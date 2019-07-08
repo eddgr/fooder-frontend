@@ -143,7 +143,7 @@ body {
   align-items: center;
 }
 
-.search-card, .empty-venues, .show-match {
+.search-card, .empty-venues, .show-info {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -172,6 +172,6 @@ body {
   width: 100% !important
 }
 
-.show-match {
+.show-info {
   height: 20vh;
 }

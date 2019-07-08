@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom'
 
 class ProfileContainer extends React.Component {
   state = {
-    showLikes: true
+    showLikes: true,
+    showInfo: true
   }
 
   // HELPER FUNCTIONS
@@ -48,6 +49,21 @@ class ProfileContainer extends React.Component {
     localStorage.clear()
     window.location.href = '/'
   }
+
+  showInfo = () => {
+    return (
+      this.state.showInfo &&
+      <div onClick={() => this.hideInfo()} className="mt-4 shadow alert alert-info show-info">
+        See all your likes and dislikes here.
+      </div>
+    )
+  }
+
+  hideInfo = () => {
+    this.setState({
+      showInfo: false
+    })
+  }
   // end HELPER FUNCTIONS
 
   render() {
@@ -73,6 +89,8 @@ class ProfileContainer extends React.Component {
             </small>
           </span>
         </div>
+
+        {this.props.currentUser.liked.length <= 0 && this.showInfo()}
 
         <div className="row">
           {
