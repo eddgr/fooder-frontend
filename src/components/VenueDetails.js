@@ -51,7 +51,11 @@ class VenueDetails extends React.Component {
         })
         this.props.likeVenue(venue)
         this.setState({
-          likedByUser: true
+          likedByUser: true,
+          venue: {
+            ...this.state.venue,
+            favorites: [...this.state.venue.favorites, this.props.currentUser.id]
+          }
         })
         break
       case "dislike":
@@ -133,7 +137,7 @@ class VenueDetails extends React.Component {
   }
 
   details = () => {
-    const { name, hours, location, tip_photo, tip_text, favorites, categories } = this.state.venue
+    const { name, hours, location, tip_photo, tip_text, categories } = this.state.venue
 
     return (
       <>
