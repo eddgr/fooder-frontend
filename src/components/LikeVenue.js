@@ -59,7 +59,7 @@ export default function LikeVenue(props) {
               null
               :
               <div className="col-4">
-                <img src={tip_photo} className="card-img rounded-0 border-0 align-middle" alt="..." />
+                <img src={tip_photo} className="card-img rounded-0 border-0 h-100" alt="..." />
               </div>
           }
 

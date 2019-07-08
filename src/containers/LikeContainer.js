@@ -11,15 +11,13 @@ class LikeContainer extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.loading) {
-      if (this.state.likes.length <= 0) {
-        setTimeout(() => {
-          this.setState({
-            likes: this.props.likes
-          })
-        }, 1500)
-      }
-      this.props.loaded()
+    if (this.state.likes.length <= 0) {
+      console.log("likes loading...")
+      setTimeout(() => {
+        this.setState({
+          likes: this.props.likes
+        })
+      }, 1500)
     }
   }
 
