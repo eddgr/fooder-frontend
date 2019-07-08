@@ -3,7 +3,7 @@ let BACKEND_API
 let WEBSOCKET
 
 // check whether in production or development mode
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === 'production') {
   API_URL = 'https://fooder-app-backend.herokuapp.com'
   BACKEND_API = 'https://fooder-app-backend.herokuapp.com/api/v1/'
   WEBSOCKET = "wss://fooder-app-backend.herokuapp.com/cable"
