@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import Venue from '../components/Venue'
 import loadingScreen from '../components/Loading'
@@ -9,26 +10,28 @@ import adapter from '../services/adapter'
 class VenueContainer extends React.Component {
   componentDidMount() {
     if (this.props.venues.loading) {
-      adapter.fetchRestaurants()
+      setTimeout(() => {
+        console.log("Venue loading...")
+        adapter.fetchRestaurants()
         .then(data => {
           const newData = data.filter(venue => {
             return !venue.favorites.includes(this.props.currentUser.id) && !venue.dislikes.includes(this.props.currentUser.id)
             // filter out if current user likes and dislikes a venue
           })
 
-        // add distance function
-        const distance = (lat1, lon1, lat2, lon2, unit) => {
-          if ((lat1 === lat2) && (lon1 === lon2)) {
+          // add distance function
+          const distance = (lat1, lon1, lat2, lon2, unit) => {
+            if ((lat1 === lat2) && (lon1 === lon2)) {
               return 0;
-          }
-          else {
+            }
+            else {
               var radlat1 = Math.PI * lat1/180;
               var radlat2 = Math.PI * lat2/180;
               var theta = lon1-lon2;
               var radtheta = Math.PI * theta/180;
               var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
               if (dist > 1) {
-                  dist = 1;
+                dist = 1;
               }
               dist = Math.acos(dist);
               dist = dist * 180/Math.PI;
@@ -36,28 +39,50 @@ class VenueContainer extends React.Component {
               if (unit==="K") { dist = dist * 1.609344 }
               if (unit==="N") { dist = dist * 0.8684 }
               return dist;
+            }
           }
-        }
-        // sort by distance
+          // sort by distance
 
-        const newDistanceData = newData.sort((a, b) => {
-          // add a reference to the distance
-          let aDistance = distance(this.props.currentUser.location.lat, this.props.currentUser.location.long, a.lat, a.long)
-          let bDistance = distance(this.props.currentUser.location.lat, this.props.currentUser.location.long, b.lat, b.long)
+          const newDistanceData = newData.sort((a, b) => {
+            // add a reference to the distance
+            let aDistance = distance(this.props.currentUser.location.lat, this.props.currentUser.location.long, a.lat, a.long)
+            let bDistance = distance(this.props.currentUser.location.lat, this.props.currentUser.location.long, b.lat, b.long)
 
-          return aDistance - bDistance
-        })
+            return aDistance - bDistance
+          })
 
-        setTimeout(() => {
           this.props.addVenues(newDistanceData)
           this.props.initialLoad()
-        }, 1500)
-
-      }) // end then
-    }
+          // turns off loading
+        }) // end then
+      }, 1500) // end setTimeout
+    } // end if
   }
 
   // HELPER FUNCTIONS
+  emptyVenues = () => {
+    return (
+      <div className="empty-venues">
+        <h3>No more venues near you!</h3>
+        Re-visit the ones you've liked:
+        <div className="row">
+          {this.props.currentUser.liked.slice(-9).map(rest => {
+            return (
+              <div key={rest.id} className="col-4 p-1">
+                <Link to={`/venues/${rest.id}`}>
+                    <img
+                     src={rest.tip_photo}
+                     className="w-100"
+                     alt={rest.name} />
+               </Link>
+             </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
   displayVenues = () => {
     if (this.props.venues.venues.length > 0) {
       return (
@@ -76,16 +101,7 @@ class VenueContainer extends React.Component {
       )
     } else {
       return (
-        <>
-          No more venues near you!
-          <br />
-          restaurants you've liked:
-          {this.props.currentUser.liked.slice(-5).map(rest => {
-            return (
-              <li key={rest.id}>{rest.name}</li>
-            )
-          })}
-        </>
+        this.emptyVenues()
       )
     }
   }

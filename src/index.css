@@ -143,11 +143,17 @@ body {
   align-items: center;
 }
 
-.search-card {
+.search-card, .empty-venues {
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.empty-venues {
+  flex-direction: column;
+  list-style: none;
+  height: calc(100vh - 100px);
 }
 
 .venue-card {
