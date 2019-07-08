@@ -98,7 +98,7 @@ class VenueContainer extends React.Component {
               venue={venue} />
           )
         })
-      )
+      ) // end return
     } else {
       return (
         this.emptyVenues()
@@ -130,13 +130,30 @@ class VenueContainer extends React.Component {
         console.log("Like or Dislike")
     }
   }
+
+  showMatch = () => {
+    return (
+      <div className="alert alert-success text-center">
+        Chat with other people who liked the same venues. Find chats in ♥
+      </div>
+    )
+  }
   // end HELPER FUNCTIONS
 
   render() {
     console.log("VenueContainer props", this.props)
     return (
       <div>
-        {this.props.venues.loading ? loadingScreen() : this.displayVenues()}
+        {
+          this.props.venues.loading ?
+            loadingScreen()
+            :
+            <>
+              {this.props.currentUser.liked.length <= 0 ? this.showMatch() : null}
+
+              {this.displayVenues()}
+            </>
+        }
       </div>
     )
   }
