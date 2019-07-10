@@ -21,6 +21,14 @@ const defaultState = {
 
 const userReducer = (state=defaultState, action) => {
   switch (action.type) {
+    case 'RESET_SELECT':
+      return {
+        ...state,
+        selectedVenue: {
+          id: '',
+          name: ''
+        }
+      }
     case 'LOADED':
       return {
         ...state,
