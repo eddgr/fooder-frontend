@@ -2,9 +2,7 @@ const defaultState = {
   id: '',
   username: '',
   loggedIn: false,
-
   loading: true,
-
   liked: [],
   disliked: [],
   filtered: false,
@@ -98,7 +96,6 @@ const userReducer = (state=defaultState, action) => {
     case 'UNLIKE_VENUE':
       console.log('UNLIKE_VENUE', action.payload)
       const unlikedVenue = [...state.liked].filter(venue => venue.id !== parseInt(action.payload.restaurant_id))
-      // const unlikedVenue = [...state.liked].find(venue => venue.id === parseInt(action.payload.restaurant_id))
       return {
         ...state,
         liked: unlikedVenue
@@ -106,7 +103,6 @@ const userReducer = (state=defaultState, action) => {
     case 'UNDISLIKE_VENUE':
       console.log('UNDISLIKE_VENUE', action.payload)
       const undislikedVenue = [...state.disliked].filter(venue => venue.id !== parseInt(action.payload.restaurant_id))
-      // const unlikedVenue = [...state.liked].find(venue => venue.id === parseInt(action.payload.restaurant_id))
       return {
         ...state,
         disliked: undislikedVenue

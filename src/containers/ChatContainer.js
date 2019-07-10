@@ -19,6 +19,14 @@ class ChatContainer extends React.Component {
     }
     this.showChat()
     this.props.inChat()
+
+    // check to see if user has currently disliked this venue
+    const dislikeVenueId = this.props.currentUser.disliked.map(disliked => disliked.id)
+
+    // if so, redirect them to '/likes'
+    if (dislikeVenueId.includes(this.props.currentUser.selectedVenue.id)) {
+      window.location.href = '/likes'
+    }
   }
 
   // HELPER FUNCTIONS
