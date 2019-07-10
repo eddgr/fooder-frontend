@@ -9,6 +9,10 @@ class ProfileContainer extends React.Component {
     showInfo: true
   }
 
+  componentDidMount() {
+    this.props.resetSelect()
+  }
+
   // HELPER FUNCTIONS
   handleClick = event => {
     if (event.currentTarget.dataset.name === 'liked') {
@@ -111,4 +115,12 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(ProfileContainer)
+const mapDispatchToProps = dispatch => {
+  return {
+    resetSelect: () => {
+      dispatch({ type: 'RESET_SELECT' })
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer)
