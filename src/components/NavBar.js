@@ -44,12 +44,13 @@ function NavBar(props) {
           fooder
         </h1>
 
-        {
+        <Link to="/profile"><i className="far fa-user-circle text-dark"></i></Link>
+        {/*
           props.currentUser.selectedVenue.id === parseInt(window.location.pathname.replace(/\/venues\//, '')) ?
             <Link to="/chats"><i className="text-dark far fa-comments"></i></Link>
          :
             <Link to="/profile"><i className="far fa-user-circle text-dark"></i></Link>
-        }
+        */}
       </>
     )
   }
