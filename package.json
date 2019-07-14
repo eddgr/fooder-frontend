@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "dotenv": "^8.0.0",
+    "lodash": "^4.17.14",
+    "lodash.template": "^4.5.0",
     "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-actioncable-provider": "^2.0.0",
