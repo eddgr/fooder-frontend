@@ -5,9 +5,11 @@ Fooder is mobile friendly and allows users to connect with others who are intere
 View demo: https://fooder-app-frontend.herokuapp.com
 
 ## Quick Demo
+
 ![](fooder-demo.gif)
 
 ## Chat Demo
+
 ![](fooder-chat.gif)
 
 # Stack
